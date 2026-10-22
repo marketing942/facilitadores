@@ -29,6 +29,20 @@ export const HOME_NAV = {
 
 export const TOOLS: Tool[] = [
   {
+    href: "/atendimento",
+    label: "Atendimento",
+    title: "Links de atendimento e suporte",
+    description: "Todos os links de atendimento e suporte, por empresa e por tipo (humano ou IA), prontos para copiar",
+    icon: (
+      <svg className="h-6 w-6" {...stroke}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+      </svg>
+    ),
+    nav: "border-violet-400/35 bg-violet-400/10 text-violet-300 hover:bg-violet-400/20",
+    navActive: "border-violet-300 bg-violet-400/25 text-violet-100",
+    bubble: "bg-violet-400/10 text-violet-300 group-hover:bg-violet-400/20",
+  },
+  {
     href: "/links",
     label: "Links",
     title: "Links de pagamento Guru",
@@ -69,19 +83,5 @@ export const TOOLS: Tool[] = [
     nav: "border-orange-400/35 bg-orange-400/10 text-orange-300 hover:bg-orange-400/20",
     navActive: "border-orange-300 bg-orange-400/25 text-orange-100",
     bubble: "bg-orange-400/10 text-orange-300 group-hover:bg-orange-400/20",
-  },
-  {
-    href: "/atendimento",
-    label: "Atendimento",
-    title: "Links de atendimento e suporte",
-    description: "Todos os links de atendimento e suporte, por empresa e por tipo (humano ou IA), prontos para copiar",
-    icon: (
-      <svg className="h-6 w-6" {...stroke}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-      </svg>
-    ),
-    nav: "border-violet-400/35 bg-violet-400/10 text-violet-300 hover:bg-violet-400/20",
-    navActive: "border-violet-300 bg-violet-400/25 text-violet-100",
-    bubble: "bg-violet-400/10 text-violet-300 group-hover:bg-violet-400/20",
   },
 ];

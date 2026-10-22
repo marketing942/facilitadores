@@ -8,38 +8,6 @@ import { chipClass, copyText, Highlight, normalize } from "@/components/explorer
 const CHANNELS: Channel[] = ["Humano", "IA"];
 const KINDS: Kind[] = ["Atendimento", "Suporte"];
 
-/** Grupo de filtro de escolha única (clicar de novo no ativo volta para "Todos"). */
-function FilterGroup<T extends string>({
-  label,
-  allLabel,
-  options,
-  value,
-  onChange,
-}: {
-  label: string;
-  allLabel: string;
-  options: readonly T[];
-  value: T | null;
-  onChange: (next: T | null) => void;
-}) {
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <span className="ui-label mr-1 w-full text-[11px] text-muted sm:w-auto">{label}</span>
-      {[null, ...options].map((option) => (
-        <button
-          key={option ?? "todos"}
-          type="button"
-          onClick={() => onChange(option)}
-          aria-pressed={value === option}
-          className={chipClass(value === option)}
-        >
-          {option ?? allLabel}
-        </button>
-      ))}
-    </div>
-  );
-}
-
 export default function AtendimentoExplorer({ items }: { items: ServiceLink[] }) {
   const [query, setQuery] = useState("");
   const [bu, setBu] = useState<ServiceLink["bu"] | null>(null);
@@ -76,13 +44,6 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
   );
 
   const filtering = terms.length > 0 || Boolean(bu || channel || kind);
-
-  function resetSelection<T>(setter: (value: T) => void) {
-    return (value: T) => {
-      setter(value);
-      setSelected(0);
-    };
-  }
 
   function copy(item: ServiceLink) {
     copyText(item.url, () => {
@@ -128,23 +89,70 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
           />
         </div>
 
-        <div className="mt-3 flex flex-col gap-2.5">
-          <FilterGroup label="Empresa" allLabel="Todos" options={BUS} value={bu} onChange={resetSelection(setBu)} />
-          <div className="flex flex-wrap gap-x-8 gap-y-2.5">
-            <FilterGroup
-              label="Tipo"
-              allLabel="Todos"
-              options={CHANNELS}
-              value={channel}
-              onChange={resetSelection(setChannel)}
-            />
-            <FilterGroup
-              label="Finalidade"
-              allLabel="Todas"
-              options={KINDS}
-              value={kind}
-              onChange={resetSelection(setKind)}
-            />
+        <div className="mt-3 flex flex-col gap-2">
+          {/* Empresa: igual à página de links da Guru */}
+          <div className="flex flex-wrap items-center gap-2">
+            {[null, ...BUS].map((value) => (
+              <button
+                key={value ?? "todos"}
+                type="button"
+                onClick={() => {
+                  setBu(value);
+                  setSelected(0);
+                }}
+                aria-pressed={bu === value}
+                className={chipClass(bu === value)}
+              >
+                {value ?? "Todos"}
+              </button>
+            ))}
+          </div>
+
+          {/* Tipo e finalidade: clique para filtrar, clique de novo para tirar */}
+          <div className="flex flex-wrap items-center gap-2">
+            {CHANNELS.map((value) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => {
+                  setChannel(channel === value ? null : value);
+                  setSelected(0);
+                }}
+                aria-pressed={channel === value}
+                className={chipClass(channel === value)}
+              >
+                {value}
+              </button>
+            ))}
+            <span aria-hidden className="mx-1 hidden h-5 w-px bg-line-active sm:block" />
+            {KINDS.map((value) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => {
+                  setKind(kind === value ? null : value);
+                  setSelected(0);
+                }}
+                aria-pressed={kind === value}
+                className={chipClass(kind === value)}
+              >
+                {value}
+              </button>
+            ))}
+            {(bu || channel || kind) && (
+              <button
+                type="button"
+                onClick={() => {
+                  setBu(null);
+                  setChannel(null);
+                  setKind(null);
+                  setSelected(0);
+                }}
+                className="ui-label ml-auto px-2 py-1.5 text-xs text-muted underline underline-offset-4 transition hover:text-gold-pale"
+              >
+                Limpar filtros
+              </button>
+            )}
           </div>
         </div>
       </div>
