@@ -4,6 +4,11 @@ Página interna onde a equipe busca um produto e copia o link de pagamento.
 Os dados vêm **direto da API do Digital Manager Guru** — sem webhook, sem planilha e sem
 cadastro manual de link. Toda oferta ativa na Guru aparece aqui sozinha.
 
+## Onde roda
+
+- Produção: https://links-pagamento-guru.vercel.app (projeto Vercel `links-pagamento-guru`)
+- Repositório: https://github.com/marketing942/links_guru — cada push na `main` publica sozinho.
+
 ## Como funciona
 
 1. `lib/guru.ts` lê a API da Guru (`/products` e `/products/{id}/offers`). São ~280 chamadas
