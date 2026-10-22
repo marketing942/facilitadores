@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/* Identidade CPPEM (preto + dourado) — mesmos tokens do site novo (siteCppemNovo). */
+:root {
+  --gold: #af9256;
+  --gold-light: #c9ae7a;
+  --gold-pale: #f0dcb0;
+  --gold-dark: #8a7040;
+  --bg: #0a0a0b;
+  --surface: #111115;
+  --surface-2: #18181e;
+  --surface-3: #1f1f28;
+  --text: #e8e4d9;
+  --text-soft: #ada99b;
+  --text-muted: #87847a;
+  --border: rgba(175, 146, 86, 0.18);
+  --border-active: rgba(175, 146, 86, 0.55);
+  --danger: #e3796b;
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--border);
+  --color-line-active: var(--border-active);
+  --color-soft: var(--text-soft);
+  --color-muted: var(--text-muted);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-pale: var(--gold-pale);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-ui: var(--font-ui);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), sans-serif;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-pale);
+  outline-offset: 3px;
+}
+
+/* Brilho dourado do fundo, igual ao .page-shell do site. */
+.page-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(900px 460px at 90% 0%, rgba(175, 146, 86, 0.075), transparent 65%),
+    radial-gradient(800px 500px at 0% 75%, rgba(91, 140, 184, 0.035), transparent 70%),
+    var(--bg);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--gold-light);
+  font: 700 0.78rem/1 var(--font-ui);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.display-title {
+  font: 700 clamp(1.7rem, 3.4vw, 2.5rem)/1 var(--font-display);
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.ui-label {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gold-button {
+  color: #16130c;
+  background: linear-gradient(150deg, var(--gold-pale), var(--gold) 55%, var(--gold-dark));
+  box-shadow: 0 14px 40px rgba(175, 146, 86, 0.14);
+}
+.gold-button:hover {
+  filter: brightness(1.06);
+}
+
+.ghost-button {
+  color: var(--text);
+  border: 1px solid var(--border-active);
+  background: rgba(10, 10, 11, 0.58);
+}
+.ghost-button:hover {
+  color: var(--gold-pale);
+  border-color: var(--gold-light);
+}
+
+/* Faixa dourada à esquerda das ofertas em destaque. */
+.row-featured {
+  box-shadow: inset 3px 0 0 var(--gold);
+}
