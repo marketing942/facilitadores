@@ -1,4 +1,18 @@
-# Links de Pagamento · Grupo CPPEM
+# Time Comercial · Grupo CPPEM
+
+Sistema interno do time comercial, com três ferramentas escolhidas na página inicial:
+
+| Rota | Ferramenta |
+| --- | --- |
+| `/links` | **Links de pagamento Guru** — busca o produto e copia o link (detalhes abaixo) |
+| `/calculadora` | **Calculadora Guru + Stone** — parcelas, juros repassados e valor líquido recebido |
+| `/calculadora-ton` | **Calculadora Maquineta TON** — taxas por plano (Super, Turbo, Max) |
+
+As calculadoras não usam banco de dados nem a API da Guru: cada pessoa calcula no próprio navegador
+(os últimos valores digitados ficam no `localStorage` dela). No computador, o cursor vira uma mira
+(`components/crosshair.tsx`); em celular e tablet nada muda.
+
+## Links de pagamento
 
 Página interna onde a equipe busca um produto e copia o link de pagamento.
 Os dados vêm **direto da API do Digital Manager Guru** — sem webhook, sem planilha e sem
@@ -47,10 +61,34 @@ npm run build && npm start
 | `lib/guru.ts` | Cliente da API da Guru: paginação, repetição e controle de cota |
 | `lib/catalog.ts` | Monta o catálogo, calcula parcelas e aplica o cache de 10 min |
 | `config/destaques.ts` | Ofertas fixadas em "Mais usados" (pelo final do link de checkout) |
-| `app/page.tsx` | Página (servidor) |
-| `app/links-explorer.tsx` | Busca, filtros, tabela, cópia e favoritos (cliente) |
-| `app/actions.ts` | Ação "Atualizar agora" |
+| `app/page.tsx` | Página inicial: escolha da ferramenta |
+| `app/links/page.tsx` | Página dos links (servidor) |
+| `app/links/links-explorer.tsx` | Busca, filtros, tabela, cópia e favoritos (cliente) |
+| `app/links/actions.ts` | Ação "Atualizar agora" |
 | `app/api/links/route.ts` | O mesmo catálogo em JSON, para n8n e outras ferramentas |
+| `components/CalculadoraStone.tsx` | Calculadora Guru + Stone (taxas no topo do arquivo) |
+| `components/CalculadoraTon.tsx` | Calculadora da maquineta TON (taxas no topo do arquivo) |
+| `hooks/useLocalStorage.ts` | Guarda no navegador os últimos valores digitados |
+
+## Calculadora Guru + Stone
+
+Taxas do demonstrativo "Taxas e prazos das suas transações" (Pagar.me / Stone, e-Commerce), emitido em
+22/10/2026. Ficam em constantes no topo de `components/CalculadoraStone.tsx`:
+
+- **Cartão de crédito**: percentual por quantidade de parcelas (1x a 18x), igual para Visa, Mastercard,
+  Elo, Amex e Hipercard. Não se multiplica pelo número de parcelas.
+- **Processamento**: R$ 0,30 por transação aprovada (crédito, boleto e Pix).
+- **Antifraude**: R$ 0,20 por transação de crédito (só cartão).
+- **Boleto**: R$ 2,39. **Pix**: 0,85% do valor.
+- Líquido do crédito = total do cliente × (1 − taxa da parcela) − R$ 0,30 − R$ 0,20.
+- Os juros repassados são simples: total = valor × (1 + juros mensal × parcelas). A faixa sugerida de
+  juros (1,70% a 2,50%) é só um aviso na tela e não entra na conta.
+- **Juros automático por faixa de valor** (`RATE_TIERS`): abaixo de R$ 1.000 → 2,10% · de R$ 1.000 a
+  R$ 1.999,99 → 2,00% · a partir de R$ 2.000 → 1,90%. O campo se ajusta sozinho quando o vendedor muda o
+  valor. Se ele editar o juros (negociação especial), o valor dele passa a valer, mesmo que o valor do
+  produto mude depois, até clicar em "Voltar ao automático". Fica salvo no navegador (`calc_rate_manual`).
+
+Quando a Stone mudar as taxas, é só atualizar essas constantes.
 
 ## Detalhes que valem saber
 
