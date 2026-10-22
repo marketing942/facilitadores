@@ -1,12 +1,13 @@
 # Time Comercial · Grupo CPPEM
 
-Sistema interno do time comercial, com três ferramentas escolhidas na página inicial:
+Sistema interno do time comercial, com quatro ferramentas escolhidas na página inicial:
 
 | Rota | Ferramenta |
 | --- | --- |
 | `/links` | **Links de pagamento Guru** — busca o produto e copia o link (detalhes abaixo) |
 | `/calculadora` | **Calculadora Guru + Stone** — parcelas, juros repassados e valor líquido recebido |
 | `/calculadora-ton` | **Calculadora Maquineta TON** — taxas por plano (Super, Turbo, Max) |
+| `/atendimento` | **Links de atendimento e suporte** — todos os canais, filtrados por empresa, tipo (humano ou IA) e finalidade |
 
 As calculadoras não usam banco de dados nem a API da Guru: cada pessoa calcula no próprio navegador
 (os últimos valores digitados ficam no `localStorage` dela). No computador, o cursor vira uma mira
@@ -66,6 +67,10 @@ npm run build && npm start
 | `app/links/links-explorer.tsx` | Busca, filtros, tabela, cópia e favoritos (cliente) |
 | `app/links/actions.ts` | Ação "Atualizar agora" |
 | `app/api/links/route.ts` | O mesmo catálogo em JSON, para n8n e outras ferramentas |
+| `app/atendimento/` | Página e busca dos links de atendimento e suporte |
+| `config/atendimento.ts` | **Lista dos links de atendimento e suporte** (para incluir, trocar ou remover um canal, edite aqui) |
+| `config/tools.tsx` | As ferramentas da página inicial e as cores dos botões do menu |
+| `components/explorer-kit.tsx` | Busca com destaque, cópia e filtros, compartilhados entre `/links` e `/atendimento` |
 | `components/CalculadoraStone.tsx` | Calculadora Guru + Stone (taxas no topo do arquivo) |
 | `components/CalculadoraTon.tsx` | Calculadora da maquineta TON (taxas no topo do arquivo) |
 | `hooks/useLocalStorage.ts` | Guarda no navegador os últimos valores digitados |

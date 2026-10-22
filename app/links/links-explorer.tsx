@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, useSyncExternalStore, useTransiti
 import { useRouter } from "next/navigation";
 import { Check, Copy, ExternalLink, RefreshCw, Search, Star } from "lucide-react";
 import type { CatalogItem } from "@/lib/catalog";
+import { copyText, Highlight, normalize } from "@/components/explorer-kit";
 import { refreshCatalog } from "./actions";
 
 const BRANDS = ["CPPEM", "Colégio", "Unicive"] as const;
@@ -11,9 +12,6 @@ const FAVORITES_KEY = "links-cppem:favoritos";
 
 const brl = (value: number) =>
   value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-
-const normalize = (value: string) =>
-  value.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
 
 /*
  * Favoritos de cada pessoa, guardados no navegador. Ficam num store externo (e não em
@@ -48,38 +46,6 @@ function saveFavorites(next: string[]) {
 function subscribeFavorites(notify: () => void) {
   favoritesListeners.add(notify);
   return () => favoritesListeners.delete(notify);
-}
-
-function Highlight({ text, terms }: { text: string; terms: string[] }) {
-  if (!terms.length) return <>{text}</>;
-  const source = normalize(text);
-  const marks: Array<[number, number]> = [];
-  for (const term of terms) {
-    let from = 0;
-    let at = source.indexOf(term, from);
-    while (at !== -1) {
-      marks.push([at, at + term.length]);
-      from = at + term.length;
-      at = source.indexOf(term, from);
-    }
-  }
-  if (!marks.length) return <>{text}</>;
-  marks.sort((a, b) => a[0] - b[0]);
-
-  const parts: React.ReactNode[] = [];
-  let cursor = 0;
-  marks.forEach(([start, end], i) => {
-    if (start < cursor) return;
-    if (start > cursor) parts.push(text.slice(cursor, start));
-    parts.push(
-      <mark key={i} className="rounded-sm bg-gold/25 px-0.5 text-gold-pale">
-        {text.slice(start, end)}
-      </mark>,
-    );
-    cursor = end;
-  });
-  parts.push(text.slice(cursor));
-  return <>{parts}</>;
 }
 
 export default function LinksExplorer({
@@ -143,29 +109,11 @@ export default function LinksExplorer({
   const ordered = searching ? visible : [...starred, ...visible.filter((item) => !starred.includes(item))];
 
   function copy(item: CatalogItem) {
-    const done = () => {
+    copyText(item.url, () => {
       setCopied(item.id);
       setToast(`✓ Link copiado: ${item.name}`);
       setTimeout(() => setCopied((current) => (current === item.id ? null : current)), 1600);
-    };
-    // navigator.clipboard exige contexto seguro; execCommand cobre o resto
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(item.url).then(done, () => fallbackCopy(item, done));
-    } else {
-      fallbackCopy(item, done);
-    }
-  }
-
-  function fallbackCopy(item: CatalogItem, done: () => void) {
-    const field = document.createElement("textarea");
-    field.value = item.url;
-    field.style.cssText = "position:fixed;top:0;left:0;opacity:0";
-    document.body.appendChild(field);
-    field.select();
-    const ok = document.execCommand("copy");
-    field.remove();
-    if (ok) done();
-    else window.prompt("Copie o link com Ctrl+C:", item.url);
+    });
   }
 
   function toggleFavorite(item: CatalogItem) {

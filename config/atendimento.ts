@@ -1,0 +1,47 @@
+// Links de atendimento e suporte do Grupo CPPEM. Para incluir, trocar ou remover um canal,
+// basta editar esta lista: a página /atendimento e os filtros se montam sozinhos.
+
+export const BUS = ["CPPEM", "Colégio", "Unicive"] as const;
+export type Bu = (typeof BUS)[number];
+
+export type Channel = "Humano" | "IA";
+export type Kind = "Atendimento" | "Suporte";
+
+/** Nome completo de cada empresa (o filtro usa o nome curto, igual à página de links da Guru). */
+export const BU_NAMES: Record<Bu, string> = {
+  CPPEM: "Cppem Concursos",
+  Colégio: "Colégio Cppem",
+  Unicive: "Unicive Caruaru",
+};
+
+export type ServiceLink = {
+  id: string;
+  /** Ex.: "Atendimento Humano · Colégio Cppem" */
+  title: string;
+  bu: Bu;
+  kind: Kind;
+  channel: Channel;
+  url: string;
+};
+
+function link(bu: Bu, kind: Kind, channel: Channel, url: string): ServiceLink {
+  return {
+    id: url.replace(/^https?:\/\//, ""),
+    title: `${kind} ${channel} · ${BU_NAMES[bu]}`,
+    bu,
+    kind,
+    channel,
+    url,
+  };
+}
+
+export const SERVICE_LINKS: ServiceLink[] = [
+  link("CPPEM", "Atendimento", "Humano", "https://pxa.cppem.com.br/lt/cppem-contato"),
+  link("CPPEM", "Atendimento", "IA", "https://links.cppem.com.br/contato-cppem-ass"),
+  link("CPPEM", "Suporte", "Humano", "https://links.cppem.com.br/suporte-cppem-equipe"),
+  link("CPPEM", "Suporte", "IA", "https://links.cppem.com.br/suporte-cppem-ass"),
+  link("Colégio", "Atendimento", "Humano", "https://pxa.cppem.com.br/lt/colegio-contato"),
+  link("Colégio", "Atendimento", "IA", "https://links.cppem.com.br/contato-colegio-ass"),
+  link("Unicive", "Atendimento", "Humano", "https://pxa.cppem.com.br/lt/unicive-contato"),
+  link("Unicive", "Atendimento", "IA", "https://links.cppem.com.br/contato-unicive-ass"),
+];

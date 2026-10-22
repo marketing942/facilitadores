@@ -167,8 +167,6 @@ export default function CalculadoraStone() {
 
   const rateWarning =
     interestRate > 0 && interestRate < MIN_RATE_WARNING;
-  const rateOk =
-    interestRate >= MIN_RATE_WARNING && interestRate <= MAX_RATE_SUGGESTION;
   const rateHigh = interestRate > MAX_RATE_SUGGESTION;
 
   function handlePriceChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -282,36 +280,12 @@ export default function CalculadoraStone() {
                     Taxa muito baixa!
                   </p>
                   <p className="text-xs text-red-400">
-                    Abaixo de {MIN_RATE_WARNING.toFixed(2).replace(".", ",")}%
-                    pode resultar em prejuízo nas vendas parceladas. Sugerimos
-                    entre{" "}
-                    <strong>
-                      {MIN_RATE_WARNING.toFixed(2).replace(".", ",")}%
-                    </strong>{" "}
-                    e{" "}
-                    <strong>
-                      {MAX_RATE_SUGGESTION.toFixed(2).replace(".", ",")}%
-                    </strong>
-                    .
+                    Abaixo de {fmtRate(MIN_RATE_WARNING)}% pode resultar em prejuízo nas
+                    vendas parceladas. Para este valor, o juros automático é{" "}
+                    <strong>{fmtRate(autoTier.rate)}%</strong>.
                   </p>
                 </div>
               </div>
-            )}
-            {rateOk && (
-              <p className="text-xs text-emerald-400 mt-1 flex items-center gap-1">
-                <svg
-                  className="w-3.5 h-3.5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                Taxa dentro da faixa recomendada (1,70% – 2,50%)
-              </p>
             )}
             {rateHigh && (
               <p className="text-xs text-gold-light mt-1 flex items-center gap-1">
@@ -329,13 +303,63 @@ export default function CalculadoraStone() {
                 Taxa acima do sugerido — verifique se o cliente aceitará
               </p>
             )}
-            {!rateWarning && !rateOk && !rateHigh && (
-              <p className="text-xs text-ink-muted mt-1">
-                Sugestão: entre 1,70% e 2,50% ao mês
-              </p>
-            )}
           </div>
         </div>
+      </div>
+
+      {/* Como funciona o juros */}
+      <div className="bg-surface rounded-xl shadow-none border border-line p-6">
+        <h2 className="text-base font-semibold text-ink mb-1">Como funciona o juros</h2>
+        <p className="text-sm text-ink-soft mb-4">
+          O juros mensal se ajusta sozinho conforme o valor do produto:
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {RATE_TIERS.map((tier) => {
+            const current = tier === autoTier;
+            return (
+              <div
+                key={tier.label}
+                className={`rounded-xl border p-3 transition-colors ${
+                  current ? "border-gold/60 bg-gold/10" : "border-line bg-surface-2"
+                }`}
+              >
+                <p className={`text-xs font-medium ${current ? "text-gold-light" : "text-ink-soft"}`}>
+                  Produto {tier.label}
+                </p>
+                <p className={`text-lg font-bold ${current ? "text-gold-pale" : "text-ink"}`}>
+                  {fmtRate(tier.rate)}% <span className="text-xs font-medium text-ink-muted">ao mês</span>
+                </p>
+                {current && <p className="text-[11px] text-gold-light mt-0.5">faixa do valor atual</p>}
+              </div>
+            );
+          })}
+        </div>
+
+        <ul className="mt-4 space-y-2 text-sm text-ink-soft">
+          <li className="flex gap-2">
+            <span className="text-gold-light">•</span>
+            <span>
+              <strong className="text-ink">Você pode editar:</strong> se houver uma negociação especial, digite outro
+              juros no campo. O valor que você digitar passa a valer por cima do automático, mesmo que o valor do
+              produto mude depois, até você clicar em “Voltar ao automático”.
+            </span>
+          </li>
+          <li className="flex gap-2">
+            <span className="text-gold-light">•</span>
+            <span>
+              <strong className="text-ink">Juros simples:</strong> total do cliente = valor × (1 + juros mensal × número
+              de parcelas). No 1x (à vista) não há juros.
+            </span>
+          </li>
+          <li className="flex gap-2">
+            <span className="text-gold-light">•</span>
+            <span>
+              <strong className="text-ink">Na tabela</strong> você vê, em cada parcelamento, o juros repassado ao
+              cliente e quanto você recebe líquido, já descontadas as taxas da Stone.
+            </span>
+          </li>
+        </ul>
       </div>
 
       {/* Results table */}
