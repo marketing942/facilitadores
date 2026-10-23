@@ -41,7 +41,7 @@ export function FilterSearch({
         onKeyDown={onKeyDown}
         placeholder={placeholder}
         aria-label={label}
-        className="h-11 w-full rounded-xl border border-line bg-surface-2 pl-11 pr-4 text-[15px] outline-none transition-colors placeholder:text-muted focus:border-gold"
+        className="h-11 w-full rounded-xl border border-line bg-surface-2 pl-11 pr-4 text-base outline-none sm:text-[15px] transition-colors placeholder:text-muted focus:border-gold"
       />
     </div>
   );
@@ -71,7 +71,7 @@ export function FilterSelect({
         aria-label={label}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className={`h-11 w-full cursor-pointer appearance-none rounded-xl border bg-surface-2 pl-4 pr-10 text-sm outline-none transition-colors focus:border-gold ${
+        className={`h-11 w-full cursor-pointer appearance-none rounded-xl border bg-surface-2 pl-4 pr-10 text-base outline-none sm:text-sm transition-colors focus:border-gold ${
           active ? "border-gold/60 text-gold-pale" : "border-line text-foreground"
         }`}
       >
@@ -101,7 +101,7 @@ export function FilterAction({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="flex h-10 items-center gap-2 rounded-full border border-line bg-surface-2 px-5 text-sm font-semibold text-foreground transition hover:border-line-active hover:text-gold-pale disabled:cursor-default disabled:opacity-40 disabled:hover:border-line disabled:hover:text-foreground"
+      className="flex h-11 items-center gap-2 rounded-full sm:h-10 border border-line bg-surface-2 px-5 text-sm font-semibold text-foreground transition hover:border-line-active hover:text-gold-pale disabled:cursor-default disabled:opacity-40 disabled:hover:border-line disabled:hover:text-foreground"
     >
       {children}
     </button>

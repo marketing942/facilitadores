@@ -12,7 +12,7 @@ export default function AtendimentoPage() {
   return (
     <main className="mx-auto w-full max-w-[1240px] px-4 pb-24 pt-8 sm:px-6">
       <nav className="mb-6 flex items-center gap-2 text-sm text-soft" aria-label="Você está em">
-        <Link href="/" className="transition-colors hover:text-foreground">
+        <Link href="/" className="-my-2 py-2 transition-colors hover:text-foreground">
           Início
         </Link>
         <span aria-hidden className="text-muted">›</span>

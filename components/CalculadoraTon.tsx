@@ -131,6 +131,63 @@ function Row({
   );
 }
 
+// Versão em cartão (celular) de uma linha da simulação: mesmos números da tabela.
+function MobileRow({
+  method,
+  installments,
+  rate,
+  price,
+  highlight,
+}: {
+  method: string;
+  installments: number;
+  rate: number;
+  price: number;
+  highlight?: "pix" | "best";
+}) {
+  const taxa = price * (rate / 100);
+  const liquido = price - taxa;
+  const parcela = installments > 0 ? price / installments : price;
+
+  const bg = highlight === "pix" ? "bg-emerald-500/10" : highlight === "best" ? "bg-sky-500/10" : "";
+
+  return (
+    <li className={`px-4 py-3.5 ${bg}`}>
+      <div className="flex items-center justify-between gap-3">
+        <span
+          className={`flex items-center gap-2 text-base ${
+            highlight === "pix" ? "font-semibold text-emerald-400" : "font-semibold text-ink"
+          }`}
+        >
+          {highlight === "pix" && <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />}
+          {method}
+        </span>
+        <span className={`font-mono text-sm ${rate === 0 ? "font-bold text-emerald-400" : "text-ink"}`}>
+          {fmtPct(rate)}
+        </span>
+      </div>
+      <dl className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+        <div>
+          <dt className="text-xs text-ink-muted">Valor da taxa</dt>
+          <dd className="font-mono text-red-400">{fmt(taxa)}</dd>
+        </div>
+        <div>
+          <dt className="text-xs text-ink-muted">Você recebe</dt>
+          <dd className={`font-mono font-bold ${liquido >= price ? "text-emerald-400" : "text-ink"}`}>{fmt(liquido)}</dd>
+        </div>
+        {installments > 1 && (
+          <div className="col-span-2">
+            <dt className="text-xs text-ink-muted">Cliente paga</dt>
+            <dd className="font-mono text-ink-soft">
+              {installments}× <strong className="text-ink">{fmt(parcela)}</strong>
+            </dd>
+          </div>
+        )}
+      </dl>
+    </li>
+  );
+}
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const PLAN_STYLES: Record<string, { active: string; badge: string }> = {
@@ -175,7 +232,7 @@ export default function CalculadoraTon() {
   return (
     <div className="space-y-5">
       {/* Plan selector */}
-      <div className="bg-surface rounded-xl border border-line shadow-none p-5">
+      <div className="bg-surface rounded-xl border border-line shadow-none p-4 sm:p-5">
         <label className="text-xs font-semibold text-ink-soft uppercase tracking-wide mb-3 block">
           Escolha o plano TON
         </label>
@@ -212,7 +269,7 @@ export default function CalculadoraTon() {
       </div>
 
       {/* Price input */}
-      <div className="bg-surface rounded-xl border border-line shadow-none p-5">
+      <div className="bg-surface rounded-xl border border-line shadow-none p-4 sm:p-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end">
           <div>
             <label className="text-xs font-semibold text-ink-soft uppercase tracking-wide mb-2 block">
@@ -287,7 +344,7 @@ export default function CalculadoraTon() {
 
       {/* Detailed breakdown table */}
       <div className="bg-surface rounded-xl border border-line shadow-none overflow-hidden">
-        <div className="px-5 py-3 border-b border-line flex items-center justify-between">
+        <div className="px-4 py-3 sm:px-5 border-b border-line flex items-center justify-between gap-3">
           <div>
             <h3 className="font-bold text-sm text-ink">Simulação por forma de pagamento</h3>
             <p className="text-xs text-ink-soft mt-0.5">
@@ -299,7 +356,7 @@ export default function CalculadoraTon() {
           </span>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="hidden overflow-x-auto sm:block">
           <table className="w-full text-xs">
             <thead>
               <tr className="bg-surface-3 text-gold-pale font-ui uppercase tracking-wider">
@@ -326,6 +383,22 @@ export default function CalculadoraTon() {
             </tbody>
           </table>
         </div>
+
+        {/* Celular: um cartão por forma de pagamento */}
+        <ul className="divide-y divide-line sm:hidden">
+          <MobileRow method="Pix" installments={1} rate={plan.pix} price={priceN} highlight="pix" />
+          <MobileRow method="Débito" installments={1} rate={plan.debito} price={priceN} />
+          {plan.credito.slice(0, maxInstallments).map((rate, i) => (
+            <MobileRow
+              key={i}
+              method={i === 0 ? "Crédito à vista" : `Crédito ${i + 1}×`}
+              installments={i + 1}
+              rate={rate}
+              price={priceN}
+              highlight={i === bestCreditIdx && i > 0 ? "best" : undefined}
+            />
+          ))}
+        </ul>
       </div>
 
       {/* Legend */}

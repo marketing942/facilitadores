@@ -12,7 +12,7 @@ export default function CalculadoraPage() {
     <main className="mx-auto w-full max-w-6xl px-4 py-8">
       {/* Breadcrumb */}
       <nav className="mb-6 flex items-center gap-2 text-sm text-ink-soft">
-        <Link href="/" className="transition-colors hover:text-ink">
+        <Link href="/" className="-my-2 py-2 transition-colors hover:text-ink">
           Início
         </Link>
         <svg className="h-4 w-4 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

@@ -8,6 +8,8 @@ export type Tool = {
   href: string;
   /** Texto curto, no menu */
   label: string;
+  /** Rótulo da barra de abas do celular (cabe sob o ícone) */
+  shortLabel: string;
   title: string;
   description: string;
   icon: ReactNode;
@@ -23,6 +25,12 @@ const stroke = { fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", str
 export const HOME_NAV = {
   href: "/",
   label: "Início",
+  shortLabel: "Início",
+  icon: (
+    <svg className="h-5 w-5" {...stroke}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 10.5L12 3l9 7.5M5 9.5V20h5v-5h4v5h5V9.5" />
+    </svg>
+  ),
   nav: "border-gold/35 bg-gold/10 text-gold-light hover:bg-gold/20",
   navActive: "border-gold-light bg-gold/25 text-gold-pale",
 };
@@ -31,6 +39,7 @@ export const TOOLS: Tool[] = [
   {
     href: "/atendimento",
     label: "Atendimento",
+    shortLabel: "Atend.",
     title: "Links de atendimento e suporte",
     description: "Todos os links de atendimento e suporte, por empresa e por tipo (humano ou IA), prontos para copiar",
     icon: (
@@ -45,6 +54,7 @@ export const TOOLS: Tool[] = [
   {
     href: "/links",
     label: "Links",
+    shortLabel: "Links",
     title: "Links de pagamento Guru",
     description: "Busque o produto e copie o link de pagamento. As ofertas ativas da Guru aparecem sozinhas.",
     icon: (
@@ -59,6 +69,7 @@ export const TOOLS: Tool[] = [
   {
     href: "/calculadora",
     label: "Guru + Stone",
+    shortLabel: "Guru",
     title: "Calculadora Guru + Stone",
     description: "Simule juros, parcelas e o valor líquido recebido via Guru + Stone",
     icon: (
@@ -73,6 +84,7 @@ export const TOOLS: Tool[] = [
   {
     href: "/calculadora-ton",
     label: "TON",
+    shortLabel: "TON",
     title: "Calculadora Maquineta TON",
     description: "Simule taxas da TON por plano (Super, Turbo, Max) em Pix, débito e crédito parcelado",
     icon: (

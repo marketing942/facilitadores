@@ -267,7 +267,7 @@ export default function LinksExplorer({
                       event.stopPropagation();
                       toggleFavorite(item);
                     }}
-                    className="mt-0.5 text-muted transition hover:text-gold-light"
+                    className="-m-2.5 mt-0 p-2.5 text-muted transition hover:text-gold-light"
                   >
                     <Star className={`h-4 w-4 ${isFavorite || item.featured ? "fill-gold text-gold" : ""}`} />
                   </button>
@@ -326,7 +326,7 @@ export default function LinksExplorer({
                     event.stopPropagation();
                     copy(item);
                   }}
-                  className={`ui-label flex flex-1 items-center justify-center gap-1.5 rounded-md px-3 py-2 text-xs transition md:flex-none ${
+                  className={`ui-label flex flex-1 items-center justify-center gap-1.5 rounded-md px-3 py-3 text-xs transition md:flex-none md:py-2 ${
                     copied === item.id ? "bg-gold-pale text-[#16130c]" : "gold-button"
                   }`}
                 >
@@ -339,7 +339,7 @@ export default function LinksExplorer({
                   rel="noopener"
                   onClick={(event) => event.stopPropagation()}
                   aria-label="Abrir checkout"
-                  className="ghost-button flex w-11 items-center justify-center rounded-md text-muted transition hover:text-gold-pale"
+                  className="ghost-button flex w-12 items-center justify-center rounded-md md:w-11 text-muted transition hover:text-gold-pale"
                 >
                   <ExternalLink className="h-4 w-4" />
                 </a>
@@ -356,7 +356,7 @@ export default function LinksExplorer({
       <div
         role="status"
         aria-live="polite"
-        className={`pointer-events-none fixed bottom-6 left-1/2 max-w-[calc(100%-2rem)] -translate-x-1/2 rounded-lg border border-line-active bg-surface-2 px-4 py-2.5 text-sm font-medium text-gold-pale shadow-[0_18px_45px_rgba(0,0,0,.45)] transition ${
+        className={`pointer-events-none fixed bottom-24 left-1/2 sm:bottom-6 max-w-[calc(100%-2rem)] -translate-x-1/2 rounded-lg border border-line-active bg-surface-2 px-4 py-2.5 text-sm font-medium text-gold-pale shadow-[0_18px_45px_rgba(0,0,0,.45)] transition ${
           toast ? "opacity-100" : "translate-y-3 opacity-0"
         }`}
       >

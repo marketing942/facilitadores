@@ -76,6 +76,14 @@ interface InstallmentRow {
   profitLossPct: number;
 }
 
+/** Texto da coluna "Taxa Stone" (igual ao da tabela). */
+function taxLabel(row: InstallmentRow): string {
+  if (row.stoneRate === null) return `R$ ${BOLETO_FIXED_COST.toFixed(2).replace(".", ",")}`;
+  if (row.label === "Pix") return `${PIX_RATE.toFixed(2).replace(".", ",")}%`;
+  if (row.label === "Boleto") return `R$ ${BOLETO_FIXED_COST.toFixed(2).replace(".", ",")}`;
+  return `${row.stoneRate.toFixed(2).replace(".", ",")}%`;
+}
+
 function calcRows(price: number, interestRate: number): InstallmentRow[] {
   const rows: InstallmentRow[] = [];
 
@@ -184,7 +192,7 @@ export default function CalculadoraStone() {
   return (
     <div className="space-y-6">
       {/* Inputs */}
-      <div className="bg-surface rounded-xl shadow-none border border-line p-6">
+      <div className="bg-surface rounded-xl shadow-none border border-line p-4 sm:p-6">
         <h2 className="text-base font-semibold text-ink mb-4">
           Parâmetros da simulação
         </h2>
@@ -204,7 +212,7 @@ export default function CalculadoraStone() {
                 value={priceInput}
                 onChange={handlePriceChange}
                 placeholder="0,00"
-                className="w-full pl-10 pr-4 py-2.5 border border-gold/60 bg-gold/10 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gold-light focus:border-transparent transition"
+                className="w-full pl-10 pr-4 py-2.5 border border-gold/60 bg-gold/10 rounded-lg text-base sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gold-light focus:border-transparent transition"
               />
             </div>
             <p className="text-xs text-ink-muted mt-1">
@@ -224,7 +232,7 @@ export default function CalculadoraStone() {
                 value={rateInput}
                 onChange={handleRateChange}
                 placeholder="2,10"
-                className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:border-transparent transition ${
+                className={`w-full pl-4 pr-10 py-2.5 border rounded-lg text-base sm:text-sm font-medium focus:outline-none focus:ring-2 focus:border-transparent transition ${
                   rateWarning
                     ? "border-red-500/40 bg-red-500/10 focus:ring-red-400"
                     : "border-gold/60 bg-gold/10 focus:ring-gold-light"
@@ -248,7 +256,7 @@ export default function CalculadoraStone() {
                   <button
                     type="button"
                     onClick={resetToAutoRate}
-                    className="font-semibold text-gold-light underline underline-offset-2 hover:text-gold-pale"
+                    className="py-1.5 font-semibold text-gold-light underline underline-offset-2 hover:text-gold-pale"
                   >
                     Voltar ao automático
                   </button>
@@ -308,7 +316,7 @@ export default function CalculadoraStone() {
       </div>
 
       {/* Como funciona o juros */}
-      <div className="bg-surface rounded-xl shadow-none border border-line p-6">
+      <div className="bg-surface rounded-xl shadow-none border border-line p-4 sm:p-6">
         <h2 className="text-base font-semibold text-ink mb-1">Como funciona o juros</h2>
         <p className="text-sm text-ink-soft mb-4">
           O juros mensal se ajusta sozinho conforme o valor do produto:
@@ -365,7 +373,7 @@ export default function CalculadoraStone() {
       {/* Results table */}
       {price > 0 ? (
         <div className="bg-surface rounded-xl shadow-none border border-line overflow-hidden">
-          <div className="px-6 py-4 border-b border-line">
+          <div className="px-4 py-3.5 sm:px-6 sm:py-4 border-b border-line">
             <h2 className="text-base font-semibold text-ink">
               Simulação de venda —{" "}
               <span className="text-emerald-400">{fmt(price)}</span>
@@ -376,7 +384,7 @@ export default function CalculadoraStone() {
             </p>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="hidden overflow-x-auto md:block">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-surface-2 text-xs font-semibold text-ink-soft uppercase tracking-wide">
@@ -484,6 +492,64 @@ export default function CalculadoraStone() {
             </table>
           </div>
 
+
+          {/* Celular: um cartão por forma de pagamento (a tabela larga some). Mesmos números da tabela. */}
+          <ul className="divide-y divide-line md:hidden">
+            {rows.map((row) => {
+              const isPositive = row.profitLossPct > 0.05;
+              const isNegative = row.profitLossPct < -0.05;
+              return (
+                <Fragment key={row.label}>
+                  {row.label === "Boleto" && (
+                    <li className="bg-surface-2 px-4 py-2 text-xs font-medium text-ink-muted">
+                      Outros métodos de pagamento
+                    </li>
+                  )}
+                  <li className="px-4 py-3.5">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-base font-semibold text-ink">{row.label}</span>
+                      <span
+                        className={`inline-block rounded px-2 py-1 text-xs font-semibold ${
+                          isPositive
+                            ? "bg-emerald-500/10 text-emerald-400"
+                            : isNegative
+                            ? "bg-red-500/10 text-red-400"
+                            : "bg-surface-3 text-ink-soft"
+                        }`}
+                      >
+                        {fmtPct(row.profitLossPct)}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 text-xs text-ink-soft">
+                      Cliente paga {row.installments ? `${row.installments}x de ` : ""}
+                      <strong className="text-ink">{fmt(row.customerPerInstallment)}</strong>
+                    </p>
+                    <dl className="mt-2.5 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                      <div>
+                        <dt className="text-xs text-ink-muted">Total do cliente</dt>
+                        <dd className="text-ink">{fmt(row.customerTotal)}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-xs text-ink-muted">Juros repassados</dt>
+                        <dd className={row.interestTransferred > 0 ? "font-medium text-sky-400" : "text-ink-muted"}>
+                          {row.interestTransferred > 0 ? fmt(row.interestTransferred) : "—"}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="text-xs text-ink-muted">Taxa Stone</dt>
+                        <dd className="text-ink-soft">{taxLabel(row)}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-xs text-ink-muted">Você recebe (líquido)</dt>
+                        <dd className="font-bold text-ink">{fmt(row.sellerReceives)}</dd>
+                      </div>
+                    </dl>
+                  </li>
+                </Fragment>
+              );
+            })}
+          </ul>
+
           {/* Legend */}
           <div className="px-6 py-3 bg-surface-2 border-t border-line flex flex-wrap gap-4 text-xs text-ink-soft">
             <span className="flex items-center gap-1.5">
@@ -501,7 +567,7 @@ export default function CalculadoraStone() {
           </div>
         </div>
       ) : (
-        <div className="bg-surface rounded-xl shadow-none border border-line p-12 text-center">
+        <div className="bg-surface rounded-xl shadow-none border border-line p-8 sm:p-12 text-center">
           <div className="w-16 h-16 bg-surface-3 rounded-xl flex items-center justify-center mx-auto mb-4">
             <svg
               className="w-8 h-8 text-ink-muted"
