@@ -1,14 +1,75 @@
-import type { KeyboardEvent, ReactNode, Ref } from "react";
-import { ChevronDown, Search } from "lucide-react";
+"use client";
+
+import { useState, type KeyboardEvent, type ReactNode, type Ref } from "react";
+import { ChevronDown, Search, SlidersHorizontal } from "lucide-react";
 
 // Barra de filtros das telas de busca (links da Guru e links de atendimento):
 // painel com a busca em cima e filtros em listas (selects) logo abaixo.
 
-/** Painel que gruda no topo (abaixo do menu) enquanto a lista rola; no celular fica solto, para não ocupar a tela. */
-export function FilterPanel({ children }: { children: ReactNode }) {
+/**
+ * Painel de filtros. No computador mostra tudo (busca, listas e ações) e gruda no topo; no celular fica solto
+ * e recolhe as listas atrás do botão "Filtros" para a lista de links aparecer logo.
+ */
+export function FilterPanel({
+  search,
+  filters,
+  actions,
+  extra,
+  activeCount,
+}: {
+  /** Campo de busca (sempre visível) */
+  search: ReactNode;
+  /** As listas de filtro (recolhidas no celular) */
+  filters: ReactNode;
+  /** Ações dos filtros, como "Limpar filtros" (recolhidas no celular) */
+  actions: ReactNode;
+  /** Ação que fica sempre à vista no celular, ao lado do botão "Filtros" (ex.: Atualizar agora) */
+  extra?: ReactNode;
+  /** Quantos filtros estão ligados (mostrado no botão do celular) */
+  activeCount: number;
+}) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="z-10 -mx-4 sm:sticky sm:top-16 bg-background/95 px-4 pb-3 pt-4 backdrop-blur sm:-mx-6 sm:px-6">
-      <div className="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-3 sm:p-4">{children}</div>
+    <div className="z-10 -mx-4 bg-background/95 px-4 pb-3 pt-4 backdrop-blur sm:sticky sm:top-16 sm:-mx-6 sm:px-6">
+      <div className="flex flex-col gap-2.5 rounded-2xl border border-line bg-surface p-3 sm:gap-3 sm:p-4">
+        {search}
+
+        {/* Celular: botão que abre/fecha as listas + ação rápida */}
+        <div className="flex items-center gap-2 sm:hidden">
+          <button
+            type="button"
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
+            className={`flex h-11 flex-1 items-center justify-between rounded-xl border bg-surface-2 px-4 text-base transition-colors ${
+              activeCount > 0 ? "border-gold/60 text-gold-pale" : "border-line text-foreground"
+            }`}
+          >
+            <span className="flex items-center gap-2">
+              <SlidersHorizontal className="h-4 w-4 text-gold-light" />
+              Filtros
+              {activeCount > 0 && (
+                <span className="grid h-5 min-w-5 place-items-center rounded-full bg-gold px-1 text-xs font-bold text-[#17130b]">
+                  {activeCount}
+                </span>
+              )}
+            </span>
+            <ChevronDown className={`h-4 w-4 text-gold-light transition-transform ${open ? "rotate-180" : ""}`} />
+          </button>
+          {extra}
+        </div>
+
+        {/* Listas e ações: sempre no computador; no celular só com o botão aberto */}
+        <div
+          className={`${open ? "flex" : "hidden"} flex-col gap-3 sm:flex sm:flex-row sm:flex-wrap sm:items-center`}
+        >
+          {filters}
+          <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
+            {actions}
+            <span className="hidden sm:contents">{extra}</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -45,11 +106,6 @@ export function FilterSearch({
       />
     </div>
   );
-}
-
-/** Linha dos filtros: listas à esquerda e ações (limpar, atualizar…) à direita. */
-export function FilterRow({ children }: { children: ReactNode }) {
-  return <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">{children}</div>;
 }
 
 export function FilterSelect({

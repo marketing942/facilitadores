@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Check, Copy, ExternalLink } from "lucide-react";
 import { BUS, type Channel, type Kind, type ServiceLink } from "@/config/atendimento";
 import { copyText, Highlight, normalize } from "@/components/explorer-kit";
-import { FilterAction, FilterPanel, FilterRow, FilterSearch, FilterSelect } from "@/components/filter-panel";
+import { FilterAction, FilterPanel, FilterSearch, FilterSelect } from "@/components/filter-panel";
 
 const CHANNELS: Channel[] = ["Humano", "IA"];
 const KINDS: Kind[] = ["Atendimento", "Suporte"];
@@ -73,67 +73,70 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
 
   return (
     <>
-      <FilterPanel>
-        <FilterSearch
-          autoFocus
-          value={query}
-          onChange={(value) => {
-            setQuery(value);
-            setSelected(0);
-          }}
-          onKeyDown={onSearchKeyDown}
-          placeholder="Digite o canal ou a empresa…"
-          label="Buscar link de atendimento"
-        />
-
-        <FilterRow>
-          <FilterSelect
-            label="Empresa"
-            value={bu ?? ""}
+      <FilterPanel
+        activeCount={Number(Boolean(bu)) + Number(Boolean(channel)) + Number(Boolean(kind))}
+        search={
+          <FilterSearch
+            autoFocus
+            value={query}
             onChange={(value) => {
-              setBu((value || null) as ServiceLink["bu"] | null);
+              setQuery(value);
               setSelected(0);
             }}
-            options={[{ value: "", label: "Todas as empresas" }, ...BUS.map((value) => ({ value, label: value }))]}
+            onKeyDown={onSearchKeyDown}
+            placeholder="Digite o canal ou a empresa…"
+            label="Buscar link de atendimento"
           />
-          <FilterSelect
-            label="Tipo"
-            value={channel ?? ""}
-            onChange={(value) => {
-              setChannel((value || null) as Channel | null);
-              setSelected(0);
-            }}
-            options={[
-              { value: "", label: "Todos os tipos" },
-              ...CHANNELS.map((value) => ({ value, label: value === "IA" ? "IA" : "Humano" })),
-            ]}
-          />
-          <FilterSelect
-            label="Finalidade"
-            value={kind ?? ""}
-            onChange={(value) => {
-              setKind((value || null) as Kind | null);
-              setSelected(0);
-            }}
-            options={[{ value: "", label: "Todas as finalidades" }, ...KINDS.map((value) => ({ value, label: value }))]}
-          />
-
-          <div className="sm:ml-auto">
-            <FilterAction
-              disabled={!query && !bu && !channel && !kind}
-              onClick={() => {
-                setQuery("");
-                setBu(null);
-                setChannel(null);
-                setKind(null);
+        }
+        filters={
+          <>
+            <FilterSelect
+              label="Empresa"
+              value={bu ?? ""}
+              onChange={(value) => {
+                setBu((value || null) as ServiceLink["bu"] | null);
                 setSelected(0);
               }}
-            >
-              Limpar filtros
-            </FilterAction>
-          </div>
-        </FilterRow>
-      </FilterPanel>
+              options={[{ value: "", label: "Todas as empresas" }, ...BUS.map((value) => ({ value, label: value }))]}
+            />
+            <FilterSelect
+              label="Tipo"
+              value={channel ?? ""}
+              onChange={(value) => {
+                setChannel((value || null) as Channel | null);
+                setSelected(0);
+              }}
+              options={[
+                { value: "", label: "Todos os tipos" },
+                ...CHANNELS.map((value) => ({ value, label: value === "IA" ? "IA" : "Humano" })),
+              ]}
+            />
+            <FilterSelect
+              label="Finalidade"
+              value={kind ?? ""}
+              onChange={(value) => {
+                setKind((value || null) as Kind | null);
+                setSelected(0);
+              }}
+              options={[{ value: "", label: "Todas as finalidades" }, ...KINDS.map((value) => ({ value, label: value }))]}
+            />
+          </>
+        }
+        actions={
+          <FilterAction
+            disabled={!query && !bu && !channel && !kind}
+            onClick={() => {
+              setQuery("");
+              setBu(null);
+              setChannel(null);
+              setKind(null);
+              setSelected(0);
+            }}
+          >
+            Limpar filtros
+          </FilterAction>
+        }
+      />
 
       <p className="mt-3 hidden text-xs text-muted sm:block">
         <kbd className="rounded border border-line bg-surface px-1 text-soft">↑</kbd>{" "}
@@ -167,17 +170,18 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
           <div
             key={item.id}
             onClick={() => copy(item)}
-            className={`grid cursor-pointer grid-cols-2 items-center gap-x-4 gap-y-2 border-t border-line px-4 py-3 transition first:border-t-0 md:grid-cols-[minmax(0,1fr)_110px_100px_120px_150px] ${
+            className={`grid cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1.5 border-t border-line px-3 py-2.5 transition first:border-t-0 md:grid-cols-[minmax(0,1fr)_110px_100px_120px_150px] md:gap-x-4 md:gap-y-2 md:px-4 md:py-3 ${
               index === selected && terms.length > 0 ? "bg-gold/10" : "hover:bg-surface-2"
             }`}
           >
-            <div className="col-span-2 min-w-0 md:col-span-1">
-              <p className="font-display text-[0.95rem] font-bold uppercase leading-snug tracking-tight">
+            <div className="col-start-1 row-start-1 min-w-0 md:col-auto md:row-auto">
+              <p className="line-clamp-3 font-display text-[0.9rem] font-bold uppercase leading-snug tracking-tight md:line-clamp-none md:text-[0.95rem]">
                 <Highlight text={item.title} terms={terms} />
               </p>
               <p className="truncate text-xs text-muted">{item.url.replace("https://", "")}</p>
             </div>
 
+            <div className="col-span-2 row-start-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:contents">
             <div>
               <span className="ui-label rounded-full border border-line px-2.5 py-0.5 text-[10px] text-gold-light">
                 {item.bu}
@@ -196,21 +200,23 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
               </span>
             </div>
 
-            <div className="text-sm text-soft">{item.kind}</div>
+            <div className="text-xs text-soft md:text-sm">{item.kind}</div>
+            </div>
 
-            <div className="col-span-2 flex gap-2 md:col-span-1 md:justify-end">
+            <div className="col-start-2 row-start-1 flex gap-1.5 md:col-auto md:row-auto md:justify-end md:gap-2">
               <button
                 type="button"
                 onClick={(event) => {
                   event.stopPropagation();
                   copy(item);
                 }}
-                className={`ui-label flex flex-1 items-center justify-center gap-1.5 rounded-md px-3 py-3 text-xs transition md:flex-none md:py-2 ${
+                aria-label="Copiar link"
+                className={`ui-label flex flex-none items-center justify-center gap-1.5 rounded-md px-2.5 py-2 text-xs transition md:px-3 ${
                   copied === item.id ? "bg-gold-pale text-[#16130c]" : "gold-button"
                 }`}
               >
                 {copied === item.id ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                {copied === item.id ? "Copiado" : "Copiar"}
+                <span className="max-md:sr-only">{copied === item.id ? "Copiado" : "Copiar"}</span>
               </button>
               <a
                 href={item.url}
@@ -218,7 +224,7 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
                 rel="noopener"
                 onClick={(event) => event.stopPropagation()}
                 aria-label="Abrir link"
-                className="ghost-button flex w-12 items-center justify-center rounded-md md:w-11 text-muted transition hover:text-gold-pale"
+                className="ghost-button flex w-9 items-center justify-center rounded-md text-muted transition hover:text-gold-pale md:w-11"
               >
                 <ExternalLink className="h-4 w-4" />
               </a>

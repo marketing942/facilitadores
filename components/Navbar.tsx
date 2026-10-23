@@ -13,7 +13,7 @@ export default function Navbar() {
   return (
     <>
       {/* Topo: no computador traz os botões das abas; no celular só a marca (as abas ficam embaixo). */}
-      <nav className="sticky top-0 z-50 border-b border-line bg-base/90 backdrop-blur-lg" aria-label="Principal">
+      <nav className="sticky top-0 z-50 border-b border-line bg-canvas/90 backdrop-blur-lg" aria-label="Principal">
         <div className="mx-auto max-w-6xl px-4">
           <div className="flex h-12 items-center justify-between gap-4 sm:h-16">
             <Link
@@ -47,7 +47,7 @@ export default function Navbar() {
       {/* Celular: barra de abas fixa embaixo, ao alcance do polegar. */}
       <nav
         aria-label="Abas"
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-line-active bg-base/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg sm:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-line-active bg-canvas/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg sm:hidden"
       >
         <ul className="grid grid-cols-5 gap-1 px-2 pt-1.5 pb-1.5">
           {items.map((item) => {
