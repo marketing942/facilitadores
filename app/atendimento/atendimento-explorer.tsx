@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Check, Copy, ExternalLink, Search } from "lucide-react";
+import { Check, Copy, ExternalLink } from "lucide-react";
 import { BUS, type Channel, type Kind, type ServiceLink } from "@/config/atendimento";
-import { chipClass, copyText, Highlight, normalize } from "@/components/explorer-kit";
+import { copyText, Highlight, normalize } from "@/components/explorer-kit";
+import { FilterAction, FilterPanel, FilterRow, FilterSearch, FilterSelect } from "@/components/filter-panel";
 
 const CHANNELS: Channel[] = ["Humano", "IA"];
 const KINDS: Kind[] = ["Atendimento", "Suporte"];
@@ -72,90 +73,67 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
 
   return (
     <>
-      <div className="sticky top-16 z-10 -mx-4 bg-background/95 px-4 pb-3 pt-4 backdrop-blur sm:-mx-6 sm:px-6">
-        <div className="relative">
-          <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gold-light" />
-          <input
-            autoFocus
-            value={query}
-            onChange={(event) => {
-              setQuery(event.target.value);
+      <FilterPanel>
+        <FilterSearch
+          autoFocus
+          value={query}
+          onChange={(value) => {
+            setQuery(value);
+            setSelected(0);
+          }}
+          onKeyDown={onSearchKeyDown}
+          placeholder="Digite o canal ou a empresa…"
+          label="Buscar link de atendimento"
+        />
+
+        <FilterRow>
+          <FilterSelect
+            label="Empresa"
+            value={bu ?? ""}
+            onChange={(value) => {
+              setBu((value || null) as ServiceLink["bu"] | null);
               setSelected(0);
             }}
-            onKeyDown={onSearchKeyDown}
-            placeholder="Digite o canal ou a empresa…"
-            aria-label="Buscar link de atendimento"
-            className="w-full rounded-lg border border-line bg-surface-2 py-4 pl-12 pr-4 text-base outline-none transition-colors placeholder:text-muted focus:border-gold sm:text-lg"
+            options={[{ value: "", label: "Todas as empresas" }, ...BUS.map((value) => ({ value, label: value }))]}
           />
-        </div>
+          <FilterSelect
+            label="Tipo"
+            value={channel ?? ""}
+            onChange={(value) => {
+              setChannel((value || null) as Channel | null);
+              setSelected(0);
+            }}
+            options={[
+              { value: "", label: "Todos os tipos" },
+              ...CHANNELS.map((value) => ({ value, label: value === "IA" ? "IA" : "Humano" })),
+            ]}
+          />
+          <FilterSelect
+            label="Finalidade"
+            value={kind ?? ""}
+            onChange={(value) => {
+              setKind((value || null) as Kind | null);
+              setSelected(0);
+            }}
+            options={[{ value: "", label: "Todas as finalidades" }, ...KINDS.map((value) => ({ value, label: value }))]}
+          />
 
-        <div className="mt-3 flex flex-col gap-2">
-          {/* Empresa: igual à página de links da Guru */}
-          <div className="flex flex-wrap items-center gap-2">
-            {[null, ...BUS].map((value) => (
-              <button
-                key={value ?? "todos"}
-                type="button"
-                onClick={() => {
-                  setBu(value);
-                  setSelected(0);
-                }}
-                aria-pressed={bu === value}
-                className={chipClass(bu === value)}
-              >
-                {value ?? "Todos"}
-              </button>
-            ))}
+          <div className="sm:ml-auto">
+            <FilterAction
+              disabled={!query && !bu && !channel && !kind}
+              onClick={() => {
+                setQuery("");
+                setBu(null);
+                setChannel(null);
+                setKind(null);
+                setSelected(0);
+              }}
+            >
+              Limpar filtros
+            </FilterAction>
           </div>
-
-          {/* Tipo e finalidade: clique para filtrar, clique de novo para tirar */}
-          <div className="flex flex-wrap items-center gap-2">
-            {CHANNELS.map((value) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => {
-                  setChannel(channel === value ? null : value);
-                  setSelected(0);
-                }}
-                aria-pressed={channel === value}
-                className={chipClass(channel === value)}
-              >
-                {value}
-              </button>
-            ))}
-            <span aria-hidden className="mx-1 hidden h-5 w-px bg-line-active sm:block" />
-            {KINDS.map((value) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => {
-                  setKind(kind === value ? null : value);
-                  setSelected(0);
-                }}
-                aria-pressed={kind === value}
-                className={chipClass(kind === value)}
-              >
-                {value}
-              </button>
-            ))}
-            {(bu || channel || kind) && (
-              <button
-                type="button"
-                onClick={() => {
-                  setBu(null);
-                  setChannel(null);
-                  setKind(null);
-                  setSelected(0);
-                }}
-                className="ui-label ml-auto px-2 py-1.5 text-xs text-muted underline underline-offset-4 transition hover:text-gold-pale"
-              >
-                Limpar filtros
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
+        </FilterRow>
+      </FilterPanel>
 
       <p className="mt-3 hidden text-xs text-muted sm:block">
         <kbd className="rounded border border-line bg-surface px-1 text-soft">↑</kbd>{" "}

@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Check, Copy, ExternalLink, RefreshCw, Search, Star } from "lucide-react";
+import { Check, Copy, ExternalLink, RefreshCw, Star } from "lucide-react";
 import type { CatalogItem } from "@/lib/catalog";
 import { copyText, Highlight, normalize } from "@/components/explorer-kit";
+import { FilterAction, FilterPanel, FilterRow, FilterSearch, FilterSelect } from "@/components/filter-panel";
 import { refreshCatalog } from "./actions";
 
 const BRANDS = ["CPPEM", "Colégio", "Unicive"] as const;
@@ -152,78 +153,72 @@ export default function LinksExplorer({
 
   return (
     <>
-      <div className="sticky top-16 z-10 -mx-4 bg-background/95 px-4 pb-3 pt-4 backdrop-blur sm:-mx-6 sm:px-6">
-        <div className="relative">
-          <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gold-light" />
-          <input
-            ref={searchRef}
-            autoFocus
-            value={query}
-            onChange={(event) => {
-              setQuery(event.target.value);
+      <FilterPanel>
+        <FilterSearch
+          inputRef={searchRef}
+          autoFocus
+          value={query}
+          onChange={(value) => {
+            setQuery(value);
+            setSelected(0);
+          }}
+          onKeyDown={onSearchKeyDown}
+          placeholder="Digite o nome do produto…"
+          label="Buscar produto"
+        />
+
+        <FilterRow>
+          <FilterSelect
+            label="Empresa"
+            value={brand ?? ""}
+            onChange={(value) => {
+              setBrand(value || null);
               setSelected(0);
             }}
-            onKeyDown={onSearchKeyDown}
-            placeholder="Digite o nome do produto…"
-            aria-label="Buscar produto"
-            className="w-full rounded-lg border border-line bg-surface-2 py-4 pl-12 pr-4 text-base outline-none transition-colors placeholder:text-muted focus:border-gold sm:text-lg"
+            options={[{ value: "", label: "Todas as empresas" }, ...BRANDS.map((value) => ({ value, label: value }))]}
           />
-        </div>
+          <FilterSelect
+            label="Favoritos"
+            value={onlyFavorites ? "favoritos" : ""}
+            onChange={(value) => {
+              setOnlyFavorites(value === "favoritos");
+              setSelected(0);
+            }}
+            options={[
+              { value: "", label: "Todos os links" },
+              { value: "favoritos", label: "Só meus favoritos" },
+            ]}
+          />
 
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          {[null, ...BRANDS].map((value) => (
-            <button
-              key={value ?? "todos"}
-              type="button"
+          <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
+            <FilterAction
+              disabled={!query && !brand && !onlyFavorites}
               onClick={() => {
-                setBrand(value);
+                setQuery("");
+                setBrand(null);
+                setOnlyFavorites(false);
                 setSelected(0);
               }}
-              aria-pressed={brand === value}
-              className={`ui-label rounded-full border px-4 py-1.5 text-xs transition ${
-                brand === value
-                  ? "border-transparent bg-linear-[145deg,var(--gold-pale),var(--gold)] text-[#17130b]"
-                  : "border-line bg-surface text-soft hover:border-line-active hover:text-gold-pale"
-              }`}
             >
-              {value ?? "Todos"}
-            </button>
-          ))}
-          <button
-            type="button"
-            onClick={() => {
-              setOnlyFavorites((value) => !value);
-              setSelected(0);
-            }}
-            aria-pressed={onlyFavorites}
-            className={`ui-label flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-xs transition ${
-              onlyFavorites
-                ? "border-transparent bg-linear-[145deg,var(--gold-pale),var(--gold)] text-[#17130b]"
-                : "border-line bg-surface text-soft hover:border-line-active hover:text-gold-pale"
-            }`}
-          >
-            <Star className={`h-3.5 w-3.5 ${onlyFavorites ? "fill-[#17130b]" : ""}`} />
-            Meus favoritos
-          </button>
-
-          <button
-            type="button"
-            disabled={isRefreshing}
-            onClick={() =>
-              // updateTag() derruba o cache; o router.refresh() dentro da mesma transição
-              // mantém o botão em "Atualizando…" até a página voltar com os dados novos.
-              startRefresh(async () => {
-                await refreshCatalog();
-                router.refresh();
-              })
-            }
-            className="ui-label ml-auto flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-1.5 text-xs text-muted transition hover:border-line-active hover:text-gold-pale disabled:opacity-60"
-          >
-            <RefreshCw className={`h-3.5 w-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
-            {isRefreshing ? "Atualizando… (até 2 min)" : "Atualizar agora"}
-          </button>
-        </div>
-      </div>
+              Limpar filtros
+            </FilterAction>
+            <FilterAction
+              disabled={isRefreshing}
+              onClick={() =>
+                // updateTag() derruba o cache; o router.refresh() dentro da mesma transição
+                // mantém o botão em "Atualizando…" até a página voltar com os dados novos.
+                startRefresh(async () => {
+                  await refreshCatalog();
+                  router.refresh();
+                })
+              }
+            >
+              <RefreshCw className={`h-3.5 w-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
+              {isRefreshing ? "Atualizando… (até 2 min)" : "Atualizar agora"}
+            </FilterAction>
+          </div>
+        </FilterRow>
+      </FilterPanel>
 
       <p className="mt-3 hidden text-xs text-muted sm:block">
         <kbd className="rounded border border-line bg-surface px-1 text-soft">↑</kbd>{" "}

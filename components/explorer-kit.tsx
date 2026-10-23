@@ -60,10 +60,3 @@ export function copyText(text: string, done: () => void) {
   }
 }
 
-/** Visual dos botões de filtro (pílulas), igual ao da página de links da Guru. */
-export const chipClass = (active: boolean) =>
-  `ui-label rounded-full border px-4 py-1.5 text-xs transition ${
-    active
-      ? "border-transparent bg-linear-[145deg,var(--gold-pale),var(--gold)] text-[#17130b]"
-      : "border-line bg-surface text-soft hover:border-line-active hover:text-gold-pale"
-  }`;
