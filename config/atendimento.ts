@@ -16,7 +16,7 @@ export const BU_NAMES: Record<Bu, string> = {
 
 export type ServiceLink = {
   id: string;
-  /** Ex.: "Atendimento Humano · Colégio Cppem" */
+  /** Ex.: "Atendimento Humano" (a BU aparece à parte, na etiqueta e no grupo) */
   title: string;
   bu: Bu;
   kind: Kind;
@@ -40,7 +40,7 @@ const PHOTOS: Record<string, string> = {
 function link(bu: Bu, kind: Kind, channel: Channel, url: string): ServiceLink {
   return {
     id: url.replace(/^https?:\/\//, ""),
-    title: `${kind} ${channel} · ${BU_NAMES[bu]}`,
+    title: `${kind} ${channel}`,
     bu,
     kind,
     channel,

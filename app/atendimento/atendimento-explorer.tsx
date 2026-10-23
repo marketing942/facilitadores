@@ -26,7 +26,7 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
 
   const haystacks = useMemo(
     () =>
-      new Map(items.map((item) => [item.id, normalize(`${item.title} ${item.bu} ${item.kind} ${item.channel} ${item.url}`)])),
+      new Map(items.map((item) => [item.id, normalize(`${item.title} ${item.bu} ${BU_NAMES[item.bu]} ${item.kind} ${item.channel} ${item.url}`)])),
     [items],
   );
 
@@ -49,7 +49,7 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
   function copy(item: ServiceLink) {
     copyText(item.url, () => {
       setCopied(item.id);
-      setToast(`✓ Link copiado: ${item.title}`);
+      setToast(`✓ Link copiado: ${item.title} · ${item.bu}`);
       setTimeout(() => setCopied((current) => (current === item.id ? null : current)), 1600);
     });
   }
@@ -227,7 +227,7 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
                   event.stopPropagation();
                   copy(item);
                 }}
-                aria-label="Copiar link"
+                aria-label={`Copiar link: ${item.title} · ${item.bu}`}
                 className={`ui-label flex flex-none items-center justify-center gap-1.5 rounded-md px-2.5 py-2 text-xs transition md:px-3 ${
                   copied === item.id ? "bg-gold-pale text-[#16130c]" : "gold-button"
                 }`}
@@ -240,7 +240,7 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
                 target="_blank"
                 rel="noopener"
                 onClick={(event) => event.stopPropagation()}
-                aria-label="Abrir link"
+                aria-label={`Abrir link: ${item.title} · ${item.bu}`}
                 className="ghost-button flex w-9 items-center justify-center rounded-md text-muted transition hover:text-gold-pale md:w-11"
               >
                 <ExternalLink className="h-4 w-4" />
