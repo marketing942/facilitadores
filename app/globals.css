@@ -91,12 +91,6 @@ input {
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
-.eyebrow::before {
-  content: "";
-  width: 28px;
-  height: 1px;
-  background: var(--gold);
-}
 
 .display-title {
   font: 700 clamp(1.7rem, 3.4vw, 2.5rem)/1 var(--font-display);

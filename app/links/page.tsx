@@ -20,7 +20,7 @@ export default async function Page() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-[1240px] px-4 pb-24 pt-8 sm:px-6">
+    <main className="mx-auto w-full max-w-[1240px] px-4 pb-4 pt-8 sm:pb-12 sm:px-6">
       <nav className="mb-6 flex items-center gap-2 text-sm text-soft" aria-label="Você está em">
         <Link href="/" className="-my-2 py-2 transition-colors hover:text-foreground">
           Início

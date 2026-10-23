@@ -251,10 +251,6 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
         ))}
       </div>
 
-      <footer className="mt-8 border-t border-line pt-5 text-center text-xs text-muted">
-        {items.length} links · clique na linha ou em “Copiar” para copiar
-      </footer>
-
       <div
         role="status"
         aria-live="polite"
