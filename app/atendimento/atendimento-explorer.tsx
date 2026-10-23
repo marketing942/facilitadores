@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Check, Copy, ExternalLink } from "lucide-react";
-import { BUS, type Channel, type Kind, type ServiceLink } from "@/config/atendimento";
+import { BU_NAMES, BUS, type Channel, type Kind, type ServiceLink } from "@/config/atendimento";
 import { copyText, Highlight, normalize } from "@/components/explorer-kit";
 import { FilterAction, FilterPanel, FilterSearch, FilterSelect } from "@/components/filter-panel";
 
@@ -84,20 +84,20 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
               setSelected(0);
             }}
             onKeyDown={onSearchKeyDown}
-            placeholder="Digite o canal ou a empresa…"
+            placeholder="Digite o canal ou a BU…"
             label="Buscar link de atendimento"
           />
         }
         filters={
           <>
             <FilterSelect
-              label="Empresa"
+              label="BU"
               value={bu ?? ""}
               onChange={(value) => {
                 setBu((value || null) as ServiceLink["bu"] | null);
                 setSelected(0);
               }}
-              options={[{ value: "", label: "Todas as empresas" }, ...BUS.map((value) => ({ value, label: value }))]}
+              options={[{ value: "", label: "Todas as BUs" }, ...BUS.map((value) => ({ value, label: value }))]}
             />
             <FilterSelect
               label="Tipo"
@@ -154,7 +154,7 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
       <div className="overflow-hidden rounded-xl border border-line bg-surface">
         <div className="ui-label hidden grid-cols-[minmax(0,1fr)_110px_100px_120px_150px] gap-4 border-b border-line bg-surface-2 px-4 py-3 text-[11px] text-gold-light md:grid">
           <div>Canal</div>
-          <div>Empresa</div>
+          <div>BU</div>
           <div>Tipo</div>
           <div>Finalidade</div>
           <div />
@@ -167,18 +167,35 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
         )}
 
         {visible.map((item, index) => (
+          <Fragment key={item.id}>
+          {item.bu !== visible[index - 1]?.bu && (
+            <div className="ui-label flex items-center justify-between border-t border-line bg-surface-2 px-3 py-2 text-[11px] text-gold-light first:border-t-0 md:px-4">
+              <span>{BU_NAMES[item.bu]}</span>
+              <span className="text-muted">{visible.filter((other) => other.bu === item.bu).length}</span>
+            </div>
+          )}
           <div
-            key={item.id}
             onClick={() => copy(item)}
-            className={`grid cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1.5 border-t border-line px-3 py-2.5 transition first:border-t-0 md:grid-cols-[minmax(0,1fr)_110px_100px_120px_150px] md:gap-x-4 md:gap-y-2 md:px-4 md:py-3 ${
+            className={`grid cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1.5 border-t border-line px-3 py-2.5 transition md:grid-cols-[minmax(0,1fr)_110px_100px_120px_150px] md:gap-x-4 md:gap-y-2 md:px-4 md:py-3 ${
               index === selected && terms.length > 0 ? "bg-gold/10" : "hover:bg-surface-2"
             }`}
           >
-            <div className="col-start-1 row-start-1 min-w-0 md:col-auto md:row-auto">
+            <div className="col-start-1 row-start-1 flex min-w-0 items-center gap-3 md:col-auto md:row-auto">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.photo}
+                alt=""
+                width={56}
+                height={56}
+                loading="lazy"
+                className="h-10 w-10 flex-none rounded-full border border-line object-cover md:h-12 md:w-12"
+              />
+              <div className="min-w-0">
               <p className="line-clamp-3 font-display text-[0.9rem] font-bold uppercase leading-snug tracking-tight md:line-clamp-none md:text-[0.95rem]">
                 <Highlight text={item.title} terms={terms} />
               </p>
               <p className="truncate text-xs text-muted">{item.url.replace("https://", "")}</p>
+              </div>
             </div>
 
             <div className="col-span-2 row-start-2 flex flex-wrap items-center gap-x-2 gap-y-1 md:contents">
@@ -230,6 +247,7 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
               </a>
             </div>
           </div>
+          </Fragment>
         ))}
       </div>
 

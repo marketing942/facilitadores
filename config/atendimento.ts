@@ -7,7 +7,7 @@ export type Bu = (typeof BUS)[number];
 export type Channel = "Humano" | "IA";
 export type Kind = "Atendimento" | "Suporte";
 
-/** Nome completo de cada empresa (o filtro usa o nome curto, igual à página de links da Guru). */
+/** Nome completo de cada BU (o filtro usa o nome curto, igual à página de links da Guru). */
 export const BU_NAMES: Record<Bu, string> = {
   CPPEM: "Cppem Concursos",
   Colégio: "Colégio Cppem",
@@ -22,6 +22,19 @@ export type ServiceLink = {
   kind: Kind;
   channel: Channel;
   url: string;
+  /** Foto do contato, em /public/contatos. */
+  photo: string;
+};
+
+const PHOTOS: Record<string, string> = {
+  "CPPEM Atendimento Humano": "cppem-humano",
+  "CPPEM Atendimento IA": "cppem-atendimento-ia",
+  "CPPEM Suporte Humano": "cppem-humano",
+  "CPPEM Suporte IA": "cppem-suporte-ia",
+  "Colégio Atendimento Humano": "colegio-humano",
+  "Colégio Atendimento IA": "colegio-atendimento-ia",
+  "Unicive Atendimento Humano": "unicive-humano",
+  "Unicive Atendimento IA": "unicive-atendimento-ia",
 };
 
 function link(bu: Bu, kind: Kind, channel: Channel, url: string): ServiceLink {
@@ -32,6 +45,7 @@ function link(bu: Bu, kind: Kind, channel: Channel, url: string): ServiceLink {
     kind,
     channel,
     url,
+    photo: `/contatos/${PHOTOS[`${bu} ${kind} ${channel}`]}.jpg`,
   };
 }
 
