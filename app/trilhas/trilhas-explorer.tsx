@@ -116,27 +116,27 @@ export default function TrilhasExplorer({
         {areas.filter((a) => !area || a === area).map((nome) => (
           <section key={nome} aria-label={nome}>
             <h2 className="eyebrow mb-3">{nome}</h2>
-            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {trilhas
                 .filter((t) => t.area === nome)
                 .map((trilha) => (
-                  <li key={trilha.slug}>
+                  <li key={trilha.slug} className="min-w-0">
                     <button
                       type="button"
                       onClick={() => setAberta(trilha)}
                       className="group flex h-full w-full flex-col rounded-xl border border-line bg-surface p-4 text-left transition hover:-translate-y-0.5 hover:border-line-active sm:p-5"
                     >
                       <span className="flex w-full items-start justify-between gap-3">
-                        <span className="font-display text-lg font-bold uppercase leading-snug tracking-tight text-ink">{trilha.nome}</span>
+                        <span className="min-w-0 font-display text-lg font-bold uppercase leading-snug tracking-tight text-ink">{trilha.nome}</span>
                         <span className="ui-label flex-none rounded-full border border-line px-2.5 py-0.5 text-[10px] text-gold-light">
                           {trilha.cursos.length} {item}
                         </span>
                       </span>
                       <span className="mt-3 block space-y-1 text-[13px] leading-snug text-soft">
                         {trilha.cursos.slice(0, 3).map((c, i) => (
-                          <span key={`${c.url}-${i}`} className="flex gap-2">
+                          <span key={`${c.url}-${i}`} className="flex min-w-0 gap-2">
                             <span className="w-4 flex-none text-right text-muted">{i + 1}.</span>
-                            <span className="truncate">{c.titulo}</span>
+                            <span className="min-w-0 truncate">{c.titulo}</span>
                           </span>
                         ))}
                         {trilha.cursos.length > 3 && <span className="block pl-6 text-muted">+ {trilha.cursos.length - 3} {item}</span>}

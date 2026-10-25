@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown } from "lucide-react";
-import { GROUPS, HOME_NAV, groupOf } from "@/config/tools";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { GROUPS, groupOf, linkProps } from "@/config/tools";
+import { AiLinks } from "@/components/ai-links";
 
-const BRAND = "Utilitários CPPEM";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -41,27 +41,19 @@ export default function Navbar() {
 
   return (
     <div ref={root} className="print:hidden">
-      {/* Topo: marca + Início + um botão por grupo, que abre a lista das páginas dele. */}
+      {/* Topo: marca (leva ao início) + um botão por grupo, que abre a lista das páginas dele, + atalhos de IA. */}
       <nav className="sticky top-0 z-50 border-b border-line bg-canvas/90 backdrop-blur-lg" aria-label="Principal">
         <div className="mx-auto max-w-6xl px-4">
           <div className="flex h-12 items-center justify-between gap-4 sm:h-16">
             <Link
               href="/"
-              className="shrink-0 py-3 font-ui text-sm font-bold uppercase tracking-[0.14em] text-gold-light"
+              aria-current={onHome ? "page" : undefined}
+              className="min-w-0 shrink py-3 font-ui text-xs font-bold uppercase tracking-[0.1em] text-gold-light min-[400px]:text-sm min-[400px]:tracking-[0.14em]"
             >
-              {BRAND}
+              <span className="max-[399px]:hidden">Utilitários </span>CPPEM
             </Link>
 
-            <div className="hidden items-center gap-2 sm:flex">
-              <Link
-                href="/"
-                aria-current={onHome ? "page" : undefined}
-                className={`rounded-md border px-3 py-1.5 font-ui text-sm font-bold uppercase tracking-wider transition-colors ${
-                  onHome ? current : idle
-                }`}
-              >
-                {HOME_NAV.label}
-              </Link>
+            <div className="ml-auto hidden items-center gap-1.5 lg:flex xl:gap-2">
 
               {GROUPS.map((group) => {
                 const isOpen = open === group.id;
@@ -73,7 +65,7 @@ export default function Navbar() {
                       aria-expanded={isOpen}
                       aria-haspopup="true"
                       onClick={() => setOpen(isOpen ? null : group.id)}
-                      className={`flex items-center gap-1.5 rounded-md border px-3 py-1.5 transition-colors ${
+                      className={`flex items-center gap-1 rounded-md border px-2.5 py-1.5 transition-colors xl:gap-1.5 xl:px-3 ${
                         isActive || isOpen ? current : idle
                       }`}
                     >
@@ -87,6 +79,7 @@ export default function Navbar() {
                           <li key={tool.href} className="border-t border-line first:border-t-0">
                             <Link
                               href={tool.href}
+                              {...linkProps(tool)}
                               aria-current={toolActive(tool.href) ? "page" : undefined}
                               className={`flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-2 ${
                                 toolActive(tool.href) ? "bg-gold/10 text-gold-pale" : "text-ink"
@@ -94,6 +87,7 @@ export default function Navbar() {
                             >
                               <span className="text-gold-light [&_svg]:h-5 [&_svg]:w-5">{tool.icon}</span>
                               <span className="font-ui text-sm font-bold uppercase tracking-wider">{tool.label}</span>
+                              {tool.externo && <ArrowUpRight aria-label="abre em nova aba" className="ml-auto h-4 w-4 text-muted" />}
                             </Link>
                           </li>
                         ))}
@@ -103,18 +97,20 @@ export default function Navbar() {
                 );
               })}
             </div>
+            <AiLinks className="shrink-0 border-l border-line pl-1.5 lg:pl-2" />
           </div>
         </div>
       </nav>
 
-      {/* Celular: barra fixa embaixo (Início + grupos). Tocar num grupo abre a lista dele acima da barra. */}
-      {open && <div className="fixed inset-0 z-40 bg-black/50 sm:hidden" aria-hidden />}
+      {/* Celular e tablet: barra fixa embaixo com os grupos. Tocar num grupo abre a lista dele acima da barra. */}
+      {open && <div className="fixed inset-0 z-40 bg-black/50 lg:hidden" aria-hidden />}
       {open && (
-        <ul className="fixed inset-x-3 bottom-[calc(76px+env(safe-area-inset-bottom))] z-50 overflow-hidden rounded-2xl border border-line-active bg-surface shadow-[0_18px_45px_rgba(0,0,0,.6)] sm:hidden">
+        <ul className="fixed inset-x-3 bottom-[calc(76px+env(safe-area-inset-bottom))] z-50 overflow-hidden rounded-2xl border border-line-active bg-surface shadow-[0_18px_45px_rgba(0,0,0,.6)] lg:hidden">
           {GROUPS.find((group) => group.id === open)?.tools.map((tool) => (
             <li key={tool.href} className="border-t border-line first:border-t-0">
               <Link
                 href={tool.href}
+                              {...linkProps(tool)}
                 aria-current={toolActive(tool.href) ? "page" : undefined}
                 className={`flex min-h-[52px] items-center gap-3 px-4 py-2 ${
                   toolActive(tool.href) ? "bg-gold/10 text-gold-pale" : "text-ink"
@@ -122,6 +118,7 @@ export default function Navbar() {
               >
                 <span className="text-gold-light [&_svg]:h-5 [&_svg]:w-5">{tool.icon}</span>
                 <span className="font-ui text-base font-bold uppercase tracking-wider">{tool.label}</span>
+                {tool.externo && <ArrowUpRight aria-label="abre em nova aba" className="ml-auto h-4 w-4 text-muted" />}
               </Link>
             </li>
           ))}
@@ -130,21 +127,9 @@ export default function Navbar() {
 
       <nav
         aria-label="Abas"
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-line-active bg-canvas/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg sm:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-line-active bg-canvas/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden"
       >
-        <ul className="grid grid-cols-5 gap-1 px-2 pt-1.5 pb-1.5">
-          <li>
-            <Link
-              href="/"
-              aria-current={onHome ? "page" : undefined}
-              className={`flex min-h-[54px] flex-col items-center justify-center gap-0.5 rounded-xl border px-1 text-[11px] font-semibold leading-tight transition-colors [&_svg]:h-5 [&_svg]:w-5 ${
-                onHome ? current : "border-transparent text-gold-light"
-              }`}
-            >
-              {HOME_NAV.icon}
-              {HOME_NAV.label}
-            </Link>
-          </li>
+        <ul className="grid grid-cols-5 gap-0.5 px-1 pt-1.5 pb-1.5 min-[390px]:gap-1 min-[390px]:px-2">
           {GROUPS.map((group) => {
             const isActive = active?.id === group.id || open === group.id;
             return (
@@ -153,12 +138,12 @@ export default function Navbar() {
                   type="button"
                   aria-expanded={open === group.id}
                   onClick={() => setOpen(open === group.id ? null : group.id)}
-                  className={`flex min-h-[54px] w-full flex-col items-center justify-center gap-0.5 rounded-xl border px-1 transition-colors [&_svg]:h-5 [&_svg]:w-5 ${
+                  className={`flex min-h-[54px] w-full flex-col items-center justify-center gap-0.5 rounded-xl border px-0 transition-colors min-[390px]:px-1 [&_svg]:h-5 [&_svg]:w-5 ${
                     isActive ? current : "border-transparent text-gold-light"
                   }`}
                 >
                   {group.icon}
-                  <span className="text-[11px] font-semibold leading-tight">{group.label}</span>
+                  <span className="max-w-full text-[9.5px] font-semibold leading-tight tracking-tight min-[390px]:text-[11px] min-[390px]:tracking-normal">{group.label}</span>
                 </button>
               </li>
             );

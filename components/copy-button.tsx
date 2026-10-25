@@ -10,11 +10,14 @@ export function CopyButton({
   label = "Copiar",
   className = "",
   variant = "gold",
+  compacto = false,
 }: {
   value: string;
   label?: string;
   className?: string;
   variant?: "gold" | "ghost";
+  /** No celular mostra só o ícone (o texto vira rótulo de acessibilidade) */
+  compacto?: boolean;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -32,7 +35,7 @@ export function CopyButton({
       } ${className}`}
     >
       {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-      <span className="text-xs">{copied ? "Copiado" : label}</span>
+      <span className={`text-xs ${compacto ? "max-sm:sr-only" : ""}`}>{copied ? "Copiado" : label}</span>
     </button>
   );
 }

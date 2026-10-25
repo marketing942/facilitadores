@@ -9,7 +9,11 @@ const nextConfig: NextConfig = {
   turbopack: { root: path.resolve(".") },
   // a aba "Acessos" mudou de nome; o endereço antigo continua funcionando
   async redirects() {
-    return [{ source: "/acessos", destination: "/ferramentas", permanent: true }];
+    return [
+      { source: "/acessos", destination: "/ferramentas", permanent: true },
+      // a aba Parceiros leva direto ao site oficial
+      { source: "/parceiros", destination: "https://cppem.com.br/parceiros", permanent: false },
+    ];
   },
   // Sem cacheComponents: o catálogo usa unstable_cache (Data Cache da Vercel), que é
   // compartilhado entre instâncias e não tem o limite de 50s do 'use cache' no build.

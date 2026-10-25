@@ -254,7 +254,7 @@ export default function AtendimentoExplorer({ items }: { items: ServiceLink[] })
       <div
         role="status"
         aria-live="polite"
-        className={`pointer-events-none fixed bottom-24 left-1/2 sm:bottom-6 max-w-[calc(100%-2rem)] -translate-x-1/2 rounded-lg border border-line-active bg-surface-2 px-4 py-2.5 text-sm font-medium text-gold-pale shadow-[0_18px_45px_rgba(0,0,0,.45)] transition ${
+        className={`pointer-events-none fixed bottom-24 left-1/2 lg:bottom-6 max-w-[calc(100%-2rem)] -translate-x-1/2 rounded-lg border border-line-active bg-surface-2 px-4 py-2.5 text-sm font-medium text-gold-pale shadow-[0_18px_45px_rgba(0,0,0,.45)] transition ${
           toast ? "opacity-100" : "translate-y-3 opacity-0"
         }`}
       >

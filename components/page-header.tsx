@@ -6,7 +6,7 @@ export function PageHeader({ crumb, eyebrow, title }: { crumb: string; eyebrow: 
   return (
     <>
       <nav className="mb-6 flex items-center gap-2 text-sm text-soft" aria-label="Você está em">
-        <Link href="/" className="-my-2 py-2 transition-colors hover:text-foreground">
+        <Link href="/" className="-my-2.5 py-2.5 transition-colors hover:text-foreground">
           Início
         </Link>
         <span aria-hidden className="text-muted">›</span>

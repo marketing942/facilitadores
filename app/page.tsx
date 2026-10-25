@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GROUPS } from "@/config/tools";
+import { GROUPS, linkProps } from "@/config/tools";
 
 export default function Home() {
   return (
@@ -22,7 +22,7 @@ export default function Home() {
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6">
               {group.tools.map((tool) => (
-                <Link key={tool.href} href={tool.href} className="group">
+                <Link key={tool.href} href={tool.href} {...linkProps(tool)} className="group">
                   <div className="flex h-full items-start gap-3.5 rounded-xl border border-line bg-surface p-4 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-line-active sm:block sm:p-6">
                     <div className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-gold/10 text-gold-light transition-colors group-hover:bg-gold/20 sm:mb-4 sm:h-12 sm:w-12 sm:rounded-xl">
                       {tool.icon}

@@ -2,9 +2,15 @@ import type { ReactNode } from "react";
 import {
   BookOpen,
   GraduationCap,
+  Handshake,
+  Share2,
+  Store,
+  UtensilsCrossed,
   Route,
   Lightbulb,
   Briefcase,
+  Bus,
+  Dumbbell,
   Building2,
   Calculator,
   CreditCard,
@@ -28,6 +34,8 @@ export type Tool = {
   title: string;
   description: string;
   icon: ReactNode;
+  /** Abre um site de fora em nova aba (o href é a URL completa) */
+  externo?: boolean;
 };
 
 export type Group = {
@@ -52,7 +60,7 @@ export const GROUPS: Group[] = [
   {
     id: "geral",
     label: "Geral",
-    description: "Wi-Fi e dados da empresa para o dia a dia",
+    description: "Wi-Fi, dados da empresa e redes sociais",
     icon: <Users className={icon} />,
     tools: [
       {
@@ -68,6 +76,13 @@ export const GROUPS: Group[] = [
         title: "Dados da empresa",
         description: "CNPJ, chave Pix, endereço e telefones, prontos para copiar",
         icon: <Building2 className={icon} />,
+      },
+      {
+        href: "/redes-sociais",
+        label: "Redes sociais",
+        title: "Redes sociais",
+        description: "Todas as redes de cada BU, prontas para abrir e copiar",
+        icon: <Share2 className={icon} />,
       },
     ],
   },
@@ -151,6 +166,43 @@ export const GROUPS: Group[] = [
     ],
   },
   {
+    id: "servicos",
+    label: "Serviços",
+    description: "Comida, academia, transporte e benefícios para a equipe",
+    icon: <Store className={icon} />,
+    tools: [
+      {
+        href: "/food-service",
+        label: "Food Service",
+        title: "Food Service",
+        description: "Restaurante parceiro, cantinas do prédio e apps de delivery",
+        icon: <UtensilsCrossed className={icon} />,
+      },
+      {
+        href: "/academia",
+        label: "Academia",
+        title: "Academia: Selfit",
+        description: "Plano corporativo Selfit e a unidade mais perto de você",
+        icon: <Dumbbell className={icon} />,
+      },
+      {
+        href: "/transporte",
+        label: "Transporte",
+        title: "Transporte",
+        description: "Cartão Leva para ônibus e apps de corrida",
+        icon: <Bus className={icon} />,
+      },
+      {
+        href: "https://cppem.com.br/parceiros",
+        label: "Parceiros",
+        title: "Parceiros",
+        description: "Rede de parceiros com benefícios e descontos para a equipe",
+        icon: <Handshake className={icon} />,
+        externo: true,
+      },
+    ],
+  },
+  {
     id: "ferramentas",
     label: "Ferramentas",
     description: "Sistemas e links internos, por setor",
@@ -169,5 +221,10 @@ export const GROUPS: Group[] = [
 
 /** Grupo ao qual o endereço pertence (null na página inicial). */
 export function groupOf(pathname: string): Group | null {
-  return GROUPS.find((group) => group.tools.some((tool) => pathname.startsWith(tool.href))) ?? null;
+  return GROUPS.find((group) => group.tools.some((tool) => !tool.externo && pathname.startsWith(tool.href))) ?? null;
+}
+
+/** Atributos de link: as abas externas abrem em nova aba. */
+export function linkProps(tool: Tool) {
+  return tool.externo ? { target: "_blank", rel: "noopener" } : {};
 }
