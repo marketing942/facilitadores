@@ -9,6 +9,18 @@ export type Acesso = { nome: string; descricao: string; url: string; tags: Tag[]
 
 export const ACESSOS: Acesso[] = [
   {
+    nome: "Vagas de trabalho",
+    descricao: "Página pública de vagas da CPPEM, para enviar a quem quer trabalhar com a gente.",
+    url: "https://links.cppem.com.br/trabalhe-conosco",
+    tags: ["Todas"],
+  },
+  {
+    nome: "Cadastro de parcerias",
+    descricao: "Formulário para empresas e pessoas que querem ser parceiras da CPPEM.",
+    url: "https://links.cppem.com.br/seja-parceiro",
+    tags: ["Todas"],
+  },
+  {
     nome: "Meu Hub Notion",
     descricao: "Hub pessoal de cada colaborador, no Notion.",
     url: "https://app.notion.com/p/cppem/379bbae8074c807e9a2fec244cdac258?v=68fbbae8074c832f9f5108cd861cc2f9&source=copy_link",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ExternalLink, X } from "lucide-react";
+import { BookOpen, ExternalLink, X } from "lucide-react";
 import { CATEGORIAS, type Livro } from "@/config/biblioteca";
 import { Highlight, normalize } from "@/components/explorer-kit";
 import { FilterAction, FilterPanel, FilterSearch, FilterSelect } from "@/components/filter-panel";
@@ -92,15 +92,27 @@ function Detalhe({ livro, onClose }: { livro: Livro; onClose: () => void }) {
             </p>
             <Lista titulo="O que o livro entrega" itens={livro.objetivos} />
             <Lista titulo="Para quem é" itens={livro.publico} />
-            <a
-              href={livro.compra}
-              target="_blank"
-              rel="noopener"
-              className="gold-button ui-label inline-flex min-h-11 items-center gap-2 rounded-md px-4"
-            >
-              <ExternalLink className="h-4 w-4" />
-              <span className="text-xs">Ver na Amazon</span>
-            </a>
+            <div className="flex flex-wrap gap-2">
+              <a
+                href={livro.notion}
+                target="_blank"
+                rel="noopener"
+                className="gold-button ui-label inline-flex min-h-11 items-center gap-2 rounded-md px-4"
+              >
+                <BookOpen className="h-4 w-4" />
+                <span className="text-xs">Ler no Notion</span>
+              </a>
+              <a
+                href={livro.compra}
+                target="_blank"
+                rel="noopener"
+                className="ghost-button ui-label inline-flex min-h-11 items-center gap-2 rounded-md px-4"
+              >
+                <ExternalLink className="h-4 w-4" />
+                <span className="text-xs">Ver na Amazon</span>
+              </a>
+            </div>
+            <p className="text-xs text-muted">O PDF fica na Biblioteca Gratuita do Notion da CPPEM: é preciso estar logado lá.</p>
           </div>
         </div>
       </div>

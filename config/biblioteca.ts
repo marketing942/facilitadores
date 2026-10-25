@@ -1,5 +1,6 @@
 // Biblioteca de estudos do time: catálogo vindo do Notion (34 livros), com capa de cada um.
 // Para incluir um livro: coloque a capa em public/biblioteca/<slug>.jpg e acrescente uma linha aqui.
+// Os PDFs NÃO ficam no sistema: o botão "Ler no Notion" abre a página do livro no Notion da CPPEM.
 // Os textos de "objetivos" e "público" são os do Notion; nos livros marcados com `preenchido: true`
 // o Notion estava vazio e o texto foi escrito para completar a ficha.
 
@@ -12,6 +13,8 @@ export type Livro = {
   objetivos: string[];
   /** Para quem é */
   publico: string[];
+  /** Página do livro na Biblioteca Gratuita do Notion, onde fica o PDF (exige acesso ao Notion da CPPEM) */
+  notion: string;
   /** Busca do livro na Amazon */
   compra: string;
   preenchido?: boolean;
@@ -23,6 +26,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "33-estrategias-de-guerra",
     titulo: "33 Estratégias de Guerra",
+    notion: "https://app.notion.com/p/316bbae8074c80edb059cfb9974abd44",
     autor: "Robert Greene",
     categorias: ["Liderança", "Negócios", "Produtividade"],
     objetivos: ["O livro \"33 Estratégias de Guerra\" busca oferecer uma abordagem prática sobre como aplicar táticas e estratégias militares na vida pessoal e profissional. Ele explora a psicologia por trás da guerra e como essas lições podem ser utilizadas para vencer conflitos e alcançar objetivos."],
@@ -32,6 +36,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "a-arte-da-guerra",
     titulo: "A Arte da Guerra",
+    notion: "https://app.notion.com/p/31dbbae8074c802499cfd00066eb506b",
     autor: "Sun Tzu",
     categorias: ["Liderança", "Psicologia"],
     objetivos: ["\"A Arte da Guerra\" é um tratado militar escrito por Sun Tzu que aborda estratégias e táticas de guerra. O livro enfatiza a importância do planejamento, da adaptação às circunstâncias e do conhecimento do inimigo e de si mesmo. Seus objetivos principais incluem fornecer orientações sobre como vencer conflitos com eficácia e minimizar perdas."],
@@ -41,6 +46,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "a-jornada-do-empreendedor-o-heroi-da-nossa-era",
     titulo: "A Jornada do Empreendedor - O herói da nossa era",
+    notion: "https://app.notion.com/p/31dbbae8074c803588a7d177f275cbfb",
     autor: "Edson Marqueto Rigonatti, Laura Mello Constantini e Martino Bagini",
     categorias: ["Negócios", "Mindset"],
     objetivos: ["Apresentar o caminho de quem empreende como uma jornada, com etapas, desafios e aprendizados.", "Ajudar o leitor a se enxergar nesse percurso e a entender o que esperar em cada fase.", "Dar ao empreendedor uma visão de conjunto antes de partir para as ferramentas e técnicas."],
@@ -51,6 +57,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "a-lei-do-triunfo",
     titulo: "A Lei do Triunfo",
+    notion: "https://app.notion.com/p/31dbbae8074c804387c5d7450a854f64",
     autor: "Napoleon Hill",
     categorias: ["Educação", "Mindset", "Negócios"],
     objetivos: ["Reunir princípios de sucesso pessoal e profissional, organizados em lições sequenciais.", "Trabalhar objetivo bem definido, disciplina, iniciativa pessoal e trabalho em equipe como bases da conquista.", "Servir como curso de desenvolvimento pessoal baseado no estudo de pessoas de grande êxito."],
@@ -61,6 +68,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "a-magica-de-pensar-grande",
     titulo: "A Mágica de Pensar grande",
+    notion: "https://app.notion.com/p/31dbbae8074c8083a86bf4eb44472854",
     autor: "David J. Schwartz",
     categorias: ["Mindset", "Produtividade", "Vendas"],
     objetivos: ["Mostrar como a forma de pensar define o tamanho dos resultados na carreira e na vida.", "Ensinar a vencer o medo, a acreditar em si e a agir sem esperar o momento perfeito.", "Apresentar hábitos práticos para aumentar a confiança, o foco e a capacidade de realização."],
@@ -71,6 +79,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "a-sutil-arte-de-ligar-o-foda-se",
     titulo: "A Sutil arte de ligar o foda-se",
+    notion: "https://app.notion.com/p/31dbbae8074c80d18431d17ac25a7ec9",
     autor: "Mark Manson",
     categorias: ["Mindset", "Psicologia"],
     objetivos: ["Mostrar que ninguém tem energia para se importar com tudo e que a vida melhora quando escolhemos com o que vale a pena se importar.", "Defender a aceitação dos próprios limites e problemas, em vez da busca constante por positividade.", "Trazer responsabilidade pessoal, valores saudáveis e disposição para encarar o desconforto como base do crescimento."],
@@ -81,6 +90,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "a-unica-coisa",
     titulo: "A Única Coisa",
+    notion: "https://app.notion.com/p/31dbbae8074c8036bad6c824f5764c33",
     autor: "Gary Keller e Jay Papasan",
     categorias: ["Produtividade", "Negócios", "Mindset"],
     objetivos: ["Defender que resultados extraordinários vêm de focar em uma prioridade de cada vez, a que torna as demais mais fáceis ou desnecessárias.", "Desfazer o mito do multitarefa e mostrar como proteger o tempo do que realmente importa.", "Ensinar a transformar um grande objetivo em ações diárias, semanais e mensais."],
@@ -91,6 +101,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "ansiedade",
     titulo: "Ansiedade",
+    notion: "https://app.notion.com/p/31dbbae8074c80ca860cddfff811387e",
     autor: "Augusto Cury",
     categorias: ["Psicologia", "Mindset"],
     objetivos: ["Explicar como funciona a ansiedade e por que ela se tornou tão comum na vida moderna.", "Mostrar a ligação entre o excesso de pensamentos, o estresse e o desgaste emocional.", "Oferecer ferramentas para gerir as emoções e recuperar a qualidade de vida."],
@@ -101,6 +112,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "as-armas-da-persuasao",
     titulo: "As armas da persuasão",
+    notion: "https://app.notion.com/p/316bbae8074c80f2a0aceb870b36eb42",
     autor: "Robert B. Cialdini",
     categorias: ["Marketing", "Psicologia", "Vendas"],
     objetivos: ["O livro \"As armas da persuasão\", escrito por Robert Cialdini, explora os princípios psicológicos que influenciam a tomada de decisão e a persuasão. Cialdini detalha seis armas de influência que podem ser usadas para persuadir os outros, oferecendo insights sobre como e por que as pessoas dizem \"sim\" e como essas técnicas podem ser aplicadas em diversas situações."],
@@ -110,6 +122,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "as-leis-da-natureza-humana",
     titulo: "As Leis da natureza humana",
+    notion: "https://app.notion.com/p/316bbae8074c808f8077f0a3ff05fc25",
     autor: "Robert Greene",
     categorias: ["Liderança", "Negócios", "Psicologia"],
     objetivos: ["\"As Leis da Natureza Humana\" explora as motivações e comportamentos humanos, analisando como as emoções, instintos e a psicologia moldam as interações sociais. O autor busca fornecer uma compreensão mais profunda das dinâmicas sociais e das forças que influenciam a vida humana, com a intenção de ajudar os leitores a se tornarem mais conscientes de si mesmos e dos outros."],
@@ -119,6 +132,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "como-evitar-preocupacoes-e-comecar-a-viver",
     titulo: "Como evitar preocupações e começar a viver",
+    notion: "https://app.notion.com/p/335bbae8074c80da882cc3f690eb78d1",
     autor: "Dale Carnegie",
     categorias: ["Educação", "Mindset", "Psicologia"],
     objetivos: ["Oferecer estratégias práticas para reduzir a ansiedade e preocupações do dia a dia.", "Incentivar uma mentalidade positiva e a apreciação do momento presente.", "Fornecer dicas para melhorar a qualidade de vida e o bem-estar emocional."],
@@ -128,6 +142,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "como-falar-bem-em-publico-e-encantar-as-pessoas",
     titulo: "Como falar bem em publico e encantar as pessoas",
+    notion: "https://app.notion.com/p/316bbae8074c80c59e9fd5cc2de0acb0",
     autor: "Dale Carnegie",
     categorias: ["Comunicação", "Educação", "Produtividade"],
     objetivos: ["Ensinar técnicas eficazes de comunicação em público.", "Aumentar a confiança ao falar diante de uma audiência.", "Proporcionar estratégias para cativar e engajar o público.", "Desenvolver habilidades de persuasão e oratória."],
@@ -137,6 +152,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "como-fazer-alguem-gostar-de-voce-em-90-segundos",
     titulo: "Como fazer alguém gostar de você em 90 segundos",
+    notion: "https://app.notion.com/p/316bbae8074c80398a7bce57d80daf1b",
     autor: "Nicholas Boothman",
     categorias: ["Comunicação", "Psicologia", "Vendas"],
     objetivos: ["Ensinar técnicas eficazes para criar uma conexão instantânea e positiva com as pessoas.", "Aumentar a empatia e a simpatia em interações sociais.", "Fornecer dicas práticas para melhorar a comunicação e a linguagem corporal."],
@@ -146,6 +162,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "como-fazer-amigos-e-influenciar-pessoas",
     titulo: "Como fazer amigos e influenciar pessoas",
+    notion: "https://app.notion.com/p/316bbae8074c80f49318f09801ab0c75",
     autor: "Dale Carnegie",
     categorias: ["Comunicação", "Liderança", "Psicologia"],
     objetivos: ["Ensinar técnicas eficazes de comunicação e interação social.", "Ajudar os leitores a desenvolver habilidades para conquistar e influenciar pessoas.", "Promover a empatia e a compreensão nas relações interpessoais."],
@@ -155,6 +172,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "como-formar-boas-equipes",
     titulo: "Como formar boas equipes",
+    notion: "https://app.notion.com/p/317bbae8074c80c1bc9ce444316b53cd",
     autor: "G4 Educação",
     categorias: ["Comunicação", "Liderança", "Produtividade"],
     objetivos: ["Explorar as dinâmicas de formação de equipes eficazes.", "Fornecer estratégias para melhorar a comunicação e colaboração entre os membros.", "Discutir a importância da diversidade e inclusão em equipes.", "Apresentar métodos para resolver conflitos e promover um ambiente de trabalho positivo."],
@@ -164,6 +182,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "como-se-tornar-um-lider",
     titulo: "Como se tornar um líder",
+    notion: "https://app.notion.com/p/316bbae8074c800e8b10ed42e5f3da08",
     autor: "John Adair",
     categorias: ["Liderança"],
     objetivos: ["Desenvolver habilidades essenciais de liderança.", "Ensinar técnicas para motivar e inspirar equipes.", "Proporcionar estratégias para tomar decisões eficazes e resolver conflitos."],
@@ -173,6 +192,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "dotcom-secrets",
     titulo: "Dotcom Secrets",
+    notion: "https://app.notion.com/p/316bbae8074c808f82aed7933f01a3a4",
     autor: "Russell Brunson",
     categorias: ["Marketing", "Negócios", "Vendas"],
     objetivos: ["Ensinar estratégias de marketing digital eficazes para aumentar vendas online.", "Apresentar o conceito de funis de vendas e como criar funis que convertem visitantes em clientes.", "Compartilhar táticas comprovadas de copywriting e persuasão para engajar o público."],
@@ -182,6 +202,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "essencialismo",
     titulo: "Essencialismo",
+    notion: "https://app.notion.com/p/316bbae8074c8093bbc4c4da028dc02c",
     autor: "Greg McKeown",
     categorias: ["Educação", "Mindset", "Produtividade"],
     objetivos: ["Promover a ideia de que menos é mais, focando no que realmente importa na vida.", "Ajudar os leitores a identificar e eliminar atividades e compromissos desnecessários.", "Incentivar uma vida mais intencional e significativa através da simplificação."],
@@ -191,6 +212,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "expert-secrets",
     titulo: "Expert Secrets",
+    notion: "https://app.notion.com/p/316bbae8074c801fb8e7c6c8f3e2be00",
     autor: "Russell Brunson",
     categorias: ["Marketing", "Negócios", "Vendas"],
     objetivos: ["Revelar os segredos de como se tornar um especialista em um nicho específico.", "Ensinar a construir uma audiência e transformar seguidores em clientes fiéis.", "Fornecer estratégias de marketing eficazes para aumentar a visibilidade e a credibilidade."],
@@ -200,6 +222,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "gatilhos-mentais",
     titulo: "Gatilhos Mentais",
+    notion: "https://app.notion.com/p/316bbae8074c80e6a0f3e96e95b32dee",
     autor: "Gustavo Ferreira",
     categorias: ["Marketing", "Psicologia", "Vendas"],
     objetivos: ["O livro \"Gatilhos Mentais\" explora como usar princípios psicológicos para influenciar decisões e comportamentos, oferecendo técnicas práticas para aumentar a persuasão e a efetividade na comunicação."],
@@ -209,6 +232,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "habitos-atomicos",
     titulo: "Hábitos Atômicos",
+    notion: "https://app.notion.com/p/316bbae8074c809ebc48e5e37dfeb5a3",
     autor: "James Clear",
     categorias: ["Educação", "Produtividade", "Psicologia"],
     objetivos: ["Apresentar a importância dos hábitos na formação da identidade e na obtenção de resultados duradouros.", "Oferecer um guia prático sobre como implementar pequenas mudanças diárias que levam a grandes transformações ao longo do tempo.", "Destacar a relação entre hábitos, ambiente e motivação, e como ajustar esses fatores para facilitar a adoção de novos hábitos."],
@@ -218,6 +242,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "mais-esperto-que-o-diabo",
     titulo: "Mais esperto que o diabo",
+    notion: "https://app.notion.com/p/316bbae8074c8075877de79685213c6c",
     autor: "Napoleon Hill",
     categorias: ["Educação", "Mindset", "Psicologia"],
     objetivos: ["O livro \"Mais esperto que o diabo\" de Napoleon Hill explora os princípios do sucesso e da superação de medos e limitações pessoais. Através de uma conversa fictícia com o diabo, Hill revela como a procrastinação, a dúvida e a falta de determinação podem impedir as pessoas de alcançar seus objetivos. O autor busca ensinar os leitores a pensar de forma positiva e a desenvolver uma mentalidade de sucesso."],
@@ -227,6 +252,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "manual-de-persuasao-do-fbi",
     titulo: "Manual de Persuasão do FBI",
+    notion: "https://app.notion.com/p/316bbae8074c800b942bd58da8008f8a",
     autor: "Jack Schafer e Marvin Karlins",
     categorias: ["Comunicação", "Psicologia", "Vendas"],
     objetivos: ["O \"Manual de Persuasão do FBI\" tem como objetivo ensinar técnicas de persuasão utilizadas por agentes do FBI em negociações e interrogatórios. O livro explora métodos eficazes para influenciar comportamentos e decisões, enfatizando a importância da empatia, da escuta ativa e da construção de rapport."],
@@ -236,6 +262,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "marketing-5-0",
     titulo: "Marketing 5.0",
+    notion: "https://app.notion.com/p/316bbae8074c80e5b172ec1e358c15d4",
     autor: "Philip Kotler",
     categorias: ["Comunicação", "Marketing", "Tecnologia"],
     objetivos: ["Explorar as novas tendências e tecnologias que estão moldando o marketing moderno.", "Fornecer estratégias práticas para implementar uma abordagem centrada no ser humano.", "Ajudar empresas a se adaptarem à era digital e a entenderem o comportamento do consumidor contemporâneo."],
@@ -245,6 +272,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "mindset-a-psicologia-do-sucesso",
     titulo: "Mindset - A psicologia do Sucesso",
+    notion: "https://app.notion.com/p/316bbae8074c80b9ae3bf34a82fe0881",
     autor: "Carol S. Dweck",
     categorias: ["Educação", "Mindset", "Psicologia"],
     objetivos: ["Explorar a relação entre mentalidade e sucesso, destacando como uma mentalidade de crescimento pode impactar positivamente a trajetória pessoal e profissional.", "Oferecer estratégias práticas para mudar a mentalidade fixa para uma mentalidade de crescimento, promovendo a resiliência e a aprendizagem contínua.", "Demonstrar como a forma como pensamos sobre nossas habilidades e desafios pode moldar nossas experiências e resultados."],
@@ -254,6 +282,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "o-jeito-harvard-de-ser-feliz",
     titulo: "O jeito Harvard de ser feliz",
+    notion: "https://app.notion.com/p/316bbae8074c80ef905fdf5c3d718c61",
     autor: "Shawn Achor",
     categorias: ["Mindset", "Psicologia"],
     objetivos: ["O livro \"O jeito Harvard de ser feliz\" explora as práticas e pesquisas da Universidade de Harvard sobre a felicidade, oferecendo insights e ferramentas para cultivar uma vida mais feliz e satisfatória. Ele aborda a importância do bem-estar emocional, relacionamentos saudáveis e a mentalidade positiva."],
@@ -263,6 +292,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "o-poder-do-habito",
     titulo: "O Poder do Hábito",
+    notion: "https://app.notion.com/p/5fd40a59b78e4ce2a068f57050a4a73d",
     autor: "Charles Duhigg",
     categorias: ["Liderança", "Produtividade", "Psicologia"],
     objetivos: ["Explorar a ciência dos hábitos e como eles se formam.", "Demonstrar como os hábitos podem ser mudados e moldados para melhorar a vida pessoal e profissional.", "Fornecer um entendimento sobre o ciclo do hábito: deixa, rotina e recompensa."],
@@ -272,6 +302,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "os-7-habitos-das-pessoas-altamente-eficazes",
     titulo: "Os 7 hábitos das pessoas altamente eficazes",
+    notion: "https://app.notion.com/p/316bbae8074c8037a170d4d1181293cd",
     autor: "Stephen R. Covey",
     categorias: ["Liderança", "Mindset", "Produtividade"],
     objetivos: ["O livro \"Os 7 hábitos das pessoas altamente eficazes\" de Stephen R. Covey busca ajudar os leitores a desenvolver hábitos que promovam a eficácia pessoal e profissional. Os sete hábitos são projetados para transformar a maneira como as pessoas pensam, agem e interagem com os outros, levando a uma vida mais equilibrada e produtiva."],
@@ -281,6 +312,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "os-segredos-da-mente-milionaria",
     titulo: "Os segredos da mente milionária",
+    notion: "https://app.notion.com/p/316bbae8074c8016a573cbe33fec429d",
     autor: "T. Harv Eker",
     categorias: ["Finanças", "Mindset", "Negócios"],
     objetivos: ["O livro \"Os segredos da mente milionária\" explora as crenças e hábitos que distinguem os milionários das pessoas comuns. Ele busca ensinar os leitores a desenvolver uma mentalidade de riqueza, abordando questões como a importância de assumir riscos, a gestão do dinheiro e a definição de metas financeiras. A obra também enfatiza a necessidade de superar crenças limitantes e adotar uma mentalidade positiva em relação ao dinheiro."],
@@ -290,6 +322,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "pai-rico-pai-pobre",
     titulo: "Pai Rico Pai Pobre",
+    notion: "https://app.notion.com/p/316bbae8074c80188ea2de0bfa9ff595",
     autor: "Robert T. Kiyosaki e Sharon L. Lechter",
     categorias: ["Finanças", "Mindset", "Negócios"],
     objetivos: ["O livro \"Pai Rico, Pai Pobre\" de Robert Kiyosaki tem como principais objetivos ensinar sobre a importância da educação financeira, desafiar as crenças tradicionais sobre dinheiro e investimentos, e enfatizar a diferença entre ativos e passivos. Ele busca motivar os leitores a pensar de forma empreendedora e a buscar formas de aumentar sua riqueza através de investimentos inteligentes e criação de negócios."],
@@ -299,6 +332,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "paixao-por-vencer",
     titulo: "Paixão por vencer",
+    notion: "https://app.notion.com/p/316bbae8074c80b0a755d329a01cf16c",
     autor: "Jack Welch e Suzy Welch",
     categorias: ["Educação", "Mindset", "Produtividade"],
     objetivos: ["Explorar a importância da determinação e da resiliência na busca pela vitória.", "Inspirar os leitores a superar desafios e a manter uma mentalidade positiva.", "Fornecer estratégias práticas para alcançar objetivos pessoais e profissionais."],
@@ -308,6 +342,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "pense-e-enriqueca",
     titulo: "Pense e Enriqueça",
+    notion: "https://app.notion.com/p/316bbae8074c80f19a1dc0decf22a4b4",
     autor: "Napoleon Hill",
     categorias: ["Educação", "Finanças", "Mindset"],
     objetivos: ["O livro \"Pense e Enriqueça\" de Napoleon Hill é um guia para alcançar o sucesso financeiro e pessoal. Ele explora a importância do pensamento positivo, da definição de metas claras e da perseverança, além de apresentar princípios que, segundo Hill, são fundamentais para acumular riqueza."],
@@ -317,6 +352,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "receita-previsivel",
     titulo: "Receita Previsível",
+    notion: "https://app.notion.com/p/362bbae8074c80c59ef8f8a814bb253d",
     autor: "Aaron Ross e Marylou Tyler",
     categorias: ["Marketing", "Negócios", "Vendas"],
     objetivos: ["Apresentar a metodologia de vendas outbound que ajudou a Salesforce a crescer, baseada em prospecção organizada.", "Defender a divisão de funções no time comercial (prospecção, qualificação e fechamento) para ganhar escala.", "Mostrar como criar um processo previsível de geração de receita, com métricas e rotinas claras."],
@@ -327,6 +363,7 @@ export const LIVROS: Livro[] = [
   {
     slug: "retorica",
     titulo: "Retórica",
+    notion: "https://app.notion.com/p/316bbae8074c80f18095efbc5c5c3b85",
     autor: "Aristóteles",
     categorias: ["Comunicação", "Educação", "Vendas"],
     objetivos: ["O livro \"Retórica\" explora os princípios fundamentais da arte da persuasão, discutindo técnicas e estratégias que oradores e escritores podem utilizar para comunicar suas ideias de forma eficaz. Ele analisa a importância da retórica na argumentação e na construção de discursos influentes, oferecendo insights sobre como cativar e persuadir diferentes públicos."],
