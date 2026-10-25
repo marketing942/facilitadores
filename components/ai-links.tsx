@@ -49,7 +49,7 @@ const IAS = [
 
 export function AiLinks({ className = "" }: { className?: string }) {
   return (
-    <ul className={`flex items-center gap-1 ${className}`} aria-label="Atalhos de IA">
+    <ul data-tour="ia" className={`flex items-center gap-1 ${className}`} aria-label="Atalhos de IA">
       {IAS.map((ia) => (
         <li key={ia.nome}>
           <a

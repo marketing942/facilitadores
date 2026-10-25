@@ -10,7 +10,7 @@ export default function Home() {
         <p className="text-base text-ink-soft">Ferramentas e informações internas, num só lugar</p>
       </div>
 
-      <div className="space-y-7 sm:space-y-10">
+      <div data-tour="home" className="space-y-7 sm:space-y-10">
         {GROUPS.map((group) => (
           <section key={group.id} aria-labelledby={`g-${group.id}`}>
             <div className="mb-3 flex items-baseline justify-between gap-3 sm:mb-4">

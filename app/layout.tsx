@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Oxanium, Rajdhani } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import { Crosshair } from "@/components/crosshair";
+import { Tour } from "@/components/tour";
 import "./globals.css";
 
 // Mesmas três fontes do site novo: Inter (corpo), Oxanium (títulos), Rajdhani (rótulos).
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* espaço para a barra de abas fixa do celular */}
         <div aria-hidden className="h-[76px] shrink-0 lg:hidden print:hidden" />
         <Crosshair />
+        <Tour />
       </body>
     </html>
   );

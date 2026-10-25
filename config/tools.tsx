@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import {
   BookOpen,
   GraduationCap,
+  HeartPulse,
   Handshake,
   Share2,
   Store,
@@ -171,7 +172,7 @@ export const GROUPS: Group[] = [
   {
     id: "servicos",
     label: "Serviços",
-    description: "Comida, academia, transporte, finanças, metas, educação e benefícios para a equipe",
+    description: "Comida, academia, saúde, transporte, finanças, metas, educação e benefícios",
     icon: <Store className={icon} />,
     tools: [
       {
@@ -187,6 +188,14 @@ export const GROUPS: Group[] = [
         title: "Academia: Selfit",
         description: "Plano corporativo Selfit e a unidade mais perto de você",
         icon: <Dumbbell className={icon} />,
+      },
+      {
+        href: "https://saude.cppem.com.br/login",
+        label: "Saúde",
+        title: "CPPEM Saúde",
+        description: "Nosso app de saúde, bem-estar e conquistas",
+        icon: <HeartPulse className={icon} />,
+        externo: true,
       },
       {
         href: "/transporte",

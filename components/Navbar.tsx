@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { GROUPS, groupOf, linkProps } from "@/config/tools";
 import { AiLinks } from "@/components/ai-links";
+import { TourButton } from "@/components/tour";
 
 
 export default function Navbar() {
@@ -53,7 +54,7 @@ export default function Navbar() {
               <span className="max-[399px]:hidden">Utilitários </span>CPPEM
             </Link>
 
-            <div className="ml-auto hidden items-center gap-1.5 lg:flex xl:gap-2">
+            <div data-tour="menu" className="ml-auto hidden items-center gap-1.5 lg:flex xl:gap-2">
 
               {GROUPS.map((group) => {
                 const isOpen = open === group.id;
@@ -62,6 +63,7 @@ export default function Navbar() {
                   <div key={group.id} className="relative">
                     <button
                       type="button"
+                      data-tour={`grupo-${group.id}`}
                       aria-expanded={isOpen}
                       aria-haspopup="true"
                       onClick={() => setOpen(isOpen ? null : group.id)}
@@ -98,6 +100,7 @@ export default function Navbar() {
               })}
             </div>
             <AiLinks className="shrink-0 border-l border-line pl-1.5 lg:pl-2" />
+            <TourButton />
           </div>
         </div>
       </nav>
@@ -126,6 +129,7 @@ export default function Navbar() {
       )}
 
       <nav
+        data-tour="menu"
         aria-label="Abas"
         className="fixed inset-x-0 bottom-0 z-50 border-t border-line-active bg-canvas/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden"
       >
@@ -136,6 +140,7 @@ export default function Navbar() {
               <li key={group.id}>
                 <button
                   type="button"
+                  data-tour={`grupo-${group.id}`}
                   aria-expanded={open === group.id}
                   onClick={() => setOpen(open === group.id ? null : group.id)}
                   className={`flex min-h-[54px] w-full flex-col items-center justify-center gap-0.5 rounded-xl border px-0 transition-colors min-[390px]:px-1 [&_svg]:h-5 [&_svg]:w-5 ${
