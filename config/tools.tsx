@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import {
+  BookOpen,
   Briefcase,
   Building2,
   Calculator,
@@ -107,6 +108,21 @@ export const GROUPS: Group[] = [
         title: "Cancelamento e multa rescisória",
         description: "Multa rescisória, orçamento de restituição, modelo de demonstrativo, sistemas e tutoriais",
         icon: <FileX2 className={icon} />,
+      },
+    ],
+  },
+  {
+    id: "estudo",
+    label: "Estudo",
+    description: "Material de estudo e desenvolvimento do time",
+    icon: <BookOpen className={icon} />,
+    tools: [
+      {
+        href: "/biblioteca",
+        label: "Biblioteca",
+        title: "Biblioteca",
+        description: "Livros de estudo do time, com capa, resumo e para quem cada um é indicado",
+        icon: <BookOpen className={icon} />,
       },
     ],
   },

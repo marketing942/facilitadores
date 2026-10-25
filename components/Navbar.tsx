@@ -132,7 +132,7 @@ export default function Navbar() {
         aria-label="Abas"
         className="fixed inset-x-0 bottom-0 z-50 border-t border-line-active bg-canvas/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg sm:hidden"
       >
-        <ul className="grid grid-cols-4 gap-1 px-2 pt-1.5 pb-1.5">
+        <ul className="grid grid-cols-5 gap-1 px-2 pt-1.5 pb-1.5">
           <li>
             <Link
               href="/"
