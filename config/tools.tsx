@@ -81,8 +81,8 @@ export const GROUPS: Group[] = [
     ],
   },
   {
-    id: "equipe",
-    label: "Equipe",
+    id: "geral",
+    label: "Geral",
     description: "Wi-Fi e dados da empresa para o dia a dia",
     icon: <Users className={icon} />,
     tools: [
@@ -103,13 +103,13 @@ export const GROUPS: Group[] = [
     ],
   },
   {
-    id: "acessos",
-    label: "Acessos",
-    description: "Sistemas e links internos da empresa",
+    id: "ferramentas",
+    label: "Ferramentas",
+    description: "Sistemas e links internos, por setor",
     icon: <Wrench className={icon} />,
     tools: [
       {
-        href: "/acessos",
+        href: "/ferramentas",
         label: "Sistemas e links",
         title: "Sistemas e links",
         description: "Todos os sistemas e links internos, organizados por setor",

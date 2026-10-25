@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   staticPageGenerationTimeout: 300,
   // há outros package-lock.json nas pastas acima; fixa a raiz neste projeto
   turbopack: { root: path.resolve(".") },
+  // a aba "Acessos" mudou de nome; o endereço antigo continua funcionando
+  async redirects() {
+    return [{ source: "/acessos", destination: "/ferramentas", permanent: true }];
+  },
   // Sem cacheComponents: o catálogo usa unstable_cache (Data Cache da Vercel), que é
   // compartilhado entre instâncias e não tem o limite de 50s do 'use cache' no build.
 };

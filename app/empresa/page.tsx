@@ -37,7 +37,7 @@ export default function EmpresaPage() {
     <main className="mx-auto w-full max-w-4xl px-4 pb-4 pt-8 sm:px-6 sm:pb-12">
       <PageHeader
         crumb="Dados da empresa"
-        eyebrow="Equipe · Grupo CPPEM"
+        eyebrow="Geral · Grupo CPPEM"
         title={<>Dados da <span className="text-gold-light">empresa</span></>}
       />
 

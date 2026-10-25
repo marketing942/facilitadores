@@ -19,7 +19,7 @@ export default async function WifiPage() {
 
   return (
     <main className="mx-auto w-full max-w-4xl px-4 pb-4 pt-8 sm:px-6 sm:pb-12">
-      <PageHeader crumb="Wi-Fi" eyebrow="Equipe · Grupo CPPEM" title={<>Wi-Fi <span className="text-gold-light">da CPPEM</span></>} />
+      <PageHeader crumb="Wi-Fi" eyebrow="Geral · Grupo CPPEM" title={<>Wi-Fi <span className="text-gold-light">da CPPEM</span></>} />
 
       <section aria-labelledby="visitantes" className="rounded-2xl border border-line bg-surface p-4 sm:p-6">
         <h2 id="visitantes" className="ui-label text-sm text-gold-light">

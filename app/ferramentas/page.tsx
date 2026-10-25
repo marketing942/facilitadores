@@ -12,7 +12,7 @@ export default function AcessosPage() {
     <main className="mx-auto w-full max-w-4xl px-4 pb-4 pt-8 sm:px-6 sm:pb-12">
       <PageHeader
         crumb="Sistemas e links"
-        eyebrow="Acessos · Grupo CPPEM"
+        eyebrow="Ferramentas · Grupo CPPEM"
         title={<>Sistemas <span className="text-gold-light">e links</span></>}
       />
 

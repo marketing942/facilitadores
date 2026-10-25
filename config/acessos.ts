@@ -9,6 +9,18 @@ export type Acesso = { nome: string; descricao: string; url: string; tags: Tag[]
 
 export const ACESSOS: Acesso[] = [
   {
+    nome: "Meu Hub Notion",
+    descricao: "Hub pessoal de cada colaborador, no Notion.",
+    url: "https://app.notion.com/p/cppem/379bbae8074c807e9a2fec244cdac258?v=68fbbae8074c832f9f5108cd861cc2f9&source=copy_link",
+    tags: ["Todas"],
+  },
+  {
+    nome: "G4 Skills vitalício",
+    descricao: "Plataforma de cursos G4 Business (acesso vitalício).",
+    url: "https://online.g4business.com/",
+    tags: ["Todas"],
+  },
+  {
     nome: "Regras e processos",
     descricao: "Regras e processos da empresa, no Notion.",
     url: "https://app.notion.com/p/cppem/REGRAS-E-PROCESSOS-3abbbae8074c8048a8a3e95195e4144f?source=copy_link",
