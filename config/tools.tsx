@@ -46,6 +46,28 @@ export const HOME_NAV = {
 
 export const GROUPS: Group[] = [
   {
+    id: "geral",
+    label: "Geral",
+    description: "Wi-Fi e dados da empresa para o dia a dia",
+    icon: <Users className={icon} />,
+    tools: [
+      {
+        href: "/wifi",
+        label: "Wi-Fi",
+        title: "Wi-Fi",
+        description: "Rede e QR Code para visitantes e senhas das redes internas",
+        icon: <Wifi className={icon} />,
+      },
+      {
+        href: "/empresa",
+        label: "Dados da empresa",
+        title: "Dados da empresa",
+        description: "CNPJ, chave Pix, endereço e telefones, prontos para copiar",
+        icon: <Building2 className={icon} />,
+      },
+    ],
+  },
+  {
     id: "comercial",
     label: "Comercial",
     description: "Atendimento, links de pagamento e calculadoras de venda",
@@ -85,28 +107,6 @@ export const GROUPS: Group[] = [
         title: "Cancelamento e multa rescisória",
         description: "Multa rescisória, orçamento de restituição, modelo de demonstrativo, sistemas e tutoriais",
         icon: <FileX2 className={icon} />,
-      },
-    ],
-  },
-  {
-    id: "geral",
-    label: "Geral",
-    description: "Wi-Fi e dados da empresa para o dia a dia",
-    icon: <Users className={icon} />,
-    tools: [
-      {
-        href: "/wifi",
-        label: "Wi-Fi",
-        title: "Wi-Fi",
-        description: "Rede e QR Code para visitantes e senhas das redes internas",
-        icon: <Wifi className={icon} />,
-      },
-      {
-        href: "/empresa",
-        label: "Dados da empresa",
-        title: "Dados da empresa",
-        description: "CNPJ, chave Pix, endereço e telefones, prontos para copiar",
-        icon: <Building2 className={icon} />,
       },
     ],
   },
