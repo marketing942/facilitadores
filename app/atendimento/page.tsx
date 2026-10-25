@@ -4,7 +4,7 @@ import { SERVICE_LINKS } from "@/config/atendimento";
 import AtendimentoExplorer from "./atendimento-explorer";
 
 export const metadata: Metadata = {
-  title: "Links de atendimento e suporte | Time Comercial",
+  title: "Links de atendimento e suporte | Utilitários CPPEM",
   description: "Todos os links de atendimento e suporte do Grupo CPPEM, por empresa e por tipo, prontos para copiar.",
 };
 

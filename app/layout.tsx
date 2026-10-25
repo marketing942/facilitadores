@@ -10,8 +10,8 @@ const oxanium = Oxanium({ variable: "--font-display", subsets: ["latin"] });
 const rajdhani = Rajdhani({ variable: "--font-ui", subsets: ["latin"], weight: ["500", "600", "700"] });
 
 export const metadata: Metadata = {
-  title: "Time Comercial | CPPEM",
-  description: "Links de pagamento da Guru e calculadoras do time comercial. Uso interno da equipe.",
+  title: "Utilitários CPPEM",
+  description: "Ferramentas e informações internas da equipe CPPEM: links, calculadoras, Wi-Fi e dados da empresa.",
   robots: { index: false, follow: false },
 };
 

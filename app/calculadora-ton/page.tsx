@@ -3,7 +3,7 @@ import Link from "next/link";
 import CalculadoraTon from "@/components/CalculadoraTon";
 
 export const metadata: Metadata = {
-  title: "Calculadora Maquineta TON | Time Comercial",
+  title: "Calculadora Maquineta TON | Utilitários CPPEM",
   description:
     "Simule taxas da maquineta TON por plano (Super, Turbo, Max) e forma de pagamento — Pix, débito e crédito parcelado.",
 };

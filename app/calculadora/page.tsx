@@ -3,7 +3,7 @@ import Link from "next/link";
 import CalculadoraStone from "@/components/CalculadoraStone";
 
 export const metadata: Metadata = {
-  title: "Calculadora Guru + Stone | Time Comercial",
+  title: "Calculadora Guru + Stone | Utilitários CPPEM",
   description: "Simule juros, parcelas e valor líquido recebido via Guru + Stone",
 };
 

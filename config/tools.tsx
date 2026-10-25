@@ -1,99 +1,125 @@
 import type { ReactNode } from "react";
+import {
+  Briefcase,
+  Building2,
+  Calculator,
+  CreditCard,
+  Home,
+  Link2,
+  MessageCircle,
+  Users,
+  Wifi,
+  Wrench,
+} from "lucide-react";
 
-// As ferramentas do sistema: usadas na página inicial e na barra de navegação.
-// Todas seguem a identidade dourada do sistema (botões da navbar e ícone dos cartões). As
-// classes ficam escritas por extenso para o Tailwind enxergá-las.
+// O sistema de utilitários da equipe. Cada ferramenta pertence a um GRUPO; o menu do topo (desktop),
+// a barra de baixo (celular) e a página inicial se montam sozinhos a partir desta lista. Para criar
+// uma aba nova: acrescente a ferramenta no grupo certo (ou crie um grupo, se for um assunto novo).
 
 export type Tool = {
   href: string;
-  /** Texto curto, no menu */
+  /** Texto do menu */
   label: string;
-  /** Rótulo da barra de abas do celular (cabe sob o ícone) */
-  shortLabel: string;
   title: string;
   description: string;
   icon: ReactNode;
-  /** Botão do menu: parado, com o mouse e na aba aberta */
-  nav: string;
-  navActive: string;
-  /** Fundo e cor do ícone no cartão da página inicial */
-  bubble: string;
 };
 
-const stroke = { fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 2 } as const;
+export type Group = {
+  id: string;
+  /** Nome do grupo no menu */
+  label: string;
+  /** Resumo, na página inicial */
+  description: string;
+  icon: ReactNode;
+  tools: Tool[];
+};
+
+const icon = "h-6 w-6";
 
 export const HOME_NAV = {
   href: "/",
   label: "Início",
-  shortLabel: "Início",
-  icon: (
-    <svg className="h-5 w-5" {...stroke}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 10.5L12 3l9 7.5M5 9.5V20h5v-5h4v5h5V9.5" />
-    </svg>
-  ),
-  nav: "border-gold/35 bg-gold/10 text-gold-light hover:bg-gold/20",
-  navActive: "border-gold-light bg-gold/25 text-gold-pale",
+  icon: <Home className={icon} />,
 };
 
-export const TOOLS: Tool[] = [
+export const GROUPS: Group[] = [
   {
-    href: "/atendimento",
-    label: "Atendimento",
-    shortLabel: "Atend.",
-    title: "Links de atendimento e suporte",
-    description: "Todos os links de atendimento e suporte, por empresa e por tipo (humano ou IA), prontos para copiar",
-    icon: (
-      <svg className="h-6 w-6" {...stroke}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-      </svg>
-    ),
-    nav: "border-gold/35 bg-gold/10 text-gold-light hover:bg-gold/20",
-    navActive: "border-gold-light bg-gold/25 text-gold-pale",
-    bubble: "bg-gold/10 text-gold-light group-hover:bg-gold/20",
+    id: "comercial",
+    label: "Comercial",
+    description: "Atendimento, links de pagamento e calculadoras de venda",
+    icon: <Briefcase className={icon} />,
+    tools: [
+      {
+        href: "/atendimento",
+        label: "Atendimento",
+        title: "Links de atendimento e suporte",
+        description: "Todos os links de atendimento e suporte, por BU e por tipo (humano ou IA), prontos para copiar",
+        icon: <MessageCircle className={icon} />,
+      },
+      {
+        href: "/links",
+        label: "Links Guru",
+        title: "Links de pagamento Guru",
+        description: "Busque o produto e copie o link de pagamento. As ofertas ativas da Guru aparecem sozinhas.",
+        icon: <Link2 className={icon} />,
+      },
+      {
+        href: "/calculadora",
+        label: "Guru + Stone",
+        title: "Calculadora Guru + Stone",
+        description: "Simule juros, parcelas e o valor líquido recebido via Guru + Stone",
+        icon: <Calculator className={icon} />,
+      },
+      {
+        href: "/calculadora-ton",
+        label: "TON",
+        title: "Calculadora Maquineta TON",
+        description: "Simule taxas da TON por plano (Super, Turbo, Max) em Pix, débito e crédito parcelado",
+        icon: <CreditCard className={icon} />,
+      },
+    ],
   },
   {
-    href: "/links",
-    label: "Links",
-    shortLabel: "Links",
-    title: "Links de pagamento Guru",
-    description: "Busque o produto e copie o link de pagamento. As ofertas ativas da Guru aparecem sozinhas.",
-    icon: (
-      <svg className="h-6 w-6" {...stroke}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-      </svg>
-    ),
-    nav: "border-gold/35 bg-gold/10 text-gold-light hover:bg-gold/20",
-    navActive: "border-gold-light bg-gold/25 text-gold-pale",
-    bubble: "bg-gold/10 text-gold-light group-hover:bg-gold/20",
+    id: "equipe",
+    label: "Equipe",
+    description: "Wi-Fi e dados da empresa para o dia a dia",
+    icon: <Users className={icon} />,
+    tools: [
+      {
+        href: "/wifi",
+        label: "Wi-Fi",
+        title: "Wi-Fi",
+        description: "Rede e QR Code para visitantes e senhas das redes internas",
+        icon: <Wifi className={icon} />,
+      },
+      {
+        href: "/empresa",
+        label: "Dados da empresa",
+        title: "Dados da empresa",
+        description: "CNPJ, chave Pix, endereço e telefones, prontos para copiar",
+        icon: <Building2 className={icon} />,
+      },
+    ],
   },
   {
-    href: "/calculadora",
-    label: "Guru + Stone",
-    shortLabel: "Guru",
-    title: "Calculadora Guru + Stone",
-    description: "Simule juros, parcelas e o valor líquido recebido via Guru + Stone",
-    icon: (
-      <svg className="h-6 w-6" {...stroke}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-      </svg>
-    ),
-    nav: "border-gold/35 bg-gold/10 text-gold-light hover:bg-gold/20",
-    navActive: "border-gold-light bg-gold/25 text-gold-pale",
-    bubble: "bg-gold/10 text-gold-light group-hover:bg-gold/20",
-  },
-  {
-    href: "/calculadora-ton",
-    label: "TON",
-    shortLabel: "TON",
-    title: "Calculadora Maquineta TON",
-    description: "Simule taxas da TON por plano (Super, Turbo, Max) em Pix, débito e crédito parcelado",
-    icon: (
-      <svg className="h-6 w-6" {...stroke}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-      </svg>
-    ),
-    nav: "border-gold/35 bg-gold/10 text-gold-light hover:bg-gold/20",
-    navActive: "border-gold-light bg-gold/25 text-gold-pale",
-    bubble: "bg-gold/10 text-gold-light group-hover:bg-gold/20",
+    id: "acessos",
+    label: "Acessos",
+    description: "Sistemas e links internos da empresa",
+    icon: <Wrench className={icon} />,
+    tools: [
+      {
+        href: "/acessos",
+        label: "Sistemas e links",
+        title: "Sistemas e links",
+        description: "Todos os sistemas e links internos, organizados por setor",
+        icon: <Wrench className={icon} />,
+      },
+    ],
   },
 ];
+
+/** Grupo ao qual o endereço pertence (null na página inicial). */
+export function groupOf(pathname: string): Group | null {
+  return GROUPS.find((group) => group.tools.some((tool) => pathname.startsWith(tool.href))) ?? null;
+}
