@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 
+// Aba Como estudar (/como-estudar, grupo Estudo): a pirâmide de aprendizagem e passos práticos.
 export const metadata: Metadata = {
   title: "Como estudar | Utilitários CPPEM",
   description: "A pirâmide de aprendizagem: quanto mais ativo o estudo, mais você retém.",

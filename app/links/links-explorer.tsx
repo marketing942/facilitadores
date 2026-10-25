@@ -8,6 +8,7 @@ import { copyText, Highlight, normalize } from "@/components/explorer-kit";
 import { FilterAction, FilterPanel, FilterSearch, FilterSelect } from "@/components/filter-panel";
 import { refreshCatalog } from "./actions";
 
+// Lista dos Links Guru: busca, filtros, favoritos e cópia do link de pagamento. Os dados chegam prontos de lib/catalog.ts.
 const BRANDS = ["CPPEM", "Colégio", "Unicive"] as const;
 const FAVORITES_KEY = "links-cppem:favoritos";
 

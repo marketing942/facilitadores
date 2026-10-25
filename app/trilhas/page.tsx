@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { ExternalLink } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { AREAS, G4_URL, TRILHAS } from "@/config/trilhas";
-import TrilhasExplorer from "./trilhas-explorer";
+import TrilhasExplorer from "@/components/trilhas-explorer";
 
+// Aba Trilhas G4 Skills (/trilhas, grupo Estudo). Dados em config/trilhas.ts; a lista é components/trilhas-explorer.tsx.
 export const metadata: Metadata = {
   title: "Trilhas G4 Skills | Utilitários CPPEM",
   description: "Trilhas de cursos do G4 Skills por área, com o passo a passo e o link de cada curso.",

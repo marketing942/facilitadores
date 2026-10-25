@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/page-header";
 import { BENEFICIO, CARUARU, rotaUrl } from "@/config/academia";
 import MaisPerto from "./mais-perto";
 
+// Aba Academia (/academia, grupo Serviços): Plano Selfit e unidades de Caruaru. Dados em config/academia.ts.
 export const metadata: Metadata = {
   title: "Academia: Selfit | Utilitários CPPEM",
   description: "Plano Plus Corporativo Selfit para alunos e colaboradores do CPPEM, com a unidade mais perto de você.",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import CalculadoraTon from "@/components/CalculadoraTon";
 
+// Aba TON (/calculadora-ton, grupo Comercial). A lógica fica em components/CalculadoraTon.tsx.
 export const metadata: Metadata = {
   title: "Calculadora Maquineta TON | Utilitários CPPEM",
   description:

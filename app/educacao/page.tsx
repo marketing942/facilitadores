@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { BookOpenCheck, ExternalLink, GraduationCap, School } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 
+// Aba Educação (/educacao, grupo Serviços): Supletivo, Unicive e Colégio.
 export const metadata: Metadata = {
   title: "Educação | Utilitários CPPEM",
   description: "Supletivo, faculdade EAD com bolsa para colaboradores e colégio para os filhos.",

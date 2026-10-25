@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/page-header";
 import { SocialIcon } from "@/components/social-icon";
 import { REDES } from "@/config/redes";
 
+// Aba Redes sociais (/redes-sociais, grupo Geral): redes de cada BU. Dados em config/redes.ts.
 export const metadata: Metadata = {
   title: "Redes sociais | Utilitários CPPEM",
   description: "Todas as redes sociais de cada BU da CPPEM, prontas para abrir e copiar.",

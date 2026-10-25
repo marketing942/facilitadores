@@ -6,6 +6,7 @@ import { CATEGORIAS, type Livro } from "@/config/biblioteca";
 import { Highlight, normalize } from "@/components/explorer-kit";
 import { FilterAction, FilterPanel, FilterSearch, FilterSelect } from "@/components/filter-panel";
 
+// Prateleira da Biblioteca: busca, filtro por tema e a ficha de cada livro (modal).
 function Capa({ livro, className = "" }: { livro: Livro; className?: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element

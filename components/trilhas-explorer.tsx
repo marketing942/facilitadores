@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronRight, ExternalLink, X } from "lucide-react";
 import type { Trilha } from "@/config/trilhas";
 
+// Lista de trilhas (G4 Skills e Internas): cartões por área, filtro e o passo a passo de cada trilha em modal.
 function Detalhe({ trilha, onClose, item, aviso, rotuloLink }: { trilha: Trilha; onClose: () => void; item: string; aviso: string; rotuloLink: string }) {
   const fechar = useRef<HTMLButtonElement>(null);
 

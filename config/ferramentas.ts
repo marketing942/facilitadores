@@ -1,13 +1,13 @@
-// Sistemas e links internos, numa aba só. As tags (setor) servem para organizar e filtrar.
+// Aba Ferramentas (/ferramentas): sistemas e links internos, numa aba só. As tags (setor) servem para organizar e filtrar.
 // Para incluir um acesso novo, acrescente uma linha aqui. A tag "Todas" faz o item aparecer em qualquer filtro.
 
 export const SETORES = ["Comercial", "Gestão", "Marketing", "Pedagógico", "RH", "Tecnologia"] as const;
 export type Setor = (typeof SETORES)[number];
 export type Tag = Setor | "Todas";
 
-export type Acesso = { nome: string; descricao: string; url: string; tags: Tag[] };
+export type Ferramenta = { nome: string; descricao: string; url: string; tags: Tag[] };
 
-export const ACESSOS: Acesso[] = [
+export const FERRAMENTAS: Ferramenta[] = [
   {
     nome: "Vagas de trabalho",
     descricao: "Página pública de vagas da CPPEM, para enviar a quem quer trabalhar com a gente.",
@@ -79,11 +79,5 @@ export const ACESSOS: Acesso[] = [
     descricao: "Login do painel de administração do site de vagas de trabalho.",
     url: "https://vagas.cppem.com.br/admin/login",
     tags: ["RH"],
-  },
-  {
-    nome: "Livro dos Recordes",
-    descricao: "Livro dos Recordes da equipe.",
-    url: "https://links.cppem.com.br/recordes-equipe",
-    tags: ["Todas"],
   },
 ];

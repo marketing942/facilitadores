@@ -4,6 +4,7 @@ import { useState } from "react";
 import { LocateFixed, MapPin, Navigation } from "lucide-react";
 import { rotaUrl, SELFIT_SITE, type Unidade } from "@/config/academia";
 
+// Botão "Encontrar a Selfit mais perto de mim": usa a localização do navegador e public/selfit-unidades.json.
 type Estado =
   | { fase: "parado" }
   | { fase: "buscando" }

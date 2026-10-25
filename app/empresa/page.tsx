@@ -4,6 +4,7 @@ import { CopyButton } from "@/components/copy-button";
 import { PageHeader } from "@/components/page-header";
 import { ENDERECO_COMPLETO, EMPRESA, MAPS_URL, TELEFONES } from "@/config/empresa";
 
+// Aba Dados da empresa (/empresa, grupo Geral): CNPJ, Pix, endereço e telefones. Dados em config/empresa.ts.
 export const metadata: Metadata = {
   title: "Dados da empresa | Utilitários CPPEM",
   description: "CNPJ, chave Pix e endereço da CPPEM, prontos para copiar.",

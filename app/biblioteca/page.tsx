@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/page-header";
 import { LIVROS } from "@/config/biblioteca";
 import BibliotecaExplorer from "./biblioteca-explorer";
 
+// Aba Biblioteca (/biblioteca, grupo Estudo). Dados em config/biblioteca.ts; capas em public/biblioteca/.
 export const metadata: Metadata = {
   title: "Biblioteca | Utilitários CPPEM",
   description: "Livros de estudo do time, com capa, resumo e para quem cada um é indicado.",

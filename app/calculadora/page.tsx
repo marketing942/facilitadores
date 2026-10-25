@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import CalculadoraStone from "@/components/CalculadoraStone";
 
+// Aba Guru + Stone (/calculadora, grupo Comercial). A lógica fica em components/CalculadoraStone.tsx.
 export const metadata: Metadata = {
   title: "Calculadora Guru + Stone | Utilitários CPPEM",
   description: "Simule juros, parcelas e valor líquido recebido via Guru + Stone",

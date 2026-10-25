@@ -1,107 +1,122 @@
-# Time Comercial · Grupo CPPEM
+# Utilitários CPPEM
 
-Sistema interno do time comercial, com quatro ferramentas escolhidas na página inicial:
+Sistema interno da equipe CPPEM: links, calculadoras, Wi-Fi, dados da empresa, estudo e benefícios,
+num só lugar. Feito em **Next.js 16 (App Router) + React 19 + Tailwind CSS 4**, em TypeScript.
 
-| Rota | Ferramenta |
-| --- | --- |
-| `/links` | **Links de pagamento Guru** — busca o produto e copia o link (detalhes abaixo) |
-| `/calculadora` | **Calculadora Guru + Stone** — parcelas, juros repassados e valor líquido recebido |
-| `/calculadora-ton` | **Calculadora Maquineta TON** — taxas por plano (Super, Turbo, Max) |
-| `/atendimento` | **Links de atendimento e suporte** — todos os canais, filtrados por empresa, tipo (humano ou IA) e finalidade |
+- Repositório: https://github.com/marketing942/facilitadores (branch `main`)
+- Publicação: projeto `ferramentas-comercial` na Vercel. Cada push na `main` publica sozinho.
 
-As calculadoras não usam banco de dados nem a API da Guru: cada pessoa calcula no próprio navegador
-(os últimos valores digitados ficam no `localStorage` dela). No computador, o cursor vira uma mira
-(`components/crosshair.tsx`); em celular e tablet nada muda.
+## Como o sistema está organizado
 
-## Links de pagamento
+O menu tem **5 grupos**, e cada grupo tem **abas**. Tudo isso sai de um único arquivo,
+[`config/tools.tsx`](config/tools.tsx): o menu do topo, a barra de baixo do celular, os cartões da
+página inicial e os textos do tutorial guiado se montam sozinhos a partir dele.
 
-Página interna onde a equipe busca um produto e copia o link de pagamento.
-Os dados vêm **direto da API do Digital Manager Guru** — sem webhook, sem planilha e sem
-cadastro manual de link. Toda oferta ativa na Guru aparece aqui sozinha.
+| Grupo | Aba | Rota | Dados |
+| --- | --- | --- | --- |
+| Geral | Wi-Fi | `/wifi` | `config/wifi.ts` |
+| Geral | Dados da empresa | `/empresa` | `config/empresa.ts` |
+| Geral | Livro dos Recordes | link externo | `config/tools.tsx` |
+| Geral | Redes sociais | `/redes-sociais` | `config/redes.ts` |
+| Comercial | Atendimento | `/atendimento` | `config/atendimento.ts` |
+| Comercial | Links Guru | `/links` | API da Guru (`lib/guru.ts`, `lib/catalog.ts`) |
+| Comercial | Guru + Stone | `/calculadora` | `components/CalculadoraStone.tsx` |
+| Comercial | TON | `/calculadora-ton` | `components/CalculadoraTon.tsx` |
+| Comercial | Cancelamento | `/cancelamento` | `components/CalculadoraCancelamento.tsx` |
+| Estudo | Como estudar | `/como-estudar` | na própria página |
+| Estudo | Trilhas G4 Skills | `/trilhas` | `config/trilhas.ts` |
+| Estudo | Trilhas Internas | `/trilhas-internas` | `config/trilhas-internas.ts` |
+| Estudo | Biblioteca | `/biblioteca` | `config/biblioteca.ts` + capas em `public/biblioteca/` |
+| Serviços | Food Service | `/food-service` | `config/food.ts` |
+| Serviços | Academia | `/academia` | `config/academia.ts` + `public/selfit-unidades.json` |
+| Serviços | Saúde | link externo | `config/tools.tsx` |
+| Serviços | Transporte | `/transporte` | `config/transporte.ts` |
+| Serviços | Finanças | `/financas` | na própria página |
+| Serviços | Metas e organização | `/metas` | na própria página |
+| Serviços | Educação | `/educacao` | na própria página |
+| Serviços | Parceiros | link externo | `config/tools.tsx` |
+| Ferramentas | Sistemas e links | `/ferramentas` | `config/ferramentas.ts` |
 
-## Onde roda
+Endereços antigos que continuam funcionando (`next.config.ts`): `/acessos` → `/ferramentas` e
+`/parceiros` → site de parceiros.
 
-- Produção: https://links-pagamento-guru.vercel.app (projeto Vercel `links-pagamento-guru`)
-- Repositório: https://github.com/marketing942/links_guru — cada push na `main` publica sozinho.
+## Pastas
 
-## Como funciona
+```
+app/            uma pasta por aba (a rota é o nome da pasta); page.tsx é a página
+  layout.tsx    casca comum: fontes, menu, mira do mouse e tutorial
+  globals.css   cores da marca (tokens), classes comuns (gold-button, ghost-button, eyebrow...) e impressão
+config/         DADOS editáveis: listas, links, textos, horários. Comece por aqui para mudar conteúdo
+components/     peças reutilizadas por várias abas (menu, botões, filtros, calculadoras, tutorial)
+lib/            lógica sem tela: API da Guru, catálogo, relógio de Recife
+hooks/          hooks de React (localStorage das calculadoras)
+public/         imagens e arquivos estáticos (capas, logos, unidades da Selfit)
+```
 
-1. `lib/guru.ts` lê a API da Guru (`/products` e `/products/{id}/offers`). São ~280 chamadas
-   por sincronização, cerca de 30 segundos.
-2. `lib/catalog.ts` transforma isso em uma lista pronta para a tela (marca, valor, parcelas,
-   assinatura, destaque) e guarda o resultado com `'use cache'`.
-3. A página é pré-renderizada e **se atualiza sozinha a cada 10 minutos**, em segundo plano:
-   quem acessa nunca espera a Guru.
-4. O botão **Atualizar agora** derruba esse cache (`updateTag`) e recarrega na hora — use
-   depois de criar ou alterar uma oferta na Guru.
+## Como fazer as mudanças mais comuns
 
-### Cota da Guru
+**Trocar um texto, link, telefone ou horário:** edite o arquivo de `config/` da aba (tabela acima).
+Cada arquivo explica no topo o que guarda.
 
-A API libera 360 chamadas por janela de ~60 segundos e uma sincronização usa ~280. Por isso
-o cliente acompanha o `x-ratelimit-remaining` de cada resposta e **pausa** quando a cota está
-acabando, em vez de falhar com 429. Duas sincronizações seguidas funcionam: a segunda espera
-a janela virar (daí o "até 1 min" no botão).
+**Criar uma aba nova num grupo:**
+1. Crie `app/<rota>/page.tsx`. Use `PageHeader` (`components/page-header.tsx`) para a trilha e o título,
+   e copie a estrutura de uma aba parecida (ex.: `app/financas/page.tsx` para uma aba de app,
+   `app/food-service/page.tsx` para uma com banner).
+2. Acrescente a aba no grupo certo em `config/tools.tsx` (`href`, `label`, `title`, `description`, `icon`).
+   Pronto: menu, página inicial e tutorial já mostram.
+3. Se os dados forem mudar com frequência, ponha-os num arquivo novo em `config/`.
 
-## Rodando localmente
+**Aba que só abre um site de fora:** em `config/tools.tsx`, use a URL completa no `href` e `externo: true`
+(veja Parceiros, Saúde e Livro dos Recordes). Ela abre em nova aba e ganha a setinha ↗.
+
+**Novo grupo:** acrescente em `GROUPS` (`config/tools.tsx`). A barra de baixo do celular comporta
+5 grupos em 320px; um sexto exige rever `components/Navbar.tsx`.
+
+**Livro da Biblioteca:** capa em `public/biblioteca/<slug>.jpg` e uma entrada em `config/biblioteca.ts`.
+
+**Unidades da Selfit:** `public/selfit-unidades.json` foi baixado do site da Selfit
+(`/unidades/listar`). Baixe de novo quando abrirem unidades. As de Caruaru ficam também em `config/academia.ts`.
+
+## Regras que valem para o sistema todo
+
+- **Identidade visual:** preto e dourado. Use as cores do tema (`gold`, `gold-light`, `surface`,
+  `line`...), definidas em `app/globals.css`. Não use cores novas nos botões das abas.
+- **Celular primeiro:** toda tela nova precisa funcionar em 320, 375, 414 e 768px, sem rolagem para
+  o lado, com botões de pelo menos 40px de altura e modais dentro da tela.
+- **Tutorial guiado** (`components/tour.tsx`): abre no primeiro acesso de cada navegador e pelo botão
+  "?" do topo. Os passos apontam para elementos com `data-tour="..."` no menu e na página inicial;
+  não remova esses atributos.
+- **Conteúdo de terceiros:** a Biblioteca e as Trilhas Internas só têm catálogo e link para o Notion.
+  PDFs de livros, vídeos e senhas que estão no Notion **não** vêm para cá: o sistema abre sem login.
+- **Selo "Provavelmente ativa"** (Food Service): calculado no navegador, no fuso de Recife
+  (`lib/horario.ts`), a partir das janelas de horário em `config/food.ts`.
+- **Mira do mouse** (`components/crosshair.tsx`): só com mouse; em toque nada muda.
+
+## Links de pagamento Guru
+
+Os dados vêm direto da API do Digital Manager Guru, sem planilha nem cadastro manual: toda oferta
+ativa aparece sozinha.
+
+1. `lib/guru.ts` lê `/products` e `/products/{id}/offers` (~280 chamadas por sincronização).
+   Acompanha `x-ratelimit-remaining` e pausa antes de estourar a cota de 360 chamadas/minuto.
+2. `lib/catalog.ts` monta a lista da tela (marca, valor, parcelas, destaque) e guarda em cache por
+   10 minutos (`unstable_cache`). Produtos em destaque: `config/destaques.ts`.
+3. O botão **Atualizar agora** (`app/links/actions.ts`) limpa o cache e busca a Guru de novo.
+4. `GET /api/links` devolve o mesmo catálogo em JSON.
+
+As calculadoras não usam banco nem API: cada pessoa calcula no próprio navegador, e os últimos valores
+ficam no `localStorage` dela (`hooks/useLocalStorage.ts`).
+
+## Rodar localmente
 
 ```bash
 npm install
-# .env.local com o token da Guru (veja .env.example)
-npm run dev        # http://localhost:3000
-npm run build && npm start
+cp .env.example .env.local   # GURU_API_TOKEN=... (token da Guru, só para a aba Links Guru)
+npm run dev                  # http://localhost:3000
+npx eslint . && npx tsc --noEmit && npm run build   # antes de subir
 ```
 
-| Variável | Para que serve |
-| --- | --- |
-| `GURU_API_TOKEN` | Token da API do Digital Manager Guru (somente leitura) |
+## Publicar
 
-## Arquivos
-
-| Arquivo | O que é |
-| --- | --- |
-| `lib/guru.ts` | Cliente da API da Guru: paginação, repetição e controle de cota |
-| `lib/catalog.ts` | Monta o catálogo, calcula parcelas e aplica o cache de 10 min |
-| `config/destaques.ts` | Ofertas fixadas em "Mais usados" (pelo final do link de checkout) |
-| `app/page.tsx` | Página inicial: escolha da ferramenta |
-| `app/links/page.tsx` | Página dos links (servidor) |
-| `app/links/links-explorer.tsx` | Busca, filtros, tabela, cópia e favoritos (cliente) |
-| `app/links/actions.ts` | Ação "Atualizar agora" |
-| `app/api/links/route.ts` | O mesmo catálogo em JSON, para n8n e outras ferramentas |
-| `app/atendimento/` | Página e busca dos links de atendimento e suporte |
-| `config/atendimento.ts` | **Lista dos links de atendimento e suporte** (para incluir, trocar ou remover um canal, edite aqui) |
-| `config/tools.tsx` | As ferramentas da página inicial e as cores dos botões do menu |
-| `components/explorer-kit.tsx` | Busca com destaque, cópia e filtros, compartilhados entre `/links` e `/atendimento` |
-| `components/CalculadoraStone.tsx` | Calculadora Guru + Stone (taxas no topo do arquivo) |
-| `components/CalculadoraTon.tsx` | Calculadora da maquineta TON (taxas no topo do arquivo) |
-| `hooks/useLocalStorage.ts` | Guarda no navegador os últimos valores digitados |
-
-## Calculadora Guru + Stone
-
-Taxas do demonstrativo "Taxas e prazos das suas transações" (Pagar.me / Stone, e-Commerce), emitido em
-22/10/2026. Ficam em constantes no topo de `components/CalculadoraStone.tsx`:
-
-- **Cartão de crédito**: percentual por quantidade de parcelas (1x a 18x), igual para Visa, Mastercard,
-  Elo, Amex e Hipercard. Não se multiplica pelo número de parcelas.
-- **Processamento**: R$ 0,30 por transação aprovada (crédito, boleto e Pix).
-- **Antifraude**: R$ 0,20 por transação de crédito (só cartão).
-- **Boleto**: R$ 2,39. **Pix**: 0,85% do valor.
-- Líquido do crédito = total do cliente × (1 − taxa da parcela) − R$ 0,30 − R$ 0,20.
-- Os juros repassados são simples: total = valor × (1 + juros mensal × parcelas). A faixa sugerida de
-  juros (1,70% a 2,50%) é só um aviso na tela e não entra na conta.
-- **Juros automático por faixa de valor** (`RATE_TIERS`): abaixo de R$ 1.000 → 2,10% · de R$ 1.000 a
-  R$ 1.999,99 → 2,00% · a partir de R$ 2.000 → 1,90%. O campo se ajusta sozinho quando o vendedor muda o
-  valor. Se ele editar o juros (negociação especial), o valor dele passa a valer, mesmo que o valor do
-  produto mude depois, até clicar em "Voltar ao automático". Fica salvo no navegador (`calc_rate_manual`).
-
-Quando a Stone mudar as taxas, é só atualizar essas constantes.
-
-## Detalhes que valem saber
-
-- **Marca** (CPPEM / Colégio / Unicive): vem do grupo ou do produtor do produto na Guru, com o
-  domínio do checkout como reserva.
-- **Parcelas**: calculadas com a regra da própria oferta (`interest_rate`, `max_with_interest`),
-  igual ao que o checkout mostra — por isso aparece "18x" onde a oferta permite 18.
-- **Ocultos**: produtos escondidos na Guru e ofertas inativas não aparecem.
-- **Favoritos**: cada pessoa marca os seus, guardados no navegador dela (`localStorage`).
-- **Destaques**: valem para todo mundo e ficam em `config/destaques.ts`.
-- A página é `noindex`: é de uso interno, mas quem tiver o link acessa (não há login).
+A `main` publica sozinha na Vercel. Antes de cada envio, guarde um backup do estado anterior
+(branch `backup/pre-<assunto>-<data>` e tag com o mesmo nome) para poder voltar se precisar.

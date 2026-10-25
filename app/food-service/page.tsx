@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Coffee, ExternalLink, CupSoda, Pizza, Sandwich, Soup, UtensilsCrossed } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { APPS } from "@/config/food";
-import Locais from "./food-service";
+import Locais from "./locais";
 
+// Aba Food Service (/food-service, grupo Serviços): banner, locais com selo de horário e apps. Dados em config/food.ts.
 export const metadata: Metadata = {
   title: "Food Service | Utilitários CPPEM",
   description: "Restaurante parceiro, cantinas do prédio e apps de delivery recomendados.",

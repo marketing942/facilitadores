@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SERVICE_LINKS } from "@/config/atendimento";
 import AtendimentoExplorer from "./atendimento-explorer";
 
+// Aba Atendimento (/atendimento, grupo Comercial): links de atendimento e suporte por BU. Dados em config/atendimento.ts.
 export const metadata: Metadata = {
   title: "Links de atendimento e suporte | Utilitários CPPEM",
   description: "Todos os links de atendimento e suporte do Grupo CPPEM, por empresa e por tipo, prontos para copiar.",

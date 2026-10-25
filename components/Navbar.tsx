@@ -8,7 +8,8 @@ import { GROUPS, groupOf, linkProps } from "@/config/tools";
 import { AiLinks } from "@/components/ai-links";
 import { TourButton } from "@/components/tour";
 
-
+// Menu do sistema: topo com os grupos (a partir de 1024px), barra de baixo no celular/tablet e atalhos de IA.
+// Os grupos e abas vêm de config/tools.tsx; os data-tour marcam os alvos do tutorial (components/tour.tsx).
 export default function Navbar() {
   const pathname = usePathname();
   // O menu aberto vale só para a página em que foi aberto: ao navegar, fecha sozinho.

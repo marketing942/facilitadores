@@ -4,6 +4,7 @@ import { MessageCircle } from "lucide-react";
 import { LOCAIS } from "@/config/food";
 import { statusAgora, useAgora } from "@/lib/horario";
 
+// Cartões do restaurante e das cantinas com o selo "Provavelmente ativa" (horário de Recife, lib/horario.ts).
 export default function Locais() {
   const agora = useAgora();
 

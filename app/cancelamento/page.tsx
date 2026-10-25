@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import CalculadoraCancelamento from "@/components/CalculadoraCancelamento";
 import { PageHeader } from "@/components/page-header";
 
+// Aba Cancelamento (/cancelamento, grupo Comercial). A lógica fica em components/CalculadoraCancelamento.tsx.
 export const metadata: Metadata = {
   title: "Cancelamento e multa rescisória | Utilitários CPPEM",
   description: "Calculadoras de multa rescisória e de orçamento de cancelamento, modelo de demonstrativo, sistemas e tutoriais.",

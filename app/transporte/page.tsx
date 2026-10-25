@@ -3,6 +3,7 @@ import { Bus, CircleAlert, ExternalLink, Mail, MapPin, MessageCircle, Phone, Sma
 import { PageHeader } from "@/components/page-header";
 import { APPS_CORRIDA, LEVA } from "@/config/transporte";
 
+// Aba Transporte (/transporte, grupo Serviços): cartão Leva e apps de corrida. Dados em config/transporte.ts.
 export const metadata: Metadata = {
   title: "Transporte | Utilitários CPPEM",
   description: "Cartão Leva para os ônibus de Caruaru e apps de corrida recomendados.",

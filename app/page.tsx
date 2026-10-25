@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { GROUPS, linkProps } from "@/config/tools";
 
+// Página inicial (/): os cartões de todas as abas, por grupo. Monta-se sozinha a partir de config/tools.tsx.
 export default function Home() {
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 py-8 sm:py-16">

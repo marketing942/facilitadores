@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/page-header";
 import { SecretField } from "@/components/secret-field";
 import { WIFI_INTERNAS, WIFI_VISITANTES, wifiQrPayload } from "@/config/wifi";
 
+// Aba Wi-Fi (/wifi, grupo Geral): rede de visitantes com QR Code e redes internas com senha oculta. Dados em config/wifi.ts.
 export const metadata: Metadata = {
   title: "Wi-Fi | Utilitários CPPEM",
   description: "Rede e QR Code para visitantes e senhas das redes internas.",

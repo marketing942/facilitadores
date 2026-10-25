@@ -4,6 +4,7 @@ import { unstable_cache } from "next/cache";
 import { DESTAQUES } from "@/config/destaques";
 import { fetchProductsWithOffers, type GuruOffer, type GuruProduct } from "@/lib/guru";
 
+// Catálogo dos Links Guru: transforma o que vem de lib/guru.ts na lista da tela e guarda em cache (10 min).
 export const CATALOG_TAG = "catalogo-guru";
 
 export type Brand = "CPPEM" | "Colégio" | "Unicive";

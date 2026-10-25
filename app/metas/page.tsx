@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CalendarCheck, Dumbbell, ExternalLink, NotebookPen, Target, TrendingUp } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 
+// Aba Metas e organização (/metas, grupo Serviços): app Life Board.
 export const metadata: Metadata = {
   title: "Metas e organização pessoal | Utilitários CPPEM",
   description: "App Life Board para metas anuais, rotina de treino, anotações por área da vida e evolução.",

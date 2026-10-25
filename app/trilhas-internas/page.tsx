@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { AREAS_INTERNAS, TRILHAS_INTERNAS } from "@/config/trilhas-internas";
-import TrilhasExplorer from "../trilhas/trilhas-explorer";
+import TrilhasExplorer from "@/components/trilhas-explorer";
 
+// Aba Trilhas Internas (/trilhas-internas, grupo Estudo). Dados em config/trilhas-internas.ts; mesma lista das Trilhas G4.
 export const metadata: Metadata = {
   title: "Trilhas Internas | Utilitários CPPEM",
   description: "Tutoriais e treinamentos feitos pelo time da CPPEM, por área.",

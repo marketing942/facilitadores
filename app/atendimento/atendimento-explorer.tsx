@@ -6,6 +6,7 @@ import { BU_NAMES, BUS, type Channel, type Kind, type ServiceLink } from "@/conf
 import { copyText, Highlight, normalize } from "@/components/explorer-kit";
 import { FilterAction, FilterPanel, FilterSearch, FilterSelect } from "@/components/filter-panel";
 
+// Lista do Atendimento: busca, filtros (BU, tipo, finalidade), agrupamento por BU e cópia do link.
 const CHANNELS: Channel[] = ["Humano", "IA"];
 const KINDS: Kind[] = ["Atendimento", "Suporte"];
 

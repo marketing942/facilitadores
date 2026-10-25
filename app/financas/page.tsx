@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { BookOpen, ChartLine, ExternalLink, PiggyBank, ReceiptText, Wallet } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 
+// Aba Finanças (/financas, grupo Serviços): app Domínio Financeiro e o e-book de educação financeira.
 export const metadata: Metadata = {
   title: "Finanças | Utilitários CPPEM",
   description: "App Domínio Financeiro para organizar seu dinheiro e o e-book de educação financeira.",

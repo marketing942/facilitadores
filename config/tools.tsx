@@ -1,28 +1,28 @@
 import type { ReactNode } from "react";
 import {
   BookOpen,
-  GraduationCap,
-  HeartPulse,
-  Handshake,
-  Share2,
-  Store,
-  UtensilsCrossed,
-  Route,
-  Lightbulb,
   Briefcase,
-  CalendarCheck,
-  Bus,
-  Dumbbell,
-  School,
-  Wallet,
   Building2,
+  Bus,
   Calculator,
+  CalendarCheck,
   CreditCard,
+  Dumbbell,
   FileX2,
-  Home,
+  GraduationCap,
+  Handshake,
+  HeartPulse,
+  Lightbulb,
   Link2,
   MessageCircle,
+  Route,
+  School,
+  Share2,
+  Store,
+  Trophy,
   Users,
+  UtensilsCrossed,
+  Wallet,
   Wifi,
   Wrench,
 } from "lucide-react";
@@ -54,17 +54,11 @@ export type Group = {
 
 const icon = "h-6 w-6";
 
-export const HOME_NAV = {
-  href: "/",
-  label: "Início",
-  icon: <Home className={icon} />,
-};
-
 export const GROUPS: Group[] = [
   {
     id: "geral",
     label: "Geral",
-    description: "Wi-Fi, dados da empresa e redes sociais",
+    description: "Wi-Fi, dados da empresa, redes sociais e o Livro dos Recordes",
     icon: <Users className={icon} />,
     tools: [
       {
@@ -80,6 +74,14 @@ export const GROUPS: Group[] = [
         title: "Dados da empresa",
         description: "CNPJ, chave Pix, endereço e telefones, prontos para copiar",
         icon: <Building2 className={icon} />,
+      },
+      {
+        href: "https://links.cppem.com.br/recordes-equipe",
+        label: "Livro dos Recordes",
+        title: "Livro dos Recordes",
+        description: "Os recordes e conquistas da equipe",
+        icon: <Trophy className={icon} />,
+        externo: true,
       },
       {
         href: "/redes-sociais",
