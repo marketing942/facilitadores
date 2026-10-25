@@ -147,3 +147,16 @@ html.has-crosshair, html.has-crosshair * { cursor: none !important; }
 .crosshair.is-fire .crosshair-art { transform: scale(.72); }
 .crosshair.is-lock.is-fire .crosshair-art { transform: rotate(45deg) scale(.72); }
 @media (prefers-reduced-motion: reduce) { .crosshair-art { transition: none; } }
+
+/* Impressão: tema claro e sem menus (usado pelo demonstrativo de cancelamento). */
+@media print {
+  :root {
+    --bg: #fff; --surface: #fff; --surface-2: #fff; --surface-3: #fff;
+    --text: #111; --text-soft: #333; --text-muted: #555;
+    --border: #ccc; --border-active: #999;
+    --gold-light: #6b5524; --gold-pale: #4d3a14; --gold: #8a7040;
+  }
+  .page-shell { background: #fff !important; }
+  html.has-crosshair, html.has-crosshair * { cursor: auto !important; }
+  .crosshair { display: none; }
+}

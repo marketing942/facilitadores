@@ -25,7 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         {children}
         {/* espaço para a barra de abas fixa do celular */}
-        <div aria-hidden className="h-[76px] shrink-0 sm:hidden" />
+        <div aria-hidden className="h-[76px] shrink-0 sm:hidden print:hidden" />
         <Crosshair />
       </body>
     </html>

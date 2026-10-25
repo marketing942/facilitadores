@@ -1,7 +1,7 @@
 // Sistemas e links internos, numa aba só. As tags (setor) servem para organizar e filtrar.
 // Para incluir um acesso novo, acrescente uma linha aqui. A tag "Todas" faz o item aparecer em qualquer filtro.
 
-export const SETORES = ["Comercial", "Gestão", "Marketing", "Pedagógico", "Tecnologia"] as const;
+export const SETORES = ["Comercial", "Gestão", "Marketing", "Pedagógico", "RH", "Tecnologia"] as const;
 export type Setor = (typeof SETORES)[number];
 export type Tag = Setor | "Todas";
 
@@ -66,12 +66,12 @@ export const ACESSOS: Acesso[] = [
     nome: "Admin do site de vagas",
     descricao: "Login do painel de administração do site de vagas de trabalho.",
     url: "https://vagas.cppem.com.br/admin/login",
-    tags: [],
+    tags: ["RH"],
   },
   {
     nome: "Livro dos Recordes",
     descricao: "Livro dos Recordes da equipe.",
     url: "https://links.cppem.com.br/recordes-equipe",
-    tags: [],
+    tags: ["Todas"],
   },
 ];

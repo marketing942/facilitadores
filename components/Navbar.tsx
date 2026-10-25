@@ -40,7 +40,7 @@ export default function Navbar() {
   const current = "border-gold-light bg-gold/25 text-gold-pale";
 
   return (
-    <div ref={root}>
+    <div ref={root} className="print:hidden">
       {/* Topo: marca + Início + um botão por grupo, que abre a lista das páginas dele. */}
       <nav className="sticky top-0 z-50 border-b border-line bg-canvas/90 backdrop-blur-lg" aria-label="Principal">
         <div className="mx-auto max-w-6xl px-4">
