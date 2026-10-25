@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import {
   BookOpen,
+  GraduationCap,
+  Route,
+  Lightbulb,
   Briefcase,
   Building2,
   Calculator,
@@ -114,9 +117,30 @@ export const GROUPS: Group[] = [
   {
     id: "estudo",
     label: "Estudo",
-    description: "Material de estudo e desenvolvimento do time",
+    description: "Como estudar, trilhas de cursos, treinamentos internos e a biblioteca do time",
     icon: <BookOpen className={icon} />,
     tools: [
+      {
+        href: "/como-estudar",
+        label: "Como estudar",
+        title: "Como estudar",
+        description: "A pirâmide de aprendizagem: quanto mais ativo o estudo, mais você guarda",
+        icon: <Lightbulb className={icon} />,
+      },
+      {
+        href: "/trilhas",
+        label: "Trilhas G4 Skills",
+        title: "Trilhas G4 Skills",
+        description: "Trilhas de cursos do G4 por área, com o passo a passo e o link de cada curso",
+        icon: <GraduationCap className={icon} />,
+      },
+      {
+        href: "/trilhas-internas",
+        label: "Trilhas Internas",
+        title: "Trilhas Internas",
+        description: "Tutoriais e treinamentos feitos pelo nosso time, por área",
+        icon: <Route className={icon} />,
+      },
       {
         href: "/biblioteca",
         label: "Biblioteca",
