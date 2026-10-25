@@ -32,13 +32,13 @@ export const REDES: BuRedes[] = [
       { key: "youtube", label: "YouTube", perfil: "@colegiocppem", url: "https://www.youtube.com/@colegiocppem" },
       { key: "tiktok", label: "TikTok", perfil: "@colegiocppem", url: "https://www.tiktok.com/@colegiocppem" },
       { key: "threads", label: "Threads", perfil: "@colegiocppem", url: "https://www.threads.com/@colegiocppem" },
-      { key: "whatsapp", label: "WhatsApp", perfil: "(81) 99707-6388", url: "https://wa.me/5581997076388?text=Ol%C3%A1%2C%20gostaria%20de%20falar%20sobre%20o%20Col%C3%A9gio%20Cppem" },
     ],
   },
   {
     id: "unicive",
     nome: "Unicive Caruaru",
     descricao: "Ensino superior EAD",
+    site: { label: "unicive.cppem.com.br", url: "https://unicive.cppem.com.br" },
     redes: [
       { key: "instagram", label: "Instagram", perfil: "@unicive.caruaru", url: "https://www.instagram.com/unicive.caruaru" },
       { key: "tiktok", label: "TikTok", perfil: "@unicive.caruaru", url: "https://www.tiktok.com/@unicive.caruaru" },

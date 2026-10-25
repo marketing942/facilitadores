@@ -36,6 +36,7 @@ export const LOCAIS: Local[] = [
       { dias: SEG_SEX, inicio: "08:30", fim: "09:00" },
       { dias: SEG_SEX, inicio: "15:30", fim: "16:00" },
     ],
+    link: { label: "Chamar no WhatsApp", url: "https://wa.me/5581993979592" },
   },
   {
     id: "cantina-noturna",
@@ -44,6 +45,7 @@ export const LOCAIS: Local[] = [
     descricao: "Cantina de lanches dentro do prédio, à noite.",
     horarioTexto: "Das 20h20 às 22h · segunda a sexta",
     janelas: [{ dias: SEG_SEX, inicio: "20:20", fim: "22:00" }],
+    link: { label: "Chamar no WhatsApp", url: "https://wa.me/5581992904051" },
   },
 ];
 

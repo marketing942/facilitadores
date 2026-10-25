@@ -9,8 +9,11 @@ import {
   Route,
   Lightbulb,
   Briefcase,
+  CalendarCheck,
   Bus,
   Dumbbell,
+  School,
+  Wallet,
   Building2,
   Calculator,
   CreditCard,
@@ -168,7 +171,7 @@ export const GROUPS: Group[] = [
   {
     id: "servicos",
     label: "Serviços",
-    description: "Comida, academia, transporte e benefícios para a equipe",
+    description: "Comida, academia, transporte, finanças, metas, educação e benefícios para a equipe",
     icon: <Store className={icon} />,
     tools: [
       {
@@ -191,6 +194,27 @@ export const GROUPS: Group[] = [
         title: "Transporte",
         description: "Cartão Leva para ônibus e apps de corrida",
         icon: <Bus className={icon} />,
+      },
+      {
+        href: "/financas",
+        label: "Finanças",
+        title: "Finanças",
+        description: "App Domínio Financeiro e o e-book de educação financeira",
+        icon: <Wallet className={icon} />,
+      },
+      {
+        href: "/metas",
+        label: "Metas e organização",
+        title: "Metas e organização pessoal",
+        description: "App Life Board: metas do ano, rotina de treino, anotações e evolução",
+        icon: <CalendarCheck className={icon} />,
+      },
+      {
+        href: "/educacao",
+        label: "Educação",
+        title: "Educação",
+        description: "Supletivo, faculdade EAD com bolsa e colégio para os filhos",
+        icon: <School className={icon} />,
       },
       {
         href: "https://cppem.com.br/parceiros",

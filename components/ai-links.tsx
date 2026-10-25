@@ -30,11 +30,19 @@ const IAS = [
   {
     nome: "Jarvis",
     url: "https://jarvis.cppem.com.br",
-    // o Jarvis não tem logo: monograma na cor da marca
+    // logo do Jarvis redesenhada em vetor: anel, órbita inclinada e esfera dourados
     svg: (
-      <span aria-hidden className="font-display text-[13px] font-extrabold leading-none text-gold-pale">
-        J
-      </span>
+      <svg viewBox="0 0 24 24" fill="none" className="h-[18px] w-[18px]" aria-hidden>
+        <defs>
+          <radialGradient id="jarvis-esfera" cx="40%" cy="35%" r="70%">
+            <stop offset="0" stopColor="#f6e2a8" />
+            <stop offset="1" stopColor="#b8924a" />
+          </radialGradient>
+        </defs>
+        <circle cx="12" cy="12" r="10.6" stroke="#c9a45a" strokeWidth="1.5" />
+        <ellipse cx="12" cy="12" rx="10.6" ry="4.6" transform="rotate(-24 12 12)" stroke="#c9a45a" strokeWidth="1.2" />
+        <circle cx="12" cy="11.4" r="3.6" fill="url(#jarvis-esfera)" />
+      </svg>
     ),
   },
 ];
