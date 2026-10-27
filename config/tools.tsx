@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import {
   BookOpen,
   Briefcase,
+  CarFront,
   Building2,
   Bus,
   Calculator,
@@ -198,6 +199,13 @@ export const GROUPS: Group[] = [
         description: "Nosso app de saúde, bem-estar e conquistas",
         icon: <HeartPulse className={icon} />,
         externo: true,
+      },
+      {
+        href: "/autoescola",
+        label: "Autoescola",
+        title: "Autoescola Dirija+",
+        description: "Tire sua CNH de carro e moto com a parceria da Autoescola Dirija+",
+        icon: <CarFront className={icon} />,
       },
       {
         href: "/transporte",

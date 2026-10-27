@@ -30,6 +30,7 @@ página inicial e os textos do tutorial guiado se montam sozinhos a partir dele.
 | Serviços | Food Service | `/food-service` | `config/food.ts` |
 | Serviços | Academia | `/academia` | `config/academia.ts` + `public/selfit-unidades.json` |
 | Serviços | Saúde | link externo | `config/tools.tsx` |
+| Serviços | Autoescola | `/autoescola` | `config/autoescola.ts` + `public/servicos/dirija-logo.jpg` |
 | Serviços | Transporte | `/transporte` | `config/transporte.ts` |
 | Serviços | Finanças | `/financas` | na própria página |
 | Serviços | Metas e organização | `/metas` | na própria página |
