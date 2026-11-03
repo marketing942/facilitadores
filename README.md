@@ -22,6 +22,7 @@ página inicial e os textos do tutorial guiado se montam sozinhos a partir dele.
 | Comercial | Links Guru | `/links` | API da Guru (`lib/guru.ts`, `lib/catalog.ts`) |
 | Comercial | Guru + Stone | `/calculadora` | `components/CalculadoraStone.tsx` |
 | Comercial | TON | `/calculadora-ton` | `components/CalculadoraTon.tsx` |
+| Comercial | Comissões | `/comissoes` | `config/comissoes.ts` (regras) + `lib/comissoes.ts` (cálculos) |
 | Comercial | Cancelamento | `/cancelamento` | `components/CalculadoraCancelamento.tsx` |
 | Estudo | Como estudar | `/como-estudar` | na própria página |
 | Estudo | Trilhas G4 Skills | `/trilhas` | `config/trilhas.ts` |

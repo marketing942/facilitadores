@@ -6,6 +6,7 @@ import {
   Building2,
   Bus,
   Calculator,
+  HandCoins,
   CalendarCheck,
   CreditCard,
   Dumbbell,
@@ -126,6 +127,13 @@ export const GROUPS: Group[] = [
         title: "Calculadora Maquineta TON",
         description: "Simule taxas da TON por plano (Super, Turbo, Max) em Pix, débito e crédito parcelado",
         icon: <CreditCard className={icon} />,
+      },
+      {
+        href: "/comissoes",
+        label: "Comissões",
+        title: "Calculadora de comissões",
+        description: "Comissões de CPPEM, Colégio, Suporte e Unicive, com o relatório pronto para copiar ou imprimir",
+        icon: <HandCoins className={icon} />,
       },
       {
         href: "/cancelamento",
