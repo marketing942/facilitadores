@@ -46,7 +46,7 @@ export default function EmpresaPage() {
         <Item label="CNPJ" value={EMPRESA.cnpj}>
           <CopyButton value={EMPRESA.cnpj} label="Copiar CNPJ" />
         </Item>
-        <Item label="Chave Pix (CNPJ)" value={EMPRESA.cnpj} note="Copia só os números, como o app do banco pede.">
+        <Item label="Chave Pix (CNPJ) - Banco BTG Pactual" value={EMPRESA.cnpj} note="Copia só os números, como o app do banco pede.">
           <CopyButton value={EMPRESA.pixCnpj} label="Copiar chave Pix" />
         </Item>
         <Item label="CEP" value={EMPRESA.cep}>
