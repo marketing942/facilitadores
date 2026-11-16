@@ -3,15 +3,18 @@ import { ExternalLink } from "lucide-react";
 import { CopyButton } from "@/components/copy-button";
 import { PageHeader } from "@/components/page-header";
 import { SocialIcon } from "@/components/social-icon";
-import { REDES } from "@/config/redes";
+import { getRedes } from "@/lib/data";
 
-// Aba Redes sociais (/redes-sociais, grupo Geral): redes de cada BU. Dados em config/redes.ts.
+// Aba Redes sociais (/redes-sociais, grupo Geral): redes de cada BU. Dados no banco (painel /admin/redes).
 export const metadata: Metadata = {
   title: "Redes sociais | Utilitários CPPEM",
   description: "Todas as redes sociais de cada BU da CPPEM, prontas para abrir e copiar.",
 };
 
-export default function RedesSociaisPage() {
+export const dynamic = "force-dynamic";
+
+export default async function RedesSociaisPage() {
+  const REDES = await getRedes();
   return (
     <main className="mx-auto w-full max-w-5xl px-4 pb-4 pt-8 sm:px-6 sm:pb-12">
       <PageHeader crumb="Redes sociais" eyebrow="Geral · Grupo CPPEM" title={<>Redes <span className="text-gold-light">sociais</span></>} />

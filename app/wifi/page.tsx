@@ -3,15 +3,23 @@ import QRCode from "qrcode";
 import { CopyButton } from "@/components/copy-button";
 import { PageHeader } from "@/components/page-header";
 import { SecretField } from "@/components/secret-field";
-import { WIFI_INTERNAS, WIFI_VISITANTES, wifiQrPayload } from "@/config/wifi";
+import { EquipeForm } from "@/components/equipe-form";
+import { wifiQrPayload } from "@/config/wifi";
+import { hasSession } from "@/lib/auth";
+import { getWifiInternas, getWifiVisitantes } from "@/lib/data";
 
-// Aba Wi-Fi (/wifi, grupo Geral): rede de visitantes com QR Code e redes internas com senha oculta. Dados em config/wifi.ts.
+// Aba Wi-Fi (/wifi, grupo Geral): rede de visitantes com QR Code e redes internas com senha oculta. Dados no banco (painel /admin/wifi). As senhas internas só saem do banco com a senha da equipe.
 export const metadata: Metadata = {
   title: "Wi-Fi | Utilitários CPPEM",
   description: "Rede e QR Code para visitantes e senhas das redes internas.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function WifiPage() {
+  const WIFI_VISITANTES = await getWifiVisitantes();
+  const liberado = await hasSession("equipe");
+  const internas = liberado ? await getWifiInternas() : [];
   const qr = await QRCode.toString(wifiQrPayload(WIFI_VISITANTES.nome, WIFI_VISITANTES.senha), {
     type: "svg",
     margin: 0,
@@ -60,11 +68,19 @@ export default async function WifiPage() {
           Redes internas
         </h2>
         <p className="mt-1 text-sm text-soft">Só para a equipe. Não passe estas senhas para visitantes.</p>
-        <div className="mt-4 space-y-3">
-          {WIFI_INTERNAS.map((rede) => (
-            <SecretField key={rede.nome} label={`Wi-Fi ${rede.nome}`} value={rede.senha} />
-          ))}
-        </div>
+        {liberado ? (
+          <div className="mt-4 space-y-3">
+            {internas.map((rede) => (
+              <SecretField key={rede.id} label={`Wi-Fi ${rede.nome}`} value={rede.senha} />
+            ))}
+            {internas.length === 0 && <p className="text-sm text-muted">Nenhuma rede interna cadastrada.</p>}
+          </div>
+        ) : (
+          <>
+            <p className="mt-3 text-sm text-ink-soft">Digite a senha da equipe para ver as senhas das redes internas.</p>
+            <EquipeForm />
+          </>
+        )}
       </section>
     </main>
   );

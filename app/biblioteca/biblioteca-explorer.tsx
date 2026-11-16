@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { BookOpen, ExternalLink, X } from "lucide-react";
-import { CATEGORIAS, type Livro } from "@/config/biblioteca";
+import type { Livro } from "@/config/biblioteca";
 import { Highlight, normalize } from "@/components/explorer-kit";
 import { FilterAction, FilterPanel, FilterSearch, FilterSelect } from "@/components/filter-panel";
 
@@ -11,7 +11,7 @@ function Capa({ livro, className = "" }: { livro: Livro; className?: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`/biblioteca/${livro.slug}.jpg`}
+      src={livro.capa || `/biblioteca/${livro.slug}.jpg`}
       alt={`Capa de ${livro.titulo}`}
       loading="lazy"
       className={`aspect-[2/3] w-full rounded-sm bg-surface-2 object-cover ${className}`}
@@ -121,7 +121,7 @@ function Detalhe({ livro, onClose }: { livro: Livro; onClose: () => void }) {
   );
 }
 
-export default function BibliotecaExplorer({ livros }: { livros: Livro[] }) {
+export default function BibliotecaExplorer({ livros, categorias }: { livros: Livro[]; categorias: string[] }) {
   const [query, setQuery] = useState("");
   const [categoria, setCategoria] = useState("");
   const [aberto, setAberto] = useState<Livro | null>(null);
@@ -158,7 +158,7 @@ export default function BibliotecaExplorer({ livros }: { livros: Livro[] }) {
             label="Tema"
             value={categoria}
             onChange={setCategoria}
-            options={[{ value: "", label: "Todos os temas" }, ...CATEGORIAS.map((c) => ({ value: c, label: c }))]}
+            options={[{ value: "", label: "Todos os temas" }, ...categorias.map((c) => ({ value: c, label: c }))]}
           />
         }
         actions={

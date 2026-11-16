@@ -14,20 +14,20 @@ página inicial e os textos do tutorial guiado se montam sozinhos a partir dele.
 
 | Grupo | Aba | Rota | Dados |
 | --- | --- | --- | --- |
-| Geral | Wi-Fi | `/wifi` | `config/wifi.ts` |
-| Geral | Dados da empresa | `/empresa` | `config/empresa.ts` |
+| Geral | Wi-Fi | `/wifi` | banco · `/admin/wifi` |
+| Geral | Dados da empresa | `/empresa` | banco · `/admin/empresa` |
 | Geral | Livro dos Recordes | link externo | `config/tools.tsx` |
-| Geral | Redes sociais | `/redes-sociais` | `config/redes.ts` |
-| Comercial | Atendimento | `/atendimento` | `config/atendimento.ts` |
+| Geral | Redes sociais | `/redes-sociais` | banco · `/admin/redes` |
+| Comercial | Atendimento | `/atendimento` | banco · `/admin/atendimento` |
 | Comercial | Links Guru | `/links` | API da Guru (`lib/guru.ts`, `lib/catalog.ts`) |
 | Comercial | Guru + Stone | `/calculadora` | `components/CalculadoraStone.tsx` |
 | Comercial | TON | `/calculadora-ton` | `components/CalculadoraTon.tsx` |
 | Comercial | Comissões | `/comissoes` | `config/comissoes.ts` (regras) + `lib/comissoes.ts` (cálculos) |
 | Comercial | Cancelamento | `/cancelamento` | `components/CalculadoraCancelamento.tsx` |
 | Estudo | Como estudar | `/como-estudar` | na própria página |
-| Estudo | Trilhas G4 Skills | `/trilhas` | `config/trilhas.ts` |
-| Estudo | Trilhas Internas | `/trilhas-internas` | `config/trilhas-internas.ts` |
-| Estudo | Biblioteca | `/biblioteca` | `config/biblioteca.ts` + capas em `public/biblioteca/` |
+| Estudo | Trilhas G4 Skills | `/trilhas` | banco · `/admin/trilhas-g4` |
+| Estudo | Trilhas Internas | `/trilhas-internas` | banco · `/admin/trilhas-internas` |
+| Estudo | Biblioteca | `/biblioteca` | banco · `/admin/biblioteca` (capas em `public/biblioteca/` ou por endereço) |
 | Serviços | Food Service | `/food-service` | `config/food.ts` |
 | Serviços | Academia | `/academia` | `config/academia.ts` + `public/selfit-unidades.json` |
 | Serviços | Saúde | link externo | `config/tools.tsx` |
@@ -37,10 +37,26 @@ página inicial e os textos do tutorial guiado se montam sozinhos a partir dele.
 | Serviços | Metas e organização | `/metas` | na própria página |
 | Serviços | Educação | `/educacao` | na própria página |
 | Serviços | Parceiros | link externo | `config/tools.tsx` |
-| Ferramentas | Sistemas e links | `/ferramentas` | `config/ferramentas.ts` |
+| Ferramentas | Sistemas e links | `/ferramentas` | banco · `/admin/ferramentas` |
 
 Endereços antigos que continuam funcionando (`next.config.ts`): `/acessos` → `/ferramentas` e
 `/parceiros` → site de parceiros.
+
+## Banco de dados (Supabase) e painel administrativo
+
+As abas Wi-Fi, Dados da empresa, Redes sociais, Atendimento, Sistemas e links, Biblioteca e Trilhas (G4 e Internas)
+leem do **Postgres do Supabase** e são editadas em **`/admin`**, sem mexer no código. Food Service, Academia, Autoescola,
+Transporte, Finanças, Metas, Educação, as calculadoras e a Guru **não** usam o banco (a Guru continua vindo da API).
+
+- **Conexão:** `lib/db.ts` usa `DATABASE_URL` (pooler do Supabase, porta 6543). Só o servidor acessa o banco: todas as tabelas
+  têm RLS ligado e nenhuma policy, então a chave pública do Supabase não lê nem grava nada.
+- **Tabelas:** `supabase/migrations/*.sql`. Para aplicar: `npm run db:migrate`.
+- **Leitura:** `lib/data.ts`, com cache por tag. Ao salvar no painel a tag é invalidada e o site já mostra o dado novo.
+- **Painel:** `app/admin/`. Os formulários saem de `lib/admin-schema.ts`; para um campo novo, crie a coluna numa migração
+  e acrescente o campo ali. As ações estão em `app/admin/actions.ts`.
+- **Senhas:** duas, guardadas só como hash scrypt na tabela `settings`: a do **painel** e a da **equipe** (libera as senhas do
+  Wi-Fi interno em `/wifi`). As duas se trocam em `/admin/seguranca`. Sessões em cookie httpOnly, com bloqueio após 5 erros em 15 min.
+- **Capas e fotos:** não há upload. Use um caminho em `public/` ou o endereço completo da imagem.
 
 ## Pastas
 
@@ -48,7 +64,9 @@ Endereços antigos que continuam funcionando (`next.config.ts`): `/acessos` → 
 app/            uma pasta por aba (a rota é o nome da pasta); page.tsx é a página
   layout.tsx    casca comum: fontes, menu, mira do mouse e tutorial
   globals.css   cores da marca (tokens), classes comuns (gold-button, ghost-button, eyebrow...) e impressão
-config/         DADOS editáveis: listas, links, textos, horários. Comece por aqui para mudar conteúdo
+config/         tipos e constantes das abas, e os DADOS das abas que não usam o banco (Food Service, Academia...)
+lib/db.ts, lib/data.ts, lib/auth.ts, lib/admin-schema.ts   banco, leitura com cache, senhas e formulários do painel
+supabase/       migrações SQL do banco
 components/     peças reutilizadas por várias abas (menu, botões, filtros, calculadoras, tutorial)
 lib/            lógica sem tela: API da Guru, catálogo, relógio de Recife
 hooks/          hooks de React (localStorage das calculadoras)
@@ -57,7 +75,7 @@ public/         imagens e arquivos estáticos (capas, logos, unidades da Selfit)
 
 ## Como fazer as mudanças mais comuns
 
-**Trocar um texto, link, telefone ou horário:** edite o arquivo de `config/` da aba (tabela acima).
+**Trocar um texto, link, telefone ou senha das abas ligadas ao banco:** entre em `/admin`. As demais abas (Food Service, Academia, Autoescola, Transporte) ainda se editam no arquivo de `config/`.
 Cada arquivo explica no topo o que guarda.
 
 **Criar uma aba nova num grupo:**
@@ -113,12 +131,12 @@ ficam no `localStorage` dela (`hooks/useLocalStorage.ts`).
 
 ```bash
 npm install
-cp .env.example .env.local   # GURU_API_TOKEN=... (token da Guru, só para a aba Links Guru)
+cp .env.example .env.local   # GURU_API_TOKEN (Links Guru) e DATABASE_URL (Supabase)
 npm run dev                  # http://localhost:3000
 npx eslint . && npx tsc --noEmit && npm run build   # antes de subir
 ```
 
 ## Publicar
 
-A `main` publica sozinha na Vercel. Antes de cada envio, guarde um backup do estado anterior
+A `main` publica sozinha na Vercel. As variáveis `DATABASE_URL` e `GURU_API_TOKEN` precisam estar cadastradas na Vercel. Antes de cada envio, guarde um backup do estado anterior
 (branch `backup/pre-<assunto>-<data>` e tag com o mesmo nome) para poder voltar se precisar.

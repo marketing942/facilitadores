@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { ExternalLink } from "lucide-react";
 import { CopyButton } from "@/components/copy-button";
 import { PageHeader } from "@/components/page-header";
-import { ENDERECO_COMPLETO, EMPRESA, MAPS_URL, TELEFONES } from "@/config/empresa";
+import { enderecoCompleto, mapsUrl } from "@/config/empresa";
+import { getEmpresa } from "@/lib/data";
 
-// Aba Dados da empresa (/empresa, grupo Geral): CNPJ, Pix, endereço e telefones. Dados em config/empresa.ts.
+// Aba Dados da empresa (/empresa, grupo Geral): CNPJ, Pix, endereço e telefones. Dados no banco (painel /admin/empresa).
 export const metadata: Metadata = {
   title: "Dados da empresa | Utilitários CPPEM",
   description: "CNPJ, chave Pix e endereço da CPPEM, prontos para copiar.",
@@ -33,7 +34,12 @@ function Item({
   );
 }
 
-export default function EmpresaPage() {
+export const dynamic = "force-dynamic";
+
+export default async function EmpresaPage() {
+  const { empresa: EMPRESA, telefones: TELEFONES } = await getEmpresa();
+  const ENDERECO_COMPLETO = enderecoCompleto(EMPRESA);
+  const MAPS_URL = mapsUrl(EMPRESA);
   return (
     <main className="mx-auto w-full max-w-4xl px-4 pb-4 pt-8 sm:px-6 sm:pb-12">
       <PageHeader
@@ -46,8 +52,8 @@ export default function EmpresaPage() {
         <Item label="CNPJ" value={EMPRESA.cnpj}>
           <CopyButton value={EMPRESA.cnpj} label="Copiar CNPJ" />
         </Item>
-        <Item label="Chave Pix (CNPJ) - Banco BTG Pactual" value={EMPRESA.cnpj} note="Copia só os números, como o app do banco pede.">
-          <CopyButton value={EMPRESA.pixCnpj} label="Copiar chave Pix" />
+        <Item label={`Chave Pix (CNPJ)${EMPRESA.pix_banco ? ` - ${EMPRESA.pix_banco}` : ""}`} value={EMPRESA.cnpj} note="Copia só os números, como o app do banco pede.">
+          <CopyButton value={EMPRESA.pix_cnpj} label="Copiar chave Pix" />
         </Item>
         <Item label="CEP" value={EMPRESA.cep}>
           <CopyButton value={EMPRESA.cep} label="Copiar CEP" />

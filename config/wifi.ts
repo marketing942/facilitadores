@@ -1,15 +1,8 @@
-// Redes Wi-Fi. Visitantes: a senha é pública de propósito (vai no QR Code). Internas: a página
-// esconde a senha até a pessoa tocar em "Mostrar".
+// Redes Wi-Fi: os nomes e senhas ficam no banco (settings 'wifi_visitantes' e tabela wifi_redes) e são
+// editados em /admin/wifi. Este arquivo só monta o texto do QR Code.
 
-export const WIFI_VISITANTES = {
-  nome: "Cppem - 01 Visitantes",
-  senha: "CppemWifi@Visitas123",
-};
-
-export const WIFI_INTERNAS = [
-  { nome: "Cppem 3", senha: "C@#wifi62024" },
-  { nome: "Cppem 4", senha: "C@#wifi62024" },
-];
+export type WifiVisitantes = { nome: string; senha: string };
+export type WifiInterna = { id: string; nome: string; senha: string };
 
 /** Texto do QR Code padrão de Wi-Fi (Android e iPhone conectam direto ao escanear). */
 export function wifiQrPayload(nome: string, senha: string) {

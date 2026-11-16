@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SERVICE_LINKS } from "@/config/atendimento";
+import { getAtendimento } from "@/lib/data";
 import AtendimentoExplorer from "./atendimento-explorer";
 
-// Aba Atendimento (/atendimento, grupo Comercial): links de atendimento e suporte por BU. Dados em config/atendimento.ts.
+// Aba Atendimento (/atendimento, grupo Comercial): links de atendimento e suporte por BU. Dados no banco (painel /admin/atendimento).
 export const metadata: Metadata = {
   title: "Links de atendimento e suporte | Utilitários CPPEM",
   description: "Todos os links de atendimento e suporte do Grupo CPPEM, por empresa e por tipo, prontos para copiar.",
 };
 
-export default function AtendimentoPage() {
+// Lê do banco (com cache por tag): não pré-renderiza no build.
+export const dynamic = "force-dynamic";
+
+export default async function AtendimentoPage() {
+  const items = await getAtendimento();
   return (
     <main className="mx-auto w-full max-w-[1240px] px-4 pb-4 pt-8 sm:pb-12 sm:px-6">
       <nav className="mb-6 flex items-center gap-2 text-sm text-soft" aria-label="Você está em">
@@ -27,7 +31,7 @@ export default function AtendimentoPage() {
         </h1>
       </header>
 
-      <AtendimentoExplorer items={SERVICE_LINKS} />
+      <AtendimentoExplorer items={items} />
     </main>
   );
 }

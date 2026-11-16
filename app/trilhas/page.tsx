@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
 import { ExternalLink } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
-import { AREAS, G4_URL, TRILHAS } from "@/config/trilhas";
+import { G4_URL } from "@/config/trilhas";
+import { getTrilhas } from "@/lib/data";
 import TrilhasExplorer from "@/components/trilhas-explorer";
 
-// Aba Trilhas G4 Skills (/trilhas, grupo Estudo). Dados em config/trilhas.ts; a lista é components/trilhas-explorer.tsx.
+// Aba Trilhas G4 Skills (/trilhas, grupo Estudo). Dados no banco (painel /admin/trilhas-g4); a lista é components/trilhas-explorer.tsx.
 export const metadata: Metadata = {
   title: "Trilhas G4 Skills | Utilitários CPPEM",
   description: "Trilhas de cursos do G4 Skills por área, com o passo a passo e o link de cada curso.",
 };
 
-export default function TrilhasPage() {
+export const dynamic = "force-dynamic";
+
+export default async function TrilhasPage() {
+  const { trilhas, areas } = await getTrilhas("g4");
   return (
     <main className="mx-auto w-full max-w-[1240px] px-4 pb-4 pt-8 sm:px-6 sm:pb-12">
       <PageHeader crumb="Trilhas G4 Skills" eyebrow="Estudo · Grupo CPPEM" title={<>Trilhas <span className="text-gold-light">G4 Skills</span></>} />
@@ -29,7 +33,7 @@ export default function TrilhasPage() {
         </div>
       </section>
 
-      <TrilhasExplorer trilhas={TRILHAS} areas={AREAS} />
+      <TrilhasExplorer trilhas={trilhas} areas={areas} />
     </main>
   );
 }

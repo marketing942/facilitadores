@@ -3,13 +3,13 @@
 import { useState } from "react";
 import { ExternalLink } from "lucide-react";
 import { CopyButton } from "@/components/copy-button";
-import { FERRAMENTAS, SETORES, type Setor } from "@/config/ferramentas";
+import { SETORES, type Ferramenta, type Setor } from "@/config/ferramentas";
 
 // Lista da aba Ferramentas: filtro por setor (a tag "Todas" aparece em qualquer filtro), abrir e copiar.
-export default function FerramentasLista() {
+export default function FerramentasLista({ itens }: { itens: Ferramenta[] }) {
   const [setor, setSetor] = useState<Setor | null>(null);
 
-  const visiveis = FERRAMENTAS.filter(
+  const visiveis = itens.filter(
     (item) => !setor || item.tags.includes(setor) || item.tags.includes("Todas"),
   );
 
@@ -34,7 +34,7 @@ export default function FerramentasLista() {
       <ul className="space-y-3">
         {visiveis.map((item) => (
           <li
-            key={item.url}
+            key={item.id}
             className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-surface p-4 sm:p-5"
           >
             <div className="min-w-0">
