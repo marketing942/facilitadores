@@ -5,13 +5,15 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { getSetting, query, setSetting } from "@/lib/db";
 
-// Senhas e sessões. Duas senhas: a do PAINEL (/admin) e a da EQUIPE (libera as senhas do Wi-Fi interno).
+// Senhas e sessões. Três senhas: a do SITE (entrada de todo usuário, vale 8 horas), a do PAINEL (/admin)
+// e a da EQUIPE (libera as senhas do Wi-Fi interno).
 // Guardamos só o hash scrypt das senhas e o hash SHA-256 do token de sessão. O token fica num cookie httpOnly.
-export type Kind = "admin" | "equipe";
+export type Kind = "admin" | "equipe" | "site";
 
-const COOKIE: Record<Kind, string> = { admin: "cppem_admin", equipe: "cppem_equipe" };
-const SETTING: Record<Kind, string> = { admin: "admin_password", equipe: "equipe_password" };
-const TTL_DAYS: Record<Kind, number> = { admin: 7, equipe: 30 };
+export const SITE_COOKIE = "cppem_site";
+const COOKIE: Record<Kind, string> = { admin: "cppem_admin", equipe: "cppem_equipe", site: SITE_COOKIE };
+const SETTING: Record<Kind, string> = { admin: "admin_password", equipe: "equipe_password", site: "site_password" };
+const TTL_SECONDS: Record<Kind, number> = { admin: 7 * 86400, equipe: 30 * 86400, site: 8 * 3600 };
 const MAX_FAILS = 5;
 const WINDOW_MIN = 15;
 
@@ -30,7 +32,7 @@ function verifyHash(password: string, stored: string) {
   return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
 
-const sha = (token: string) => crypto.createHash("sha256").update(token).digest("hex");
+export const sha = (token: string) => crypto.createHash("sha256").update(token).digest("hex");
 
 async function clientIp() {
   const h = await headers();
@@ -55,13 +57,13 @@ export async function login(kind: Kind, password: string): Promise<string | null
   const token = crypto.randomBytes(32).toString("base64url");
   await query("delete from sessions where expires_at < now()");
   await query("delete from login_attempts where created_at < now() - interval '1 day'");
-  await query("insert into sessions (token_hash, kind, expires_at) values ($1, $2, now() + ($3 || ' days')::interval)", [sha(token), kind, String(TTL_DAYS[kind])]);
+  await query("insert into sessions (token_hash, kind, expires_at) values ($1, $2, now() + ($3 || ' seconds')::interval)", [sha(token), kind, String(TTL_SECONDS[kind])]);
   (await cookies()).set(COOKIE[kind], token, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: TTL_DAYS[kind] * 86400,
+    maxAge: TTL_SECONDS[kind],
   });
   return null;
 }

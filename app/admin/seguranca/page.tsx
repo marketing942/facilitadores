@@ -25,6 +25,18 @@ export default async function SegurancaPage({ searchParams }: { searchParams: Pr
       <div className="space-y-6">
         <form action={trocarSenha} className="space-y-3.5 rounded-xl border border-line bg-surface p-4 sm:p-5">
           <input type="hidden" name="__back" value="/admin/seguranca" />
+          <input type="hidden" name="__qual" value="site" />
+          <h2 className="font-display text-lg font-bold uppercase tracking-tight text-ink">Senha do site</h2>
+          <p className="text-sm text-soft">É a senha comum que todo usuário digita para entrar no sistema. O acesso dura 8 horas. Ao trocar, todos precisam entrar de novo.</p>
+          <Campo name="nova" label="Nova senha do site" autoComplete="new-password" />
+          <Campo name="confirma" label="Repita a nova senha" autoComplete="new-password" />
+          <button type="submit" className="gold-button ui-label inline-flex min-h-11 items-center rounded-md px-5">
+            <span className="text-xs">Trocar senha do site</span>
+          </button>
+        </form>
+
+        <form action={trocarSenha} className="space-y-3.5 rounded-xl border border-line bg-surface p-4 sm:p-5">
+          <input type="hidden" name="__back" value="/admin/seguranca" />
           <input type="hidden" name="__qual" value="admin" />
           <h2 className="font-display text-lg font-bold uppercase tracking-tight text-ink">Senha do painel</h2>
           <p className="text-sm text-soft">Depois de trocar, todos precisam entrar de novo no painel.</p>

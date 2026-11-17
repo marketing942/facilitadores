@@ -35,7 +35,7 @@ export default async function AdminHome({ searchParams }: { searchParams: Promis
             </span>
             <span className="min-w-0">
               <span className="block font-display text-base font-bold uppercase tracking-tight text-ink">Senhas</span>
-              <span className="block text-sm text-ink-soft">Trocar a senha do painel e a senha da equipe (Wi-Fi interno)</span>
+              <span className="block text-sm text-ink-soft">Trocar a senha do site, a do painel e a da equipe (Wi-Fi interno)</span>
             </span>
           </div>
         </Link>

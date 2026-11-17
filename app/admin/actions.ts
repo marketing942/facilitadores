@@ -166,7 +166,8 @@ export async function sair() {
 export async function trocarSenha(fd: FormData) {
   await requireAdmin();
   const back = fd.get("__back");
-  const qual = fd.get("__qual") === "equipe" ? "equipe" : "admin";
+  const q = fd.get("__qual");
+  const qual = q === "equipe" || q === "site" ? q : "admin";
   const nova = String(fd.get("nova") ?? "");
   const confirma = String(fd.get("confirma") ?? "");
   if (nova.length < MIN_PASSWORD) voltar(back, "erro", `A senha precisa ter pelo menos ${MIN_PASSWORD} caracteres.`);
@@ -175,6 +176,10 @@ export async function trocarSenha(fd: FormData) {
     if (!(await checkPassword("admin", String(fd.get("atual") ?? "")))) voltar(back, "erro", "A senha atual do painel está incorreta.");
     await changePassword("admin", nova);
     redirect("/admin/login");
+  }
+  if (qual === "site") {
+    await changePassword("site", nova);
+    voltar(back, "ok", "Senha do site trocada. Todos os usuários precisarão entrar de novo com a nova senha.");
   }
   await changePassword("equipe", nova);
   voltar(back, "ok", "Senha da equipe trocada. Quem já tinha liberado o Wi-Fi interno precisará digitar a nova.");
