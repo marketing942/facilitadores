@@ -7,4 +7,5 @@ export const TAGS = {
   ferramentas: "d-ferramentas",
   biblioteca: "d-biblioteca",
   trilhas: "d-trilhas",
+  prompts: "d-prompts",
 } as const;

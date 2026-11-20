@@ -28,6 +28,17 @@ export default async function AdminHome({ searchParams }: { searchParams: Promis
             </div>
           </Link>
         ))}
+        <Link href="/admin/prompts" className="group">
+          <div className="flex h-full items-start gap-3.5 rounded-xl border border-line bg-surface p-4 transition-all group-hover:-translate-y-0.5 group-hover:border-line-active">
+            <span className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-gold/10 text-gold-light">
+              <Pencil className="h-5 w-5" />
+            </span>
+            <span className="min-w-0">
+              <span className="block font-display text-base font-bold uppercase tracking-tight text-ink">Galeria de Prompts</span>
+              <span className="block text-sm text-ink-soft">Enviar arquivos .md de prompts e organizar por etiqueta</span>
+            </span>
+          </div>
+        </Link>
         <Link href="/admin/seguranca" className="group">
           <div className="flex h-full items-start gap-3.5 rounded-xl border border-line bg-surface p-4 transition-all group-hover:-translate-y-0.5 group-hover:border-line-active">
             <span className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-gold/10 text-gold-light">

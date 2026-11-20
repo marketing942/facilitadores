@@ -102,3 +102,22 @@ export function getTrilhas(tipo: TrilhaTipo) {
 }
 
 export type { Tag };
+
+export type PromptItem = { id: string; titulo: string; conteudo: string; etiquetas: string[] };
+export type PromptsData = { etiquetas: { id: string; nome: string }[]; prompts: PromptItem[] };
+
+/** Galeria de Prompts: só prompts ativos; as etiquetas de cada prompt vêm na ordem das etiquetas. */
+export const getPrompts = cached(async (): Promise<PromptsData> => {
+  const etiquetas = await query<{ id: string; nome: string }>("select id, nome from etiquetas order by position, nome");
+  const prompts = await query<{ id: string; titulo: string; conteudo: string; etiquetas: string[] }>(
+    `select p.id, p.titulo, p.conteudo,
+            coalesce(array_agg(e.nome order by e.position, e.nome) filter (where e.id is not null), '{}') as etiquetas
+       from prompts p
+       left join prompt_etiquetas pe on pe.prompt_id = p.id
+       left join etiquetas e on e.id = pe.etiqueta_id
+      where p.ativo
+      group by p.id
+      order by p.position, p.created_at desc`,
+  );
+  return { etiquetas, prompts };
+}, "prompts", TAGS.prompts);

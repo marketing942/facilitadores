@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
       { source: "/parceiros", destination: "https://cppem.com.br/parceiros", permanent: false },
     ];
   },
+  // envio de vários arquivos .md de uma vez no painel da Galeria de Prompts (padrão: 1 MB)
+  experimental: { serverActions: { bodySizeLimit: "5mb" } },
   // Sem cacheComponents: o catálogo usa unstable_cache (Data Cache da Vercel), que é
   // compartilhado entre instâncias e não tem o limite de 50s do 'use cache' no build.
 };

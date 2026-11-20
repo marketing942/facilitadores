@@ -20,6 +20,7 @@ import {
   Route,
   School,
   Share2,
+  Sparkles,
   Store,
   Trophy,
   Users,
@@ -134,6 +135,13 @@ export const GROUPS: Group[] = [
         title: "Calculadora de comissões",
         description: "Comissões de CPPEM, Colégio, Suporte e Unicive, com o relatório pronto para copiar ou imprimir",
         icon: <HandCoins className={icon} />,
+      },
+      {
+        href: "/prompts",
+        label: "Prompts",
+        title: "Galeria de Prompts",
+        description: "Prompts prontos para o dia a dia de vendas, filtrados por etiqueta (follow-up, pipeline, atendimento) e com cópia em um clique",
+        icon: <Sparkles className={icon} />,
       },
       {
         href: "/cancelamento",

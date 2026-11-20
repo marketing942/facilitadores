@@ -13,7 +13,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 Leia o [README.md](README.md) antes de mexer: ele tem o mapa de grupos, abas, rotas e arquivos de dados.
 
 - O menu, a página inicial e o tutorial saem de `config/tools.tsx`. Para criar ou mover uma aba, edite só ele (e crie `app/<rota>/page.tsx`).
-- Abas ligadas ao banco (Atendimento, Empresa, Wi-Fi, Redes, Ferramentas, Biblioteca, Trilhas) têm os dados no Supabase e são editadas em `/admin`: não ponha esses dados no código nem senhas no repositório. As demais abas ainda guardam o conteúdo em `config/`. Mudança de estrutura do banco vai em nova migração em `supabase/migrations/`.
+- Abas ligadas ao banco (Atendimento, Empresa, Wi-Fi, Redes, Ferramentas, Biblioteca, Trilhas, Galeria de Prompts) têm os dados no Supabase e são editadas em `/admin`: não ponha esses dados no código nem senhas no repositório. As demais abas ainda guardam o conteúdo em `config/`. Mudança de estrutura do banco vai em nova migração em `supabase/migrations/`.
 - Textos da interface em português do Brasil, no tom da marca. Identidade preto e dourado: use os tokens de `app/globals.css`.
 - Toda tela nova: teste em 320, 375, 414 e 768px (sem rolagem lateral, toques de 40px+, modais dentro da tela).
 - Mantenha os atributos `data-tour` do menu e da página inicial: o tutorial (`components/tour.tsx`) depende deles.

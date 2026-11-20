@@ -19,6 +19,7 @@ página inicial e os textos do tutorial guiado se montam sozinhos a partir dele.
 | Geral | Livro dos Recordes | link externo | `config/tools.tsx` |
 | Geral | Redes sociais | `/redes-sociais` | banco · `/admin/redes` |
 | Comercial | Atendimento | `/atendimento` | banco · `/admin/atendimento` |
+| Comercial | Galeria de Prompts | `/prompts` | banco · `/admin/prompts` (envio de .md e etiquetas) |
 | Comercial | Links Guru | `/links` | API da Guru (`lib/guru.ts`, `lib/catalog.ts`) |
 | Comercial | Guru + Stone | `/calculadora` | `components/CalculadoraStone.tsx` |
 | Comercial | TON | `/calculadora-ton` | `components/CalculadoraTon.tsx` |
@@ -44,7 +45,7 @@ Endereços antigos que continuam funcionando (`next.config.ts`): `/acessos` → 
 
 ## Banco de dados (Supabase) e painel administrativo
 
-As abas Wi-Fi, Dados da empresa, Redes sociais, Atendimento, Sistemas e links, Biblioteca e Trilhas (G4 e Internas)
+As abas Wi-Fi, Dados da empresa, Redes sociais, Atendimento, Sistemas e links, Biblioteca, Galeria de Prompts e Trilhas (G4 e Internas)
 leem do **Postgres do Supabase** e são editadas em **`/admin`**, sem mexer no código. Food Service, Academia, Autoescola,
 Transporte, Finanças, Metas, Educação, as calculadoras e a Guru **não** usam o banco (a Guru continua vindo da API).
 
