@@ -89,12 +89,14 @@ export async function enviarPrompts(fd: FormData) {
   const arquivos = arquivosEnviados(fd);
   if (!arquivos.length) voltar("erro", "Escolha pelo menos um arquivo .md.");
   const etiquetas = ids(fd, "etiquetas");
+  const nome = texto(fd, "nome").slice(0, 120);
+  if (nome && arquivos.length > 1) voltar("erro", "O campo Nome só vale para um arquivo. Para vários, deixe-o vazio e renomeie cada prompt depois.");
 
   const lidos: { titulo: string; conteudo: string }[] = [];
   for (const f of arquivos) {
     const r = await lerMarkdown(f);
     if (typeof r === "string") voltar("erro", r);
-    lidos.push(r);
+    lidos.push(nome ? { ...r, titulo: nome } : r);
   }
 
   let pos = await proximaPosicao("prompts");

@@ -57,7 +57,12 @@ export default async function PromptsAdminPage({ searchParams }: { searchParams:
             <label className="block">
               <span className="mb-1.5 block text-sm font-semibold text-ink">Arquivos Markdown (.md)</span>
               <input type="file" name="arquivos" accept=".md,.markdown,text/markdown" multiple required className={`${inputClass} file:mr-3 file:rounded-md file:border-0 file:bg-gold/20 file:px-3 file:py-1.5 file:text-sm file:text-gold-pale`} />
-              <span className="mt-1 block text-xs text-muted">Cada arquivo vira um prompt. O título é a primeira linha começada por # (ou o nome do arquivo). Até 300 KB por arquivo.</span>
+              <span className="mt-1 block text-xs text-muted">Cada arquivo vira um prompt. Sem nome digitado abaixo, o nome é a primeira linha começada por # (ou o nome do arquivo). Até 300 KB por arquivo.</span>
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-sm font-semibold text-ink">Nome do prompt</span>
+              <input name="nome" maxLength={120} placeholder="Ex.: Follow-up pós-reunião" className={inputClass} />
+              <span className="mt-1 block text-xs text-muted">É o nome que a equipe vê. Vazio: usa o título do arquivo. Com vários arquivos de uma vez, deixe vazio e renomeie depois.</span>
             </label>
             <Marcas etiquetas={etiquetas} marcadas={[]} />
             <button type="submit" className={botao}><span className="text-xs">Enviar para a galeria</span></button>
@@ -104,7 +109,7 @@ export default async function PromptsAdminPage({ searchParams }: { searchParams:
                 <form action={salvarPrompt} encType="multipart/form-data" className="space-y-4 border-t border-line p-4 sm:p-5">
                   <input type="hidden" name="id" value={p.id} />
                   <label className="block">
-                    <span className="mb-1.5 block text-sm font-semibold text-ink">Título <span className="text-gold-light">*</span></span>
+                    <span className="mb-1.5 block text-sm font-semibold text-ink">Nome do prompt <span className="text-gold-light">*</span></span>
                     <input name="titulo" defaultValue={p.titulo} required maxLength={120} className={inputClass} />
                   </label>
                   <label className="block">
